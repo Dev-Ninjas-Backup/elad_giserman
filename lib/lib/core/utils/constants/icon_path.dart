@@ -1,5 +1,4 @@
-
-class IconPath{
-  IconPath._();
-  static const  String logo='';
+class IconPath {
+  static const String appIcon = 'assets/icons/appIcon.png';
+  static const String googleIcon = 'assets/icons/googleIcon.png';
 }
