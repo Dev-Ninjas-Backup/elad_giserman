@@ -1,9 +1,9 @@
-import 'package:elad_giserman/lib/core/common/widgets/custom_button.dart';
-import 'package:elad_giserman/lib/core/utils/constants/icon_path.dart';
-import 'package:elad_giserman/lib/features/auth/sign_in/controller/sign_in_controller.dart';
+import 'package:elad_giserman/core/common/widgets/custom_button.dart';
+import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/features/auth/sign_in/controller/sign_in_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:elad_giserman/lib/core/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
 class SignInScreen extends StatelessWidget {

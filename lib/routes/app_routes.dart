@@ -1,4 +1,4 @@
-import 'package:elad_giserman/lib/features/auth/sign_in/screens/sign_in_screen.dart';
+import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoute {
