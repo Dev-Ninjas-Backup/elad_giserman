@@ -20,4 +20,6 @@ class AppColors {
   static const Color primaryFontColor = Color(0xFF141414);
   //TextField colors
   static const Color textFieldFillColor = Color(0xFFF5F5F5);
+  //Button colors
+  static const Color buttonColor = Color(0xFF0088A3);
 }

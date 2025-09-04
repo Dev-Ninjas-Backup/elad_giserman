@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
+import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/auth/sign_in/controller/sign_in_controller.dart';
@@ -36,39 +37,12 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 24),
-                Text(
-                  'Email',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.primaryFontColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
-                TextField(
+                CustomTextField(
+                  labelText: 'Email',
                   controller: controller.emailController,
-                  decoration: InputDecoration(
-                    hintText: 'example@gmail.com',
-                    hintStyle: TextStyle(
-                      color: Color(0xFF636363),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.textFieldFillColor,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 16,
-                    ),
-                    errorText: controller.emailError.value.isEmpty
-                        ? null
-                        : controller.emailError.value,
-                  ),
+                  hintText: 'example@gmail.com',
                   onChanged: (value) => controller.validateEmail(value),
+                  suffixIcon: Icon(Icons.email_outlined),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -176,7 +150,7 @@ class SignInScreen extends StatelessWidget {
                 CustomButton(
                   label: 'Log In',
                   onPressed: () {},
-                  color: Color(0xFF0088A3),
+                  color: AppColors.buttonColor,
                   textColor: Colors.white,
                 ),
                 SizedBox(height: 8),
@@ -215,7 +189,10 @@ class SignInScreen extends StatelessWidget {
                           color: Color(0xFFFFFFFF),
                           fontWeight: FontWeight.w600,
                         ),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Get.offNamed('/signUpScreen');
+                          },
                       ),
                     ],
                   ),
