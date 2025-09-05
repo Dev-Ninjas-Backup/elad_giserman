@@ -1,22 +1,24 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomPasswordTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
+  final bool? obscureText;
   final String hintText;
-  final Function(String) onChanged;
-  final Widget? suffixIcon;
+  final Widget suffixIcon;
   final String? errorText;
+  final Function(String) onChanged;
 
-  const CustomTextField({
+  const CustomPasswordTextField({
     super.key,
     required this.labelText,
     required this.controller,
+    this.obscureText,
     required this.hintText,
-    required this.onChanged,
-    this.suffixIcon,
+    required this.suffixIcon,
     this.errorText,
+    required this.onChanged,
   });
 
   @override
@@ -35,6 +37,7 @@ class CustomTextField extends StatelessWidget {
         const SizedBox(height: 8),
         TextField(
           controller: controller,
+          obscureText: obscureText ?? false,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(

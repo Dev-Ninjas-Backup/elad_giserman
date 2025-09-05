@@ -1,8 +1,10 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
+import 'package:elad_giserman/core/common/widgets/custom_password_text_field.dart';
 import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/features/auth/sign_up/controller/sign_up_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -22,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(lable: 'Sign Up'),
+                CustomAppBar(lable: 'Sign Up', routeName: '/signInScreen'),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
                   child: Column(
@@ -40,22 +43,78 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 24),
                       CustomTextField(
                         labelText: 'Username',
-                        controller: TextEditingController(),
+                        controller: controller.usernameController,
                         hintText: 'Full Name',
-                        onChanged: (String value) {},
+                        onChanged: (value) =>
+                            controller.validateUsername(value),
+                        errorText: controller.usernameError.value.isEmpty
+                            ? null
+                            : controller.usernameError.value,
                         suffixIcon: Icon(Icons.person_outline),
                       ),
                       SizedBox(height: 10),
                       CustomTextField(
                         labelText: 'Email',
-                        controller: TextEditingController(),
+                        controller: controller.emailController,
                         hintText: 'example@gmail.com',
-                        onChanged: (String value) {},
+                        onChanged: (value) => controller.validateEmail(value),
+                        errorText: controller.emailError.value.isEmpty
+                            ? null
+                            : controller.emailError.value,
+                        suffixIcon: Icon(Icons.email_outlined),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => CustomPasswordTextField(
+                          labelText: 'Password',
+                          controller: controller.passwordController,
+                          hintText: '********',
+                          obscureText: !controller.showPassword.value,
+                          suffixIcon: IconButton(
+                            onPressed: controller.togglePasswordVisibility,
+                            icon: Icon(
+                              controller.showPassword.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
+                          onChanged: (value) =>
+                              controller.validatePassword(value),
+                          errorText: controller.passwordError.value.isEmpty
+                              ? null
+                              : controller.passwordError.value,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Obx(
+                        () => CustomPasswordTextField(
+                          labelText: 'Confirm Password',
+                          controller: controller.confirmPasswordController,
+                          hintText: '********',
+                          obscureText: !controller.showConfirmPassword.value,
+                          suffixIcon: IconButton(
+                            onPressed:
+                                controller.toggleConfirmPasswordVisibility,
+                            icon: Icon(
+                              controller.showConfirmPassword.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
+                          onChanged: (value) =>
+                              controller.validateConfirmPassword(value),
+                          errorText:
+                              controller.confirmPasswordError.value.isEmpty
+                              ? null
+                              : controller.confirmPasswordError.value,
+                        ),
                       ),
                       SizedBox(height: 24),
                       CustomButton(
                         label: 'Sign Up',
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.signUp();
+                        },
                         color: AppColors.buttonColor,
                         textColor: Colors.white,
                       ),
@@ -72,7 +131,9 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 8),
                       CustomButton(
                         label: 'Login with Google',
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.signUpWithGoogle();
+                        },
                         color: Colors.white,
                         textColor: AppColors.primaryFontColor,
                         icon: Image.asset(IconPath.googleIcon),

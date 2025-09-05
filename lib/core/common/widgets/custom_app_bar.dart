@@ -1,10 +1,17 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String lable;
   final bool? cancelText;
-  const CustomAppBar({super.key, required this.lable, this.cancelText});
+  final String routeName;
+  const CustomAppBar({
+    super.key,
+    required this.lable,
+    this.cancelText,
+    required this.routeName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,7 @@ class CustomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
-              Navigator.of(context).pop();
+              Get.toNamed(routeName);
             },
           ),
           SizedBox(width: 5),
