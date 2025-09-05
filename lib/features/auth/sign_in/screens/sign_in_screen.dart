@@ -38,15 +38,17 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 24),
-                CustomTextField(
-                  labelText: 'Email',
-                  controller: controller.emailController,
-                  hintText: 'example@gmail.com',
-                  suffixIcon: Icon(Icons.email_outlined),
-                  onChanged: (value) => controller.validateEmail(value),
-                  errorText: controller.emailError.value.isEmpty
-                      ? null
-                      : controller.emailError.value,
+                Obx(
+                  () => CustomTextField(
+                    labelText: 'Email',
+                    controller: controller.emailController,
+                    hintText: 'example@gmail.com',
+                    suffixIcon: Icon(Icons.email_outlined),
+                    onChanged: (value) => controller.validateEmail(value),
+                    errorText: controller.emailError.value.isEmpty
+                        ? null
+                        : controller.emailError.value,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Obx(

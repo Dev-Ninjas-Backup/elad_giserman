@@ -45,8 +45,6 @@ class SignInController extends GetxController {
         );
       }
       // Get.offAllNamed(AppRoute.getNavbarScreen());
-    } else {
-      Get.snackbar('Error', 'Please fix the errors in the form');
     }
   }
 

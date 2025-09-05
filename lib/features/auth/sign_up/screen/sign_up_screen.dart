@@ -41,27 +41,31 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 24),
-                      CustomTextField(
-                        labelText: 'Username',
-                        controller: controller.usernameController,
-                        hintText: 'Full Name',
-                        onChanged: (value) =>
-                            controller.validateUsername(value),
-                        errorText: controller.usernameError.value.isEmpty
-                            ? null
-                            : controller.usernameError.value,
-                        suffixIcon: Icon(Icons.person_outline),
+                      Obx(
+                        () => CustomTextField(
+                          labelText: 'Username',
+                          controller: controller.usernameController,
+                          hintText: 'Full Name',
+                          onChanged: (value) =>
+                              controller.validateUsername(value),
+                          errorText: controller.usernameError.value.isEmpty
+                              ? null
+                              : controller.usernameError.value,
+                          suffixIcon: Icon(Icons.person_outline),
+                        ),
                       ),
                       SizedBox(height: 10),
-                      CustomTextField(
-                        labelText: 'Email',
-                        controller: controller.emailController,
-                        hintText: 'example@gmail.com',
-                        onChanged: (value) => controller.validateEmail(value),
-                        errorText: controller.emailError.value.isEmpty
-                            ? null
-                            : controller.emailError.value,
-                        suffixIcon: Icon(Icons.email_outlined),
+                      Obx(
+                        () => CustomTextField(
+                          labelText: 'Email',
+                          controller: controller.emailController,
+                          hintText: 'example@gmail.com',
+                          onChanged: (value) => controller.validateEmail(value),
+                          errorText: controller.emailError.value.isEmpty
+                              ? null
+                              : controller.emailError.value,
+                          suffixIcon: Icon(Icons.email_outlined),
+                        ),
                       ),
                       SizedBox(height: 10),
                       Obx(

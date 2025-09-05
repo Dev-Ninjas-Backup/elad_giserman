@@ -82,15 +82,7 @@ class SignUpController extends GetxController {
           'Sign up with: ${usernameController.text}, ${emailController.text}, ${passwordController.text}',
         );
       }
-      // Get.offAllNamed('/navbarScreen');
-    } else {
-      Get.snackbar(
-        'Error',
-        'Please fix the errors in the form',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
+      Get.offAllNamed('/verificationScreen');
     }
   }
 
