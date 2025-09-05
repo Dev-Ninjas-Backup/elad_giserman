@@ -14,7 +14,15 @@ class AppRoute {
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
-    GetPage(name: signInScreen, page: () => const SignInScreen()),
-    GetPage(name: signUpScreen, page: () => const SignUpScreen()),
+    GetPage(
+      name: signInScreen,
+      page: () => const SignInScreen(),
+      transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: signUpScreen,
+      page: () => const SignUpScreen(),
+      transition: Transition.upToDown,
+    ),
   ];
 }

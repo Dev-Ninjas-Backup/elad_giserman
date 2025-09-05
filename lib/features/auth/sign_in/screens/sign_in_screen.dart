@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
+import 'package:elad_giserman/core/common/widgets/custom_password_text_field.dart';
 import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
@@ -41,53 +42,31 @@ class SignInScreen extends StatelessWidget {
                   labelText: 'Email',
                   controller: controller.emailController,
                   hintText: 'example@gmail.com',
-                  onChanged: (value) => controller.validateEmail(value),
                   suffixIcon: Icon(Icons.email_outlined),
+                  onChanged: (value) => controller.validateEmail(value),
+                  errorText: controller.emailError.value.isEmpty
+                      ? null
+                      : controller.emailError.value,
                 ),
                 SizedBox(height: 20),
-                Text(
-                  'Password',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.primaryFontColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
                 Obx(
-                  () => TextField(
+                  () => CustomPasswordTextField(
+                    labelText: 'Password',
                     controller: controller.passwordController,
                     obscureText: !controller.showPassword.value,
-                    decoration: InputDecoration(
-                      hintText: '*********',
-                      hintStyle: TextStyle(
+                    hintText: '*********',
+                    suffixIcon: IconButton(
+                      onPressed: controller.togglePasswordVisibility,
+                      icon: Icon(
+                        controller.showPassword.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Color(0xFF636363),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
                       ),
-                      filled: true,
-                      fillColor: AppColors.textFieldFillColor,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 16,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: controller.togglePasswordVisibility,
-                        icon: Icon(
-                          controller.showPassword.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: Color(0xFF636363),
-                        ),
-                      ),
-                      errorText: controller.passwordError.value.isEmpty
-                          ? null
-                          : controller.passwordError.value,
                     ),
+                    errorText: controller.passwordError.value.isEmpty
+                        ? null
+                        : controller.passwordError.value,
                     onChanged: (value) => controller.validatePassword(value),
                   ),
                 ),
@@ -149,7 +128,9 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: 35),
                 CustomButton(
                   label: 'Log In',
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.signIn();
+                  },
                   color: AppColors.buttonColor,
                   textColor: Colors.white,
                 ),
@@ -166,7 +147,9 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: 8),
                 CustomButton(
                   label: 'Login with Google',
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.signInWithGoogle();
+                  },
                   color: Colors.white,
                   textColor: AppColors.primaryFontColor,
                   icon: Image.asset(IconPath.googleIcon, height: 24, width: 24),

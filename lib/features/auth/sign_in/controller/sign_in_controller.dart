@@ -50,6 +50,13 @@ class SignInController extends GetxController {
     }
   }
 
+  void signInWithGoogle() {
+    if (kDebugMode) {
+      print('Initiating Google sign-up');
+    }
+    // Get.offAllNamed('/navbarScreen');
+  }
+
   @override
   void onClose() {
     emailController.dispose();
