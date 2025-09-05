@@ -115,9 +115,11 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.offNamed('/forgetPasswordScreen');
+                      },
                       child: Text(
-                        'Forgot Password?',
+                        'Forget Password?',
                         style: TextStyle(
                           color: Color(0xFF0088A3),
                           fontSize: 14,
