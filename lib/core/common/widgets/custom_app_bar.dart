@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
-              Get.toNamed(routeName);
+              Get.back();
             },
           ),
           SizedBox(width: 5),
@@ -49,7 +49,9 @@ class CustomAppBar extends StatelessWidget {
           Spacer(),
           if (cancelText == true)
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.back();
+              },
               child: Text(
                 'Cancel',
                 style: TextStyle(

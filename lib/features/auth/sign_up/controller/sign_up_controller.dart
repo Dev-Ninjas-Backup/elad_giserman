@@ -1,3 +1,4 @@
+import 'package:elad_giserman/features/auth/sign_up/screen/verification_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,7 @@ class SignUpController extends GetxController {
           'Sign up with: ${usernameController.text}, ${emailController.text}, ${passwordController.text}',
         );
       }
-      Get.offAllNamed('/verificationScreen');
+      Get.to(VerificationScreen(verificationEmail: emailController.text));
     }
   }
 
