@@ -3,6 +3,8 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 
 class VerificationScreen extends StatelessWidget {
   final String verificationEmail;
@@ -71,7 +73,9 @@ class VerificationScreen extends StatelessWidget {
                       SizedBox(height: 20),
                       CustomButton(
                         label: 'Verify',
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.offAllNamed('/resetPasswordScreen');
+                        },
                         color: AppColors.buttonColor,
                         textColor: Colors.white,
                       ),
