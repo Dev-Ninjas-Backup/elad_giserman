@@ -116,7 +116,7 @@ class SignInScreen extends StatelessWidget {
                     Spacer(),
                     TextButton(
                       onPressed: () {
-                        Get.offNamed('/forgetPasswordScreen');
+                        Get.toNamed('/forgetPasswordScreen');
                       },
                       child: Text(
                         'Forget Password?',

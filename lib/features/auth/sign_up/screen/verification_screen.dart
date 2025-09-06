@@ -4,7 +4,6 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 
 class VerificationScreen extends StatelessWidget {
   final String verificationEmail;

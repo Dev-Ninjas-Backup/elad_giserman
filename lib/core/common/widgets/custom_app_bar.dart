@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -34,6 +35,12 @@ class CustomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
+              if (kDebugMode) {
+                print('Current route: ${Get.currentRoute}');
+              }
+              if (kDebugMode) {
+                print('Navigation stack: ${Get.routing}');
+              }
               Get.back();
             },
           ),
@@ -50,7 +57,7 @@ class CustomAppBar extends StatelessWidget {
           if (cancelText == true)
             TextButton(
               onPressed: () {
-                Get.back();
+                Get.offNamed('/signInScreen');
               },
               child: Text(
                 'Cancel',
