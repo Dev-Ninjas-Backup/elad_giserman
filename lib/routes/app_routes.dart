@@ -2,6 +2,7 @@ import 'package:elad_giserman/features/auth/forget_password/screen/forget_passwo
 import 'package:elad_giserman/features/auth/forget_password/screen/reset_password_screen.dart';
 import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart';
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
+import 'package:elad_giserman/features/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
 import 'package:elad_giserman/features/splash/screens/splash_screen.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class AppRoute {
   static String forgetPasswordScreen = "/forgetPasswordScreen";
   static String resetPasswordScreen = "/resetPasswordScreen";
   static String navBarScreen = "/navBarScreen";
+  static String homeScreen = "/homeScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -20,6 +22,7 @@ class AppRoute {
   static String getForgetPasswordScreen() => forgetPasswordScreen;
   static String getResetPasswordScreen() => resetPasswordScreen;
   static String getNavBarScreen() => navBarScreen;
+  static String getHomeScreen() => homeScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -44,5 +47,10 @@ class AppRoute {
       transition: Transition.upToDown,
     ),
     GetPage(name: navBarScreen, page: () => const NavbarScreen()),
+    GetPage(
+      name: homeScreen,
+      page: () => const HomeScreen(),
+      transition: Transition.upToDown,
+    ),
   ];
 }
