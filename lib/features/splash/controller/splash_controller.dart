@@ -5,7 +5,7 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     Future.delayed(Duration(seconds: 2), () {
-      Get.offAllNamed('/homeScreen');
+      Get.offAllNamed('/navBarScreen');
     });
   }
 }
