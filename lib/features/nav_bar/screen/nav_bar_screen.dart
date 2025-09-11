@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/features/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class NavbarScreen extends StatelessWidget {
             () => IndexedStack(
               index: controller.selectedIndex.value,
               children: [
-                Center(child: Text('Home Page')),
+                HomeScreen(),
                 Center(child: Text('History Page')),
                 Center(child: Text('Twist Page')),
                 Center(child: Text('VIP Page')),

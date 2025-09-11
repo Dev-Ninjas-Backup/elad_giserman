@@ -94,7 +94,9 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     CustomButton(
                       label: 'Confirm Password',
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.offAllNamed('/signInScreen');
+                      },
                       color: AppColors.buttonColor,
                       textColor: Colors.white,
                     ),
