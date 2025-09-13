@@ -1,11 +1,31 @@
+import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
-import 'package:elad_giserman/core/utils/constants/image_path.dart';
+import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
 class PopularNearWidget extends StatelessWidget {
-  const PopularNearWidget({super.key});
+  final String image;
+  final String title;
+  final String subTitle;
+  final double rating;
+  final int reviewNum;
+  final String category;
+  final bool isFavorite;
+  final VoidCallback onFavoriteTap;
+
+  const PopularNearWidget({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    required this.reviewNum,
+    required this.rating,
+    required this.image,
+    required this.category,
+    required this.isFavorite,
+    required this.onFavoriteTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +38,51 @@ class PopularNearWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadiusGeometry.only(
-              topLeft: Radius.circular(14),
-              topRight: Radius.circular(14),
-            ),
-            child: Image.asset(
-              ImagePath.popularRestaurant1,
-              height: 130,
-              width: Get.width,
-              fit: BoxFit.fill,
-            ),
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(14),
+                  topRight: Radius.circular(14),
+                ),
+                child: Image.asset(
+                  image,
+                  height: 130,
+                  width: Get.width,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.white38,
+                      ),
+                      child: Text(
+                        category,
+                        style: getTextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: onFavoriteTap,
+                      child: Icon(
+                        Icons.favorite,
+                        color: isFavorite ? Colors.red : Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 10),
           Padding(
@@ -42,11 +96,11 @@ class PopularNearWidget extends StatelessWidget {
                 Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
                 SizedBox(width: 6),
                 Text(
-                  '4.9 (327 reviews)',
+                  '$rating ($reviewNum reviews)',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF636363),
+                    color: AppColors.fontColor,
                   ),
                 ),
               ],
@@ -56,7 +110,7 @@ class PopularNearWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Text(
-              'Olive & Thyme Mediterranean Kitchen',
+              title,
               style: TextStyle(
                 color: AppColors.primaryFontColor,
                 fontSize: 16,
@@ -65,7 +119,7 @@ class PopularNearWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsetsGeometry.only(
+            padding: const EdgeInsets.only(
               left: 8,
               right: 8,
               top: 6,
@@ -73,12 +127,31 @@ class PopularNearWidget extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.location_on_outlined),
-                Text('Rothschild Blvd 22,\nTel Aviv, Israel'),
+                Image.asset(IconPath.activeHistory, height: 18, width: 18),
+                SizedBox(width: 3),
+                Expanded(
+                  child: Text(
+                    subTitle,
+                    style: getTextStyle(
+                      color: AppColors.fontColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          CustomSmallButton(text: 'Reserve a Seat', onPressed: () {}),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            child: CustomSmallButton(
+              text: 'Reserve a Seat',
+              onPressed: () {},
+              buttonColor: AppColors.buttonColor,
+              fontColor: Colors.white,
+            ),
+          ),
         ],
       ),
     );

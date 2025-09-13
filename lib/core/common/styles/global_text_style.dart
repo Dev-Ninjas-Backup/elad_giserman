@@ -12,7 +12,6 @@ TextStyle getTextStyle({
   return GoogleFonts.poppins(
     fontSize: fontSize.sp,
     fontWeight: fontWeight,
-    height: fontSize.sp / lineHeight.sp,
     color: color,
   );
 }

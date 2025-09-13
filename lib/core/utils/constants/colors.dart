@@ -22,4 +22,8 @@ class AppColors {
   static const Color textFieldFillColor = Color(0xFFF5F5F5);
   //Button colors
   static const Color buttonColor = Color(0xFF0088A3);
+  //Font color
+  static const Color fontColor = Color(0xFF636363);
+  //Border color
+  static const Color borderColor = Color(0xFFEBEBEB);
 }
