@@ -2,7 +2,6 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
