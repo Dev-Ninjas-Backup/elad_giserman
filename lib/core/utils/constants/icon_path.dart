@@ -9,4 +9,7 @@ class IconPath {
   static const String activeProfile = 'assets/icons/activeProfile.png';
 
   static const String searchSuffix = 'assets/icons/searchSuffix.png';
+  static const String tab1 = 'assets/icons/tab1.png';
+  static const String tab2 = 'assets/icons/tab2.png';
+  static const String tab3 = 'assets/icons/tab3.png';
 }

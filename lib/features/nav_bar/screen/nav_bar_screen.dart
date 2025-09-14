@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
+import 'package:elad_giserman/features/twist/screens/twist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class NavbarScreen extends StatelessWidget {
               children: [
                 HomeScreen(),
                 Center(child: Text('History Page')),
-                Center(child: Text('Twist Page')),
+                TwistScreen(),
                 Center(child: Text('VIP Page')),
                 Center(child: Text('Profile Page')),
               ],
