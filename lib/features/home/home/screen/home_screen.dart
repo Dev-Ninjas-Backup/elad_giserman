@@ -50,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                     () => SizedBox(
                       height: 320,
                       child: ListView.separated(
+                        padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.restaurants.length,
                         separatorBuilder: (_, __) => SizedBox(width: 20),
@@ -94,8 +95,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 14),
                   Obx(
                     () => ListView.separated(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: controller.recommended.length,

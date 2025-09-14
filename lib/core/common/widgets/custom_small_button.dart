@@ -12,7 +12,7 @@ class CustomSmallButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.height = 28,
+    this.height = 30,
     required this.buttonColor,
     required this.fontColor,
     this.width,

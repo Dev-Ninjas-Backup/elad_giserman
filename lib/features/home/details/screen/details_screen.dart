@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
+import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
@@ -45,8 +46,7 @@ class DetailsScreen extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-              height: Get.height,
+              padding: EdgeInsets.fromLTRB(18, 20, 18, 30),
               width: Get.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,6 +86,11 @@ class DetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           color: AppColors.fontColor,
                         ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.favorite, color: Colors.grey),
                       ),
                     ],
                   ),
@@ -226,6 +231,270 @@ class DetailsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.check, color: AppColors.buttonColor),
+                              SizedBox(width: 5),
+                              Text(
+                                'Snack bar',
+                                style: getTextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.fontColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Icon(Icons.check, color: AppColors.buttonColor),
+                              SizedBox(width: 5),
+                              Text(
+                                'Bikes and Car Parking',
+                                style: getTextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.fontColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.check, color: AppColors.buttonColor),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    'Toilet',
+                                    style: getTextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.fontColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 7),
+                            Row(
+                              children: [
+                                Icon(Icons.check, color: AppColors.buttonColor),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    '24/7 Water facility',
+                                    style: getTextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.fontColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  Divider(),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Text(
+                        'Rating:',
+                        style: getTextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryFontColor,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        '$rating ($reviewNum reviews)',
+                        style: getTextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.fontColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    maxLines: null,
+                    minLines: 3,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: BorderSide(
+                          color: Color(0xFFD2D2D2),
+                          width: 1,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: BorderSide(
+                          color: Color(0xFFD2D2D2),
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: BorderSide(
+                          color: Color(0xFFD2D2D2),
+                          width: 1,
+                        ),
+                      ),
+                      hintText: 'Add a comment',
+                    ),
+                    style: getTextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.primaryFontColor,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  CustomSmallButton(
+                    text: 'Add Comments',
+                    onPressed: () {},
+                    buttonColor: AppColors.buttonColor,
+                    fontColor: Colors.white,
+                    width: 130,
+                  ),
+                  SizedBox(height: 20),
+                  Divider(),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Image.asset(IconPath.man, height: 24, width: 24),
+                      SizedBox(width: 5),
+                      Text(
+                        'Sarah L.',
+                        style: getTextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryFontColor,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        '1h ago',
+                        style: getTextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.fontColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.deepOrangeAccent,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    "Had an amazing time at Karaoke Night! The atmosphere was vibrant, and the staff was super friendly. A perfect night out with friends. Highly recommend the cocktails too!",
+                    style: getTextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.fontColor,
+                    ),
+                    maxLines: detailsController.isExpanded.value ? null : 4,
+                    overflow: detailsController.isExpanded.value
+                        ? null
+                        : TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 12),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(width: 1, color: Color(0xFFD2D2D2)),
+                    ),
+                    child: Text(
+                      'Reply',
+                      style: getTextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.fontColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
