@@ -48,7 +48,7 @@ class HomeController extends GetxController {
       Restaurant(
         image: ImagePath.popularRestaurant1,
         title: "Olive & Thyme Mediterranean Kitchen",
-        subTitle: "Rothschild Blvd 22,\nTel Aviv, Israel",
+        subTitle: "Rothschild Blvd 22, Tel Aviv, Israel",
         rating: 4.9,
         reviewNum: 327,
         category: "Restaurant",
@@ -56,7 +56,7 @@ class HomeController extends GetxController {
       Restaurant(
         image: ImagePath.popularRestaurant2,
         title: "Café Europa",
-        subTitle: "Ben Yehuda St 99,\nTel Aviv, Israel",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
         rating: 4.7,
         reviewNum: 210,
         category: "Bar",
@@ -64,7 +64,7 @@ class HomeController extends GetxController {
       Restaurant(
         image: ImagePath.popularRestaurant1,
         title: "Olive & Thyme Mediterranean Kitchen",
-        subTitle: "Ben Yehuda St 99,\nTel Aviv, Israel",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
         rating: 4.5,
         reviewNum: 210,
         category: "Cafe",
@@ -72,7 +72,7 @@ class HomeController extends GetxController {
       Restaurant(
         image: ImagePath.popularRestaurant2,
         title: "Café Europa",
-        subTitle: "Ben Yehuda St 99,\nTel Aviv, Israel",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
         rating: 4.8,
         reviewNum: 210,
         category: "Bar",
