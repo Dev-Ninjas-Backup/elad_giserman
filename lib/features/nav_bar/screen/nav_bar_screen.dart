@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
+import 'package:elad_giserman/features/profile/screen/profile_screen.dart';
 import 'package:elad_giserman/features/twist/screens/twist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,38 +24,42 @@ class NavbarScreen extends StatelessWidget {
                 Center(child: Text('History Page')),
                 TwistScreen(),
                 Center(child: Text('VIP Page')),
-                Center(child: Text('Profile Page')),
+                ProfileScreen(),
               ],
             ),
           ),
-          Positioned(
-            bottom: 5,
-            left:
-                MediaQuery.of(context).size.width * (2 / 5) +
-                (MediaQuery.of(context).size.width / 5 - 46) / 2,
-            child: Container(
-              width: 46,
-              height: 46,
-              padding: EdgeInsets.all(13),
-              decoration: BoxDecoration(
-                color: Color(0xFF0088A3),
-                borderRadius: BorderRadius.circular(100),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(2, 93, 112, 0.50),
-                    blurRadius: 10,
-                    spreadRadius: 0,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: Image.asset(
-                IconPath.activeVip,
-                width: 20,
-                height: 20,
-                color: Colors.white,
-              ),
-            ),
+          Obx(
+            () => controller.selectedIndex.value == 2
+                ? Positioned(
+                    bottom: 0, // aligns the button with bottom nav
+                    left:
+                        MediaQuery.of(context).size.width * (2 / 5) +
+                        (MediaQuery.of(context).size.width / 5 - 46) / 2,
+                    child: Container(
+                      width: 46,
+                      height: 46,
+                      padding: EdgeInsets.all(13),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0088A3),
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(2, 93, 112, 0.50),
+                            blurRadius: 10,
+                            spreadRadius: 0,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Image.asset(
+                        IconPath.activeVip,
+                        width: 20,
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ),
         ],
       ),

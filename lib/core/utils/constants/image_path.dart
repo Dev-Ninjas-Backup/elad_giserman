@@ -6,4 +6,5 @@ class ImagePath {
   static String recommended2 = 'assets/images/recommended2.png';
   static String recommended3 = 'assets/images/recommended3.png';
   static String profileImage = 'assets/images/profileImage.png';
+  static String profileImage2 = 'assets/images/profileImage2.png';
 }
