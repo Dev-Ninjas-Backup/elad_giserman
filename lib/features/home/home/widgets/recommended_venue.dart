@@ -107,9 +107,7 @@ class RecommendedVenue extends StatelessWidget {
                 SizedBox(height: 10),
                 CustomSmallButton(
                   text: 'View Details',
-                  onPressed: () {
-                    Get.offNamed('/detailsScreen');
-                  },
+                  onPressed: () {},
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,
                   width: 100,

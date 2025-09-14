@@ -2,6 +2,7 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
@@ -137,6 +138,8 @@ class PopularNearWidget extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -147,7 +150,17 @@ class PopularNearWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: CustomSmallButton(
               text: 'Reserve a Seat',
-              onPressed: () {},
+              onPressed: () {
+                Get.to(
+                  DetailsScreen(
+                    image: image,
+                    rating: rating,
+                    reviewNum: reviewNum,
+                    title: title,
+                    location: subTitle,
+                  ),
+                );
+              },
               buttonColor: AppColors.buttonColor,
               fontColor: Colors.white,
             ),
