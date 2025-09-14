@@ -1,9 +1,9 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
-import 'package:elad_giserman/features/home/controller/home_controller.dart';
-import 'package:elad_giserman/features/home/widgets/home_app_bar.dart';
-import 'package:elad_giserman/features/home/widgets/popular_near_widget.dart';
-import 'package:elad_giserman/features/home/widgets/recommended_venue.dart';
-import 'package:elad_giserman/features/home/widgets/vip_features_widget.dart';
+import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:elad_giserman/features/home/home/widgets/home_app_bar.dart';
+import 'package:elad_giserman/features/home/home/widgets/popular_near_widget.dart';
+import 'package:elad_giserman/features/home/home/widgets/recommended_venue.dart';
+import 'package:elad_giserman/features/home/home/widgets/vip_features_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
