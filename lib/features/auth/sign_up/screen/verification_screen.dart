@@ -20,7 +20,7 @@ class VerificationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(lable: 'Verification', routeName: '/signUpScreen'),
+              CustomAppBar(lable: 'Verification', back: '/signUpScreen'),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 24, 20, 30),
                 child: Column(

@@ -21,8 +21,8 @@ class ResetPasswordScreen extends StatelessWidget {
             children: [
               CustomAppBar(
                 lable: 'Verification',
-                routeName: '/forgetPasswordScreen',
                 cancelText: true,
+                back: '/signInScreen',
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 30),

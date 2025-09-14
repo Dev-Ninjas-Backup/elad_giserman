@@ -22,7 +22,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             children: [
               CustomAppBar(
                 lable: 'Forget Password',
-                routeName: '/forgetPasswordScreen',
+                back: '/signInScreen',
                 cancelText: true,
               ),
               Padding(

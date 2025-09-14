@@ -25,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(lable: 'Sign Up', routeName: '/signInScreen'),
+                CustomAppBar(lable: 'Sign Up', back: '/signInScreen'),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
                   child: Column(
