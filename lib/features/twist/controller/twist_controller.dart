@@ -1,3 +1,4 @@
+import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:get/get.dart';
 
 class TwistController extends GetxController {
@@ -9,7 +10,7 @@ class TwistController extends GetxController {
 
   final RxList<Map<String, dynamic>> restaurants = <Map<String, dynamic>>[
     {
-      "image": "assets/images/recommended1.png",
+      "image": ImagePath.restaurant1,
       "title": "Authentic Table Dining",
       "location": "Jaffa St 35, Jerusalem, Israel",
       "category": "Restaurant",
@@ -18,31 +19,49 @@ class TwistController extends GetxController {
       "isFavorite": true,
     },
     {
-      "image": "assets/images/recommended2.png",
-      "title": "Italian Pasta House",
-      "location": "Herzl St 10, Tel Aviv, Israel",
+      "image": ImagePath.restaurant2,
+      "title": "Olive & Thyme Mediterranean Kitchen",
+      "location": "Rothschild Blvd 22, Tel Aviv, Israel",
       "category": "Restaurant",
       "rating": 4.7,
       "reviewNum": 210,
       "isFavorite": false,
     },
+    {
+      "image": ImagePath.restaurant3,
+      "title": "Café Aroma Espresso & Bakery House",
+      "location": "Carmel Center, Haifa, Israel",
+      "category": "Restaurant",
+      "rating": 4.3,
+      "reviewNum": 270,
+      "isFavorite": false,
+    },
+    {
+      "image": ImagePath.restaurant4,
+      "title": "Spicehaus – The Fantasy Cocktail Bar",
+      "location": "Dizengoff St 117, Tel Aviv, Israel",
+      "category": "Restaurant",
+      "rating": 4.7,
+      "reviewNum": 210,
+      "isFavorite": true,
+    },
   ].obs;
 
   final RxList<Map<String, dynamic>> cafes = <Map<String, dynamic>>[
     {
-      "image": "assets/images/recommended2.png",
-      "title": "Coffee & Chill Spot",
-      "location": "King George St, Jerusalem, Israel",
+      "image": ImagePath.restaurant2,
+      "title": "Café Aroma Espresso & Bakery House",
+      "location": "Carmel Center, Haifa, Israel",
       "category": "Cafe",
       "rating": 4.7,
       "reviewNum": 210,
       "isFavorite": false,
     },
     {
-      "image": "assets/images/recommended3.png",
-      "title": "Downtown Coffee Roasters",
-      "location": "Allenby St 12, Tel Aviv, Israel",
-      "category": "Cafe",
+      "image": ImagePath.restaurant2,
+      "title": "The Little Prince Bookstore Café",
+      "location": "Nahalat Binyamin St 19, Tel Aviv, Israel",
+      "category": "Ca fe",
       "rating": 4.8,
       "reviewNum": 145,
       "isFavorite": true,
@@ -51,18 +70,18 @@ class TwistController extends GetxController {
 
   final RxList<Map<String, dynamic>> bars = <Map<String, dynamic>>[
     {
-      "image": "assets/images/recommended3.png",
-      "title": "Classic Wine Bar",
-      "location": "Ben Yehuda St, Jerusalem, Israel",
+      "image": ImagePath.restaurant4,
+      "title": "Spicehaus – The Fantasy Cocktail Bar",
+      "location": "Dizengoff St 117, Tel Aviv, Israel",
       "category": "Bar",
       "rating": 4.8,
       "reviewNum": 145,
       "isFavorite": false,
     },
     {
-      "image": "assets/images/recommended1.png",
-      "title": "Nightlife Lounge",
-      "location": "Dizengoff St 99, Tel Aviv, Israel",
+      "image": ImagePath.restaurant3,
+      "title": "Gatsby Vintage Cocktail Room & Lounge",
+      "location": "Hillel St 18, Jerusalem, Israel",
       "category": "Bar",
       "rating": 4.6,
       "reviewNum": 200,

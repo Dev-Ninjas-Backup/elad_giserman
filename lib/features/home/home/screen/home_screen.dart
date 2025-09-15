@@ -85,12 +85,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Text(
-                        'See All >',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.fontColor,
+                      GestureDetector(
+                        onTap: () => Get.offNamed('/venueScreen'),
+                        child: Text(
+                          'See All >',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.fontColor,
+                          ),
                         ),
                       ),
                     ],

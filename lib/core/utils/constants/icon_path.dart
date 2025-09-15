@@ -7,6 +7,7 @@ class IconPath {
   static const String activeHistory = 'assets/icons/activeHistory.png';
   static const String activeVip = 'assets/icons/activeVip.png';
   static const String activeProfile = 'assets/icons/activeProfile.png';
+  static const String twist = 'assets/icons/twist.png';
 
   static const String searchSuffix = 'assets/icons/searchSuffix.png';
   static const String tab1 = 'assets/icons/tab1.png';

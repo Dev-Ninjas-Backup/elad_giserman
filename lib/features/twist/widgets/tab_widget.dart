@@ -16,13 +16,13 @@ class TabWidget extends StatelessWidget {
     required this.iconColor,
     required this.fontColor,
     required this.buttonColor,
-    required this.onTap, // <-- Required now
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // <-- Handle tap
+      onTap: onTap,
       child: Container(
         height: 34,
         padding: const EdgeInsets.fromLTRB(8, 7, 8, 7),
