@@ -16,7 +16,7 @@ class ReservationHistoryScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomAppBar(lable: 'Reservation History', back: '/profileScreen'),
+            CustomAppBar(lable: 'Reservation History', back: '/navBarScreen'),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
               child: Column(
