@@ -6,6 +6,8 @@ import 'package:elad_giserman/features/profile/widgets/log_out_button.dart';
 import 'package:elad_giserman/features/profile/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -54,7 +56,12 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   VipFeatures(),
                   SizedBox(height: 16),
-                  OptionButton(title: 'Edit Profile', button: () {}),
+                  OptionButton(
+                    title: 'Edit Profile',
+                    button: () {
+                      Get.offNamed('/editProfileScreen');
+                    },
+                  ),
                   SizedBox(height: 8),
                   OptionButton(title: 'My Reservation', button: () {}),
                   SizedBox(height: 8),
