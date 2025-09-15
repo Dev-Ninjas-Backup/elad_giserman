@@ -7,7 +7,6 @@ import 'package:elad_giserman/features/profile/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -63,9 +62,19 @@ class ProfileScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 8),
-                  OptionButton(title: 'My Reservation', button: () {}),
+                  OptionButton(
+                    title: 'My Reservation',
+                    button: () {
+                      Get.offNamed('/reservationScreen');
+                    },
+                  ),
                   SizedBox(height: 8),
-                  OptionButton(title: 'Subscriptions', button: () {}),
+                  OptionButton(
+                    title: 'Subscriptions',
+                    button: () {
+                      Get.offNamed('/subscriptionScreen');
+                    },
+                  ),
                   SizedBox(height: 8),
                   OptionButton(title: 'Update Password', button: () {}),
                   SizedBox(height: 8),
