@@ -27,7 +27,9 @@ class LogOutButton extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.offAllNamed('/signInScreen');
+            },
             icon: Icon(Icons.logout, color: Colors.red),
           ),
         ],
