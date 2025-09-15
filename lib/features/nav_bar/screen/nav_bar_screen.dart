@@ -28,38 +28,27 @@ class NavbarScreen extends StatelessWidget {
               ],
             ),
           ),
-          Obx(
-            () => controller.selectedIndex.value == 2
-                ? Positioned(
-                    bottom: 0, // aligns the button with bottom nav
-                    left:
-                        MediaQuery.of(context).size.width * (2 / 5) +
-                        (MediaQuery.of(context).size.width / 5 - 46) / 2,
-                    child: Container(
-                      width: 46,
-                      height: 46,
-                      padding: EdgeInsets.all(13),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF0088A3),
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(2, 93, 112, 0.50),
-                            blurRadius: 10,
-                            spreadRadius: 0,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: Image.asset(
-                        IconPath.activeVip,
-                        width: 20,
-                        height: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : SizedBox.shrink(),
+          Positioned(
+            bottom: 0,
+            left: MediaQuery.of(context).size.width / 2 - 28,
+            child: Container(
+              width: 56,
+              height: 56,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Color(0xFF0088A3),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(2, 93, 112, 0.5),
+                    blurRadius: 10,
+                    spreadRadius: 0,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Icon(Icons.search, size: 24, color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -119,17 +108,7 @@ class NavbarScreen extends StatelessWidget {
                   ),
                   label: 'History',
                 ),
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    IconPath.activeVip,
-                    width: 24,
-                    height: 24,
-                    color: controller.selectedIndex.value == 2
-                        ? Colors.black
-                        : Colors.grey,
-                  ),
-                  label: 'Twist',
-                ),
+                BottomNavigationBarItem(icon: SizedBox(), label: 'Twist'),
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     IconPath.activeVip,
