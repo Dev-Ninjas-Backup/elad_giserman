@@ -4,6 +4,8 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
+import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
+import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../profile/controller/profile_controller.dart';
@@ -19,7 +21,15 @@ class EditProfileScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(lable: 'Edit Profile', back: '/profileScreen'),
+          CustomAppBar(
+            lable: 'Edit Profile',
+            back: '',
+            onBack: () {
+              final navController = Get.put(NavbarController());
+              navController.changeTabIndex(3);
+              Get.offAll(() => const NavbarScreen());
+            },
+          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
             child: Stack(
@@ -79,13 +89,10 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          /// Phone Number Row (Dropdown + TextField)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             child: Row(
               children: [
-                /// Country Code Dropdown
                 Obx(
                   () => DropdownButton<String>(
                     value: controller.selectedCountryCode.value,
@@ -104,8 +111,6 @@ class EditProfileScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(width: 10),
-
-                /// Number Field
                 Expanded(
                   child: TextField(
                     controller: controller.phoneController,

@@ -64,15 +64,12 @@ class VipFeatures extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 14),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CustomSmallButton(
-                  text: 'Renew Subscription',
-                  onPressed: () {},
-                  buttonColor: Colors.white,
-                  fontColor: Colors.black,
-                ),
+              SizedBox(height: 24),
+              CustomSmallButton(
+                text: 'Renew Subscription',
+                onPressed: () {},
+                buttonColor: Colors.white,
+                fontColor: Colors.black,
               ),
             ],
           ),
