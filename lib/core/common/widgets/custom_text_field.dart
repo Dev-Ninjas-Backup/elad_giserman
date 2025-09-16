@@ -2,7 +2,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String labelText;
+  final String? labelText;
   final TextEditingController controller;
   final String hintText;
   final Function(String) onChanged;
@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField({
     super.key,
-    required this.labelText,
+    this.labelText,
     required this.controller,
     required this.hintText,
     required this.onChanged,
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          labelText,
+          labelText!,
           style: const TextStyle(
             fontSize: 14,
             color: AppColors.primaryFontColor,
