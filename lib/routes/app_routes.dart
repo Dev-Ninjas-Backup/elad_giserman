@@ -4,6 +4,7 @@ import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart'
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
+import 'package:elad_giserman/features/profile/screen/checkout_screen.dart';
 import 'package:elad_giserman/features/profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/profile/screen/profile_screen.dart';
 import 'package:elad_giserman/features/profile/screen/reservation_history_screen.dart';
@@ -25,6 +26,7 @@ class AppRoute {
   static String editProfileScreen = "/editProfileScreen";
   static String reservationScreen = "/reservationScreen";
   static String subscriptionScreen = "/subscriptionScreen";
+  static String checkoutScreen = "/checkoutScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -38,6 +40,7 @@ class AppRoute {
   static String getEditProfileScreen() => editProfileScreen;
   static String getReservationScreen() => reservationScreen;
   static String getSubscriptionScreen() => subscriptionScreen;
+  static String getcheckoutScreen() => checkoutScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -90,6 +93,11 @@ class AppRoute {
     GetPage(
       name: subscriptionScreen,
       page: () => const SubscriptionsScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: checkoutScreen,
+      page: () => const CheckoutScreen(),
       transition: Transition.upToDown,
     ),
   ];

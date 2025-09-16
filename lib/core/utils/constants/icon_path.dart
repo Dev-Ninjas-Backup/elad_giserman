@@ -14,4 +14,5 @@ class IconPath {
   static const String tab2 = 'assets/icons/tab2.png';
   static const String tab3 = 'assets/icons/tab3.png';
   static const String man = 'assets/icons/man.png';
+  static const String stripe = 'assets/icons/Stripe.png';
 }
