@@ -7,7 +7,13 @@ import 'package:get/route_manager.dart';
 
 class VerificationScreen extends StatelessWidget {
   final String verificationEmail;
-  const VerificationScreen({super.key, required this.verificationEmail});
+  final String previousScreen;
+
+  const VerificationScreen({
+    super.key,
+    required this.verificationEmail,
+    required this.previousScreen,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class VerificationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(lable: 'Verification', back: '/signUpScreen'),
+              CustomAppBar(lable: 'Verification'),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 24, 20, 30),
                 child: Column(
@@ -72,7 +78,11 @@ class VerificationScreen extends StatelessWidget {
                     CustomButton(
                       label: 'Verify',
                       onPressed: () {
-                        Get.offAllNamed('/resetPasswordScreen');
+                        if (previousScreen == '/signUpScreen') {
+                          Get.offAllNamed('/navBarScreen');
+                        } else {
+                          Get.offAllNamed('/resetPasswordScreen');
+                        }
                       },
                       color: AppColors.buttonColor,
                       textColor: Colors.white,

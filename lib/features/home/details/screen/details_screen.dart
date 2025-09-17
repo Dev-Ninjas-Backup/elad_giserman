@@ -6,6 +6,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
+import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -141,7 +142,9 @@ class DetailsScreen extends StatelessWidget {
                   SizedBox(height: 30),
                   CustomButton(
                     label: 'Reserve Seats',
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(ReservationScreen(image: image));
+                    },
                     color: AppColors.buttonColor,
                     textColor: Colors.white,
                   ),
