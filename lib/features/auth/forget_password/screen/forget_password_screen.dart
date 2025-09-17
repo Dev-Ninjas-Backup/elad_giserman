@@ -3,7 +3,7 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/features/auth/forget_password/controller/forget_password_controller.dart';
-import 'package:elad_giserman/features/auth/sign_up/screen/verification_screen.dart';
+import 'package:elad_giserman/features/auth/verification/screen/verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,11 +20,7 @@ class ForgetPasswordScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                lable: 'Forget Password',
-                back: '/signInScreen',
-                cancelText: true,
-              ),
+              CustomAppBar(lable: 'Forget Password', cancelText: true),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 30),
                 child: Column(
@@ -68,6 +64,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                           VerificationScreen(
                             verificationEmail:
                                 controller.forgetEmailController.text,
+                            previousScreen: '/resetPasswordScreen',
                           ),
                         );
                       },

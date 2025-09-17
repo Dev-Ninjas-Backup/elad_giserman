@@ -21,6 +21,7 @@ class AppRoute {
   static String resetPasswordScreen = "/resetPasswordScreen";
   static String navBarScreen = "/navBarScreen";
   static String homeScreen = "/homeScreen";
+  static String detailsScreen = "/detailsScreen";
   static String venueScreen = "/venueScreen";
   static String profileScreen = "/profileScreen";
   static String editProfileScreen = "/editProfileScreen";
@@ -41,6 +42,7 @@ class AppRoute {
   static String getReservationScreen() => reservationScreen;
   static String getSubscriptionScreen() => subscriptionScreen;
   static String getcheckoutScreen() => checkoutScreen;
+  static String getDetailsScreen() => detailsScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -70,6 +72,7 @@ class AppRoute {
       page: () => const HomeScreen(),
       transition: Transition.upToDown,
     ),
+
     GetPage(
       name: venueScreen,
       page: () => const VenueScreen(),

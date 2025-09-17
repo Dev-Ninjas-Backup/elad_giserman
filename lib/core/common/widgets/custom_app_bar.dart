@@ -4,13 +4,13 @@ import 'package:get/route_manager.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String lable;
-  final String back;
+  final String? back;
   final bool? cancelText;
   const CustomAppBar({
     super.key,
     required this.lable,
     this.cancelText,
-    required this.back,
+    this.back,
   });
 
   @override
@@ -34,7 +34,11 @@ class CustomAppBar extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
-              Get.offAllNamed(back);
+              if (back == null) {
+                Navigator.pop(context);
+              } else {
+                Get.offAllNamed(back!);
+              }
             },
           ),
           SizedBox(width: 5),
