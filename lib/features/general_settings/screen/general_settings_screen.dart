@@ -83,7 +83,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                       Obx(
                         () => Switch(
                           value: controller.notificationsEnabled.value,
-                          activeColor: AppColors.buttonColor,
+                          activeThumbColor: AppColors.buttonColor,
                           onChanged: (v) => controller.toggleNotifications(v),
                         ),
                       ),
