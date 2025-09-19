@@ -3,6 +3,8 @@ import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_routes.dart';
+
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
 
@@ -31,7 +33,9 @@ class HomeAppBar extends StatelessWidget {
               Image.asset(IconPath.appIcon, height: 25, width: 98),
               Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoute.getNotificationScreen());
+                },
                 icon: Icon(Icons.notifications_outlined, color: Colors.black),
               ),
               SizedBox(width: 10),

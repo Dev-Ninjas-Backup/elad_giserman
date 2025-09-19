@@ -52,7 +52,7 @@ class VipFeaturesWidget extends StatelessWidget {
             ],
           ),
           Spacer(),
-          Image.asset(ImagePath.strawGlass, height: 200, width: 120),
+          Image.asset(ImagePath.strawGlass, scale: 4),
         ],
       ),
     );

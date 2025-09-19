@@ -8,6 +8,8 @@ import 'package:elad_giserman/features/profile/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_routes.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -70,6 +72,13 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   OptionButton(
+                    title: 'Redemption History',
+                    button: () {
+                      Get.offNamed(AppRoute.getRedemptionHistoryScreen());
+                    },
+                  ),
+                  SizedBox(height: 8),
+                  OptionButton(
                     title: 'Subscriptions',
                     button: () {
                       Get.offNamed('/subscriptionScreen');
@@ -78,7 +87,12 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: 8),
                   OptionButton(title: 'Update Password', button: () {}),
                   SizedBox(height: 8),
-                  OptionButton(title: 'General Settings', button: () {}),
+                  OptionButton(
+                    title: 'General Settings',
+                    button: () {
+                      Get.offNamed('/generalSettingsScreen');
+                    },
+                  ),
                   SizedBox(height: 8),
                   LogOutButton(),
                 ],

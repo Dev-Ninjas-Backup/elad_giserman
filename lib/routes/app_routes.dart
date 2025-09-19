@@ -12,6 +12,9 @@ import 'package:elad_giserman/features/profile/screen/subscriptions_screen.dart'
 import 'package:elad_giserman/features/splash/screens/splash_screen.dart';
 import 'package:elad_giserman/features/venue/screen/venue_screen.dart';
 import 'package:get/get.dart';
+import '../features/general_settings/screen/general_settings_screen.dart';
+import '../features/notifications/screen/notifications_screen.dart';
+import '../features/redemption_history/screen/redemption_history_screen.dart';
 
 class AppRoute {
   static String splashScreen = "/splashScreen";
@@ -28,6 +31,9 @@ class AppRoute {
   static String reservationScreen = "/reservationScreen";
   static String subscriptionScreen = "/subscriptionScreen";
   static String checkoutScreen = "/checkoutScreen";
+  static String redemptionHistoryScreen = "/redemptionHistoryScreen";
+  static String generalSettingsScreen = "/generalSettingsScreen";
+  static String notificationScreen = "/notificationScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -43,6 +49,9 @@ class AppRoute {
   static String getSubscriptionScreen() => subscriptionScreen;
   static String getcheckoutScreen() => checkoutScreen;
   static String getDetailsScreen() => detailsScreen;
+  static String getRedemptionHistoryScreen() => redemptionHistoryScreen;
+  static String getGeneralSettingsScreen() => generalSettingsScreen;
+  static String getNotificationScreen() => notificationScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -101,6 +110,21 @@ class AppRoute {
     GetPage(
       name: checkoutScreen,
       page: () => const CheckoutScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: redemptionHistoryScreen,
+      page: () => RedemptionHistoryScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: generalSettingsScreen,
+      page: () => GeneralSettingsScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: notificationScreen,
+      page: () => NotificationsScreen(),
       transition: Transition.upToDown,
     ),
   ];
