@@ -108,7 +108,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                     trailing: Row(
                       children: [
                         Text(
-                          'Version 1.0.0.1',
+                          'Version 1.0.1',
                           style: TextStyle(color: AppColors.fontColor),
                         ),
                         SizedBox(width: 8),
@@ -118,7 +118,9 @@ class GeneralSettingsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Get.offNamed('/aboutScreen');
+                    },
                   ),
                   SizedBox(height: 12),
                   SettingTileWidget(
@@ -128,7 +130,12 @@ class GeneralSettingsScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 12),
-                  SettingTileWidget(title: 'Term of Use', onTap: () {}),
+                  SettingTileWidget(
+                    title: 'Term of Use',
+                    onTap: () {
+                      Get.offNamed('termOfUseScreen');
+                    },
+                  ),
                   SizedBox(height: 12),
                   SettingTileWidget(
                     title: 'Privacy Policy',

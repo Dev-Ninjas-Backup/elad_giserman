@@ -4,8 +4,10 @@ import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart'
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
+import 'package:elad_giserman/features/profile/general_settings/about/screen/about_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/helps/screen/help_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/privacy_policy/screen/privacy_policy_screen.dart';
+import 'package:elad_giserman/features/profile/general_settings/term_of_use/screen/terms_of_use_screen.dart';
 import 'package:elad_giserman/features/profile/subscriptions/screen/checkout_screen.dart';
 import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/profile/main/screen/profile_screen.dart';
@@ -38,6 +40,8 @@ class AppRoute {
   static String notificationScreen = "/notificationScreen";
   static String privacyPolicyScreen = "/privacyPolicyScreen";
   static String helpScreen = "/helpScreen";
+  static String termOfUseScreen = "/termOfUseScreen";
+  static String aboutScreen = "/aboutScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -58,6 +62,8 @@ class AppRoute {
   static String getNotificationScreen() => notificationScreen;
   static String getPrivacyPolicyScreen() => privacyPolicyScreen;
   static String getHelpScreen() => helpScreen;
+  static String getTermOfUseScreen() => termOfUseScreen;
+  static String getAboutScreen() => aboutScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -141,6 +147,16 @@ class AppRoute {
     GetPage(
       name: helpScreen,
       page: () => HelpScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: termOfUseScreen,
+      page: () => TermsOfUseScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: aboutScreen,
+      page: () => AboutScreen(),
       transition: Transition.upToDown,
     ),
   ];
