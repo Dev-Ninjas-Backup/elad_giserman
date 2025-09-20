@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/constants/colors.dart';
 
 class RedemptionCardWidget extends StatelessWidget {
   final String title;

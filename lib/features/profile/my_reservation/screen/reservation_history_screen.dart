@@ -2,7 +2,7 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
-import 'package:elad_giserman/features/profile/widgets/reservation_widget.dart';
+import 'package:elad_giserman/features/profile/my_reservation/widget/reservation_widget.dart';
 import 'package:flutter/material.dart';
 
 class ReservationHistoryScreen extends StatelessWidget {
