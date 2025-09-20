@@ -121,7 +121,12 @@ class GeneralSettingsScreen extends StatelessWidget {
                     onTap: () {},
                   ),
                   SizedBox(height: 12),
-                  SettingTileWidget(title: 'Helps', onTap: () {}),
+                  SettingTileWidget(
+                    title: 'Helps',
+                    onTap: () {
+                      Get.offNamed('/helpScreen');
+                    },
+                  ),
                   SizedBox(height: 12),
                   SettingTileWidget(title: 'Term of Use', onTap: () {}),
                   SizedBox(height: 12),
