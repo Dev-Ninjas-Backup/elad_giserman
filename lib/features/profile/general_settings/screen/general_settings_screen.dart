@@ -1,9 +1,9 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../general_settings/controller/general_settings_controller.dart';
+import '../controller/general_settings_controller.dart';
 import '../widget/setting_tile_widget.dart';
-import '../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/constants/colors.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
   final GeneralSettingsController controller = Get.put(

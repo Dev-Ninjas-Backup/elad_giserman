@@ -1,7 +1,7 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/constants/colors.dart';
 import '../controller/redemption_history_controller.dart';
 import '../widget/redemption_card_widget.dart';
 

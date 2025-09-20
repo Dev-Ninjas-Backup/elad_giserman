@@ -43,8 +43,8 @@ class SignInController extends GetxController {
         print(
           'Sign in with: ${emailController.text}, ${passwordController.text}',
         );
+        Get.offAllNamed('/navBarScreen');
       }
-      // Get.offAllNamed(AppRoute.getNavbarScreen());
     }
   }
 
@@ -52,7 +52,6 @@ class SignInController extends GetxController {
     if (kDebugMode) {
       print('Initiating Google sign-up');
     }
-    // Get.offAllNamed('/navbarScreen');
   }
 
   @override

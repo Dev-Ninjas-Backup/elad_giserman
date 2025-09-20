@@ -4,17 +4,17 @@ import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart'
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
-import 'package:elad_giserman/features/profile/screen/checkout_screen.dart';
-import 'package:elad_giserman/features/profile/screen/edit_profile_screen.dart';
-import 'package:elad_giserman/features/profile/screen/profile_screen.dart';
-import 'package:elad_giserman/features/profile/screen/reservation_history_screen.dart';
-import 'package:elad_giserman/features/profile/screen/subscriptions_screen.dart';
+import 'package:elad_giserman/features/profile/subscriptions/screen/checkout_screen.dart';
+import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
+import 'package:elad_giserman/features/profile/profile/screen/profile_screen.dart';
+import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
+import 'package:elad_giserman/features/profile/subscriptions/screen/subscriptions_screen.dart';
 import 'package:elad_giserman/features/splash/screens/splash_screen.dart';
 import 'package:elad_giserman/features/venue/screen/venue_screen.dart';
 import 'package:get/get.dart';
-import '../features/general_settings/screen/general_settings_screen.dart';
+import '../features/profile/general_settings/screen/general_settings_screen.dart';
 import '../features/notifications/screen/notifications_screen.dart';
-import '../features/redemption_history/screen/redemption_history_screen.dart';
+import '../features/profile/redemption_history/screen/redemption_history_screen.dart';
 
 class AppRoute {
   static String splashScreen = "/splashScreen";

@@ -2,13 +2,13 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
-import 'package:elad_giserman/features/profile/widgets/log_out_button.dart';
-import 'package:elad_giserman/features/profile/widgets/option_button.dart';
-import 'package:elad_giserman/features/profile/widgets/vip_features.dart';
+import 'package:elad_giserman/features/profile/profile/widgets/log_out_button.dart';
+import 'package:elad_giserman/features/profile/profile/widgets/option_button.dart';
+import 'package:elad_giserman/features/profile/profile/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../routes/app_routes.dart';
+import '../../../../routes/app_routes.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
