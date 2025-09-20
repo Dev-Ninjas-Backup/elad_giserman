@@ -4,15 +4,16 @@ import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart'
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
+import 'package:elad_giserman/features/profile/general_settings/privacy_policy/screen/privacy_policy_screen.dart';
 import 'package:elad_giserman/features/profile/subscriptions/screen/checkout_screen.dart';
 import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
-import 'package:elad_giserman/features/profile/profile/screen/profile_screen.dart';
+import 'package:elad_giserman/features/profile/main/screen/profile_screen.dart';
 import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
 import 'package:elad_giserman/features/profile/subscriptions/screen/subscriptions_screen.dart';
 import 'package:elad_giserman/features/splash/screens/splash_screen.dart';
 import 'package:elad_giserman/features/venue/screen/venue_screen.dart';
 import 'package:get/get.dart';
-import '../features/profile/general_settings/screen/general_settings_screen.dart';
+import '../features/profile/general_settings/main/screen/general_settings_screen.dart';
 import '../features/notifications/screen/notifications_screen.dart';
 import '../features/profile/redemption_history/screen/redemption_history_screen.dart';
 
@@ -34,6 +35,7 @@ class AppRoute {
   static String redemptionHistoryScreen = "/redemptionHistoryScreen";
   static String generalSettingsScreen = "/generalSettingsScreen";
   static String notificationScreen = "/notificationScreen";
+  static String privacyPolicyScreen = "/privacyPolicyScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -52,6 +54,7 @@ class AppRoute {
   static String getRedemptionHistoryScreen() => redemptionHistoryScreen;
   static String getGeneralSettingsScreen() => generalSettingsScreen;
   static String getNotificationScreen() => notificationScreen;
+  static String getPrivacyPolicyScreen() => privacyPolicyScreen;
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
@@ -125,6 +128,11 @@ class AppRoute {
     GetPage(
       name: notificationScreen,
       page: () => NotificationsScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: privacyPolicyScreen,
+      page: () => PrivacyPolicyScreen(),
       transition: Transition.upToDown,
     ),
   ];

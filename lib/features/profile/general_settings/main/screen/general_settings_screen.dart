@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/general_settings_controller.dart';
 import '../widget/setting_tile_widget.dart';
-import '../../../../core/utils/constants/colors.dart';
+import '../../../../../core/utils/constants/colors.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
   final GeneralSettingsController controller = Get.put(
@@ -125,7 +125,12 @@ class GeneralSettingsScreen extends StatelessWidget {
                   SizedBox(height: 12),
                   SettingTileWidget(title: 'Term of Use', onTap: () {}),
                   SizedBox(height: 12),
-                  SettingTileWidget(title: 'Privacy Policy', onTap: () {}),
+                  SettingTileWidget(
+                    title: 'Privacy Policy',
+                    onTap: () {
+                      Get.offNamed('/privacyPolicyScreen');
+                    },
+                  ),
 
                   SizedBox(height: 16),
                   Divider(color: AppColors.borderColor, thickness: 1),
