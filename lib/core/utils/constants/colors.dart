@@ -26,4 +26,8 @@ class AppColors {
   static const Color fontColor = Color(0xFF636363);
   //Border color
   static const Color borderColor = Color(0xFFEBEBEB);
+  //Seat color
+  static const Color color1 = Color(0xFFEEEEEE);
+  static const Color color2 = Color(0xFFD2D2D2);
+  static const Color color3 = Color(0xFF0088A3);
 }
