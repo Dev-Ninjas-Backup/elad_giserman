@@ -1,4 +1,5 @@
 class IconPath {
+  IconPath();
   static const String appIcon = 'assets/icons/appIcon.png';
   static const String googleIcon = 'assets/icons/googleIcon.png';
 
@@ -17,13 +18,7 @@ class IconPath {
   static const String stripe = 'assets/icons/Stripe.png';
 
   //Seat icon
-  static const String leftSeat1 = 'assets/icons/leftSeat1.png';
-  static const String leftSeat2 = 'assets/icons/leftSeat2.png';
-  static const String leftSeat3 = 'assets/icons/leftSeat3.png';
-  static const String middleSeat1 = 'assets/icons/middleSeat1.png';
-  static const String middleSeat2 = 'assets/icons/middleSeat2.png';
-  static const String middleSeat3 = 'assets/icons/middleSeat3.png';
-  static const String rightSeat1 = 'assets/icons/rightSeat1.png';
-  static const String rightSeat2 = 'assets/icons/rightSeat2.png';
-  static const String rightSeat3 = 'assets/icons/rightSeat3.png';
+  static const String leftSeat = 'assets/icons/leftSeat.png';
+  static const String middleSeat = 'assets/icons/middleSeat.png';
+  static const String rightSeat = 'assets/icons/rightSeat.png';
 }
