@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/features/home/reservation/controller/reservation_controller.dart';
 import 'package:elad_giserman/features/home/reservation/widget/reservation_dialog.dart';
 import 'package:elad_giserman/features/home/reservation/widget/seat_book_widget.dart';
 import 'package:elad_giserman/features/home/reservation/widget/select_date_tab.dart';
@@ -14,7 +15,7 @@ class ReservationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final ReservationController controller = Get.put(ReservationController());
+    Get.put(ReservationController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -71,20 +72,12 @@ class ReservationScreen extends StatelessWidget {
                       SizedBox(height: 14),
                       Row(
                         children: [
-                          SelectDateTab(
-                            buttonColor: AppColors.textFieldFillColor,
-                            title: 'Today',
-                          ),
+                          SelectDateTab(title: 'Today'),
                           SizedBox(width: 8),
-                          SelectDateTab(
-                            textColor: Colors.white,
-                            buttonColor: AppColors.buttonColor,
-                            title: 'Tomorrow',
-                          ),
+                          SelectDateTab(title: 'Tomorrow'),
                           SizedBox(width: 8),
                           SelectDateTab(
                             icon: Icon(Icons.calendar_month),
-                            buttonColor: AppColors.textFieldFillColor,
                             title: 'Choose Date',
                           ),
                         ],
@@ -104,23 +97,15 @@ class ReservationScreen extends StatelessWidget {
                       SizedBox(height: 12),
                       Row(
                         children: [
-                          SelectTimeTab(
-                            buttonColor: AppColors.textFieldFillColor,
-                            title: '12:00 PM - 03:00 PM',
-                          ),
+                          SelectTimeTab(title: '12:00 PM - 03:00 PM'),
                           SizedBox(width: 8),
-                          SelectTimeTab(
-                            buttonColor: AppColors.buttonColor,
-                            title: '12:00 PM - 03:00 PM',
-                            textColor: Colors.white,
-                          ),
+                          SelectTimeTab(title: '05:00 PM - 08:00 PM'),
                         ],
                       ),
                       SizedBox(height: 8),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: SelectTimeTab(
-                          buttonColor: AppColors.textFieldFillColor,
                           title: 'Choose Time',
                           icon: Icon(Icons.alarm),
                         ),
