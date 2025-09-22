@@ -2,9 +2,9 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 class SubscriptionsScreen extends StatelessWidget {
   const SubscriptionsScreen({super.key});
@@ -196,12 +196,29 @@ class SubscriptionsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   SizedBox(height: 80),
+                  Container(
+                    height: 48,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.textFieldFillColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        IconPath.stripe,
+                        height: 25,
+                        width: 63,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12),
                   CustomButton(
                     label: 'Pay with Stripe',
-                    onPressed: () {
-                      Get.offNamed('/checkoutScreen');
-                    },
+                    onPressed: () {},
                     color: AppColors.buttonColor,
                     textColor: Colors.white,
                   ),

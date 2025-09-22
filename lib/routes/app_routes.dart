@@ -8,7 +8,6 @@ import 'package:elad_giserman/features/profile/general_settings/about/screen/abo
 import 'package:elad_giserman/features/profile/general_settings/helps/screen/help_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/privacy_policy/screen/privacy_policy_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/term_of_use/screen/terms_of_use_screen.dart';
-import 'package:elad_giserman/features/profile/subscriptions/screen/checkout_screen.dart';
 import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/profile/main/screen/profile_screen.dart';
 import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
@@ -34,7 +33,6 @@ class AppRoute {
   static String editProfileScreen = "/editProfileScreen";
   static String reservationScreen = "/reservationScreen";
   static String subscriptionScreen = "/subscriptionScreen";
-  static String checkoutScreen = "/checkoutScreen";
   static String redemptionHistoryScreen = "/redemptionHistoryScreen";
   static String generalSettingsScreen = "/generalSettingsScreen";
   static String notificationScreen = "/notificationScreen";
@@ -55,7 +53,6 @@ class AppRoute {
   static String getEditProfileScreen() => editProfileScreen;
   static String getReservationScreen() => reservationScreen;
   static String getSubscriptionScreen() => subscriptionScreen;
-  static String getcheckoutScreen() => checkoutScreen;
   static String getDetailsScreen() => detailsScreen;
   static String getRedemptionHistoryScreen() => redemptionHistoryScreen;
   static String getGeneralSettingsScreen() => generalSettingsScreen;
@@ -66,62 +63,57 @@ class AppRoute {
   static String getAboutScreen() => aboutScreen;
 
   static List<GetPage> routes = [
-    GetPage(name: splashScreen, page: () => const SplashScreen()),
+    GetPage(name: splashScreen, page: () => SplashScreen()),
     GetPage(
       name: signInScreen,
-      page: () => const SignInScreen(),
+      page: () => SignInScreen(),
       transition: Transition.downToUp,
     ),
     GetPage(
       name: signUpScreen,
-      page: () => const SignUpScreen(),
+      page: () => SignUpScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: forgetPasswordScreen,
-      page: () => const ForgetPasswordScreen(),
+      page: () => ForgetPasswordScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: resetPasswordScreen,
-      page: () => const ResetPasswordScreen(),
+      page: () => ResetPasswordScreen(),
       transition: Transition.upToDown,
     ),
-    GetPage(name: navBarScreen, page: () => const NavbarScreen()),
+    GetPage(name: navBarScreen, page: () => NavbarScreen()),
     GetPage(
       name: homeScreen,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       transition: Transition.upToDown,
     ),
 
     GetPage(
       name: venueScreen,
-      page: () => const VenueScreen(),
+      page: () => VenueScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: profileScreen,
-      page: () => const ProfileScreen(),
+      page: () => ProfileScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: editProfileScreen,
-      page: () => const EditProfileScreen(),
+      page: () => EditProfileScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: reservationScreen,
-      page: () => const ReservationHistoryScreen(),
+      page: () => ReservationHistoryScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
       name: subscriptionScreen,
-      page: () => const SubscriptionsScreen(),
-      transition: Transition.upToDown,
-    ),
-    GetPage(
-      name: checkoutScreen,
-      page: () => const CheckoutScreen(),
+      page: () => SubscriptionsScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
