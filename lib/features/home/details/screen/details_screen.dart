@@ -143,7 +143,11 @@ class DetailsScreen extends StatelessWidget {
                   CustomButton(
                     label: 'Reserve Seats',
                     onPressed: () {
-                      Get.to(ReservationScreen(image: image));
+                      Get.to(
+                        () => ReservationScreen(image: image),
+                        transition: Transition.downToUp,
+                        duration: const Duration(milliseconds: 400),
+                      );
                     },
                     color: AppColors.buttonColor,
                     textColor: Colors.white,

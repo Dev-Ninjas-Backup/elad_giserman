@@ -1,11 +1,12 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/features/home/reservation/widget/reservation_dialog.dart';
 import 'package:elad_giserman/features/home/reservation/widget/seat_book_widget.dart';
 import 'package:elad_giserman/features/home/reservation/widget/select_date_tab.dart';
 import 'package:elad_giserman/features/home/reservation/widget/select_time_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class ReservationScreen extends StatelessWidget {
   final String image;
@@ -13,6 +14,7 @@ class ReservationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final ReservationController controller = Get.put(ReservationController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -99,9 +101,9 @@ class ReservationScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(height: 12),
                       Row(
                         children: [
-                          SizedBox(height: 12),
                           SelectTimeTab(
                             buttonColor: AppColors.textFieldFillColor,
                             title: '12:00 PM - 03:00 PM',
@@ -153,10 +155,12 @@ class ReservationScreen extends StatelessWidget {
                         middleSeatColor: AppColors.color3,
                         rightSeatColor: AppColors.color1,
                       ),
-                      Spacer(),
+                      SizedBox(height: 247),
                       CustomButton(
                         label: 'Confirm Reservation',
-                        onPressed: () {},
+                        onPressed: () {
+                          showConfirmationDialog();
+                        },
                         color: AppColors.buttonColor,
                         textColor: Colors.white,
                       ),
