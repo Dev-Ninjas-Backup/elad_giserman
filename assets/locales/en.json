@@ -1,0 +1,15 @@
+{
+  "general_setting": "General Setting",
+  "apps_language": "App's Language",
+  "notification_setting": "Notification Setting",
+  "allow_push_notifications": "Allow Push Notifications",
+  "about_evnc": "About EVNC",
+  "version": "Version 1.0.1",
+  "helps": "Helps",
+  "term_of_use": "Term of Use",
+  "privacy_policy": "Privacy Policy",
+  "delete_account": "Delete Account",
+  "english": "English",
+  "hebrew": "Hebrew",
+  "language_selection": "Select Language"
+}

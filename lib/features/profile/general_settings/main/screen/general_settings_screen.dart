@@ -18,7 +18,7 @@ class GeneralSettingsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          CustomAppBar(lable: 'General Setting', back: '/navBarScreen'),
+          CustomAppBar(lable: 'general_setting'.tr, back: '/navBarScreen'),
 
           Expanded(
             child: SingleChildScrollView(
@@ -27,7 +27,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "App’s Language",
+                    'apps_language'.tr,
                     style: TextStyle(
                       color: AppColors.primaryFontColor,
                       fontSize: 14,
@@ -50,7 +50,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                         children: [
                           Obx(
                             () => Text(
-                              controller.language.value,
+                              controller.getDisplayLanguage(),
                               style: TextStyle(
                                 color: AppColors.primaryFontColor,
                                 fontSize: 14,
@@ -70,7 +70,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                   SizedBox(height: 16),
 
                   Text(
-                    'Notification Setting',
+                    'notification_setting'.tr,
                     style: TextStyle(
                       color: AppColors.primaryFontColor,
                       fontSize: 14,
@@ -89,7 +89,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Allow Push Notifications',
+                        'allow_push_notifications'.tr,
                         style: TextStyle(
                           color: AppColors.primaryFontColor,
                           fontSize: 14,
@@ -104,11 +104,11 @@ class GeneralSettingsScreen extends StatelessWidget {
                   SizedBox(height: 16),
 
                   SettingTileWidget(
-                    title: 'About EVNC',
+                    title: 'about_evnc'.tr,
                     trailing: Row(
                       children: [
                         Text(
-                          'Version 1.0.1',
+                          'version'.tr,
                           style: TextStyle(color: AppColors.fontColor),
                         ),
                         SizedBox(width: 8),
@@ -124,21 +124,21 @@ class GeneralSettingsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   SettingTileWidget(
-                    title: 'Helps',
+                    title: 'helps'.tr,
                     onTap: () {
                       Get.offNamed('/helpScreen');
                     },
                   ),
                   SizedBox(height: 12),
                   SettingTileWidget(
-                    title: 'Term of Use',
+                    title: 'term_of_use'.tr,
                     onTap: () {
                       Get.offNamed('termOfUseScreen');
                     },
                   ),
                   SizedBox(height: 12),
                   SettingTileWidget(
-                    title: 'Privacy Policy',
+                    title: 'privacy_policy'.tr,
                     onTap: () {
                       Get.offNamed('/privacyPolicyScreen');
                     },
@@ -149,7 +149,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                   SizedBox(height: 16),
 
                   SettingTileWidget(
-                    title: 'Delete Account',
+                    title: 'delete_account'.tr,
                     titleColor: Color(0xFFE54400),
                     onTap: () {},
                   ),
@@ -171,17 +171,26 @@ class GeneralSettingsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                'language_selection'.tr,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryFontColor,
+                ),
+              ),
+              SizedBox(height: 16),
               ListTile(
-                title: Text('English'),
+                title: Text('english'.tr),
                 onTap: () {
-                  controller.setLanguage('English');
+                  controller.setLanguage('english');
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: Text('Spanish'),
+                title: Text('hebrew'.tr),
                 onTap: () {
-                  controller.setLanguage('Spanish');
+                  controller.setLanguage('hebrew');
                   Navigator.pop(context);
                 },
               ),
