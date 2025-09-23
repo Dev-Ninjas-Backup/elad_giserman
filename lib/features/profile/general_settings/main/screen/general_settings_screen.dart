@@ -181,14 +181,14 @@ class GeneralSettingsScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ListTile(
-                title: Text('english'.tr),
+                title: Text('English'),
                 onTap: () {
                   controller.setLanguage('english');
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                title: Text('hebrew'.tr),
+                title: Text('Hebrew'),
                 onTap: () {
                   controller.setLanguage('hebrew');
                   Navigator.pop(context);
