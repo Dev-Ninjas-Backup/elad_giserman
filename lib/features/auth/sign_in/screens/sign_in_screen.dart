@@ -15,176 +15,183 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignInController());
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SizedBox.expand(
         child: Container(
-          padding: EdgeInsets.fromLTRB(28, 96, 28, 20),
-          height: MediaQuery.of(context).size.height,
           decoration: AppColors().buildGradientBackground(context),
-          child: SizedBox.expand(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(IconPath.appIcon, height: 48, width: 190),
-                SizedBox(height: 97),
-                Center(
-                  child: Text(
-                    'sign_in_title'.tr,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primaryFontColor,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 24),
-                Obx(
-                  () => CustomTextField(
-                    labelText: 'email_label'.tr,
-                    controller: controller.emailController,
-                    hintText: 'email_hint'.tr,
-                    suffixIcon: Icon(Icons.email_outlined),
-                    onChanged: (value) => controller.validateEmail(value),
-                    errorText: controller.emailError.value.isEmpty
-                        ? null
-                        : controller.emailError.value,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Obx(
-                  () => CustomPasswordTextField(
-                    labelText: 'password_label'.tr,
-                    controller: controller.passwordController,
-                    obscureText: !controller.showPassword.value,
-                    hintText: 'password_hint'.tr,
-                    suffixIcon: IconButton(
-                      onPressed: controller.togglePasswordVisibility,
-                      icon: Icon(
-                        controller.showPassword.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Color(0xFF636363),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.asset(IconPath.appIcon, height: 48, width: 190),
+                  SizedBox(height: 97),
+                  Center(
+                    child: Text(
+                      'sign_in_title'.tr,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryFontColor,
                       ),
                     ),
-                    errorText: controller.passwordError.value.isEmpty
-                        ? null
-                        : controller.passwordError.value,
-                    onChanged: (value) => controller.validatePassword(value),
                   ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 20,
-                        width: 32,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(95),
+                  SizedBox(height: 24),
+                  Obx(
+                    () => CustomTextField(
+                      labelText: 'email_label'.tr,
+                      controller: controller.emailController,
+                      hintText: 'email_hint'.tr,
+                      suffixIcon: Icon(Icons.email_outlined),
+                      onChanged: (value) => controller.validateEmail(value),
+                      errorText: controller.emailError.value.isEmpty
+                          ? null
+                          : controller.emailError.value,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Obx(
+                    () => CustomPasswordTextField(
+                      labelText: 'password_label'.tr,
+                      controller: controller.passwordController,
+                      obscureText: !controller.showPassword.value,
+                      hintText: 'password_hint'.tr,
+                      suffixIcon: IconButton(
+                        onPressed: controller.togglePasswordVisibility,
+                        icon: Icon(
+                          controller.showPassword.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Color(0xFF636363),
                         ),
-                        child: Stack(
-                          children: [
-                            AnimatedAlign(
-                              alignment: Alignment.centerRight,
-                              duration: Duration(milliseconds: 200),
-                              curve: Curves.easeInOut,
-                              child: Container(
-                                margin: EdgeInsets.all(2),
-                                width: 16,
-                                height: 16,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(95),
+                      ),
+                      errorText: controller.passwordError.value.isEmpty
+                          ? null
+                          : controller.passwordError.value,
+                      onChanged: (value) => controller.validatePassword(value),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 20,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(95),
+                          ),
+                          child: Stack(
+                            children: [
+                              AnimatedAlign(
+                                alignment: Alignment.centerRight,
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.easeInOut,
+                                child: Container(
+                                  margin: EdgeInsets.all(2),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(95),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
+                      SizedBox(width: 10),
+                      Text(
+                        'remember_me'.tr,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Get.toNamed('/forgetPasswordScreen');
+                        },
+                        child: Text(
+                          'forget_password'.tr,
+                          style: TextStyle(
+                            color: Color(0xFF0088A3),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 35),
+                  CustomButton(
+                    label: 'log_in'.tr,
+                    onPressed: () {
+                      controller.signIn();
+                    },
+                    color: AppColors.buttonColor,
+                    textColor: Colors.white,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'or_text'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF636363),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      'remember_me'.tr,
+                  ),
+                  SizedBox(height: 8),
+                  CustomButton(
+                    label: 'login_with_google'.tr,
+                    onPressed: () {
+                      controller.signInWithGoogle();
+                    },
+                    color: Colors.white,
+                    textColor: AppColors.primaryFontColor,
+                    icon: Image.asset(
+                      IconPath.googleIcon,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: '${'dont_have_account'.tr} ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
-                    ),
-                    Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        Get.toNamed('/forgetPasswordScreen');
-                      },
-                      child: Text(
-                        'forget_password'.tr,
-                        style: TextStyle(
-                          color: Color(0xFF0088A3),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                      children: [
+                        TextSpan(
+                          text: ' ${'sign_up'.tr}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.offNamed('/signUpScreen');
+                            },
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(height: 35),
-                CustomButton(
-                  label: 'log_in'.tr,
-                  onPressed: () {
-                    controller.signIn();
-                  },
-                  color: AppColors.buttonColor,
-                  textColor: Colors.white,
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'or_text'.tr,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF636363),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
                   ),
-                ),
-                SizedBox(height: 8),
-                CustomButton(
-                  label: 'login_with_google'.tr,
-                  onPressed: () {
-                    controller.signInWithGoogle();
-                  },
-                  color: Colors.white,
-                  textColor: AppColors.primaryFontColor,
-                  icon: Image.asset(IconPath.googleIcon, height: 24, width: 24),
-                ),
-                SizedBox(height: 40),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: '${'dont_have_account'.tr} ',
-                    style: TextStyle(
-                      color: AppColors.primaryFontColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: ' ${'sign_up'.tr}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFFFFFFFF),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Get.offNamed('/signUpScreen');
-                          },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
