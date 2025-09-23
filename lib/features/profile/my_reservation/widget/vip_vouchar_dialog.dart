@@ -28,7 +28,7 @@ Future<void> vipVoucherDialog() async {
               Image.asset(ImagePath.qrCodeScan, height: 146, width: 146),
               const SizedBox(height: 20),
               Text(
-                'Congratulations!',
+                'vip_voucher_title'.tr,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -39,7 +39,7 @@ Future<void> vipVoucherDialog() async {
               SizedBox(
                 height: 84,
                 child: Text(
-                  "You have claimed your weekly VIP voucher. You will be eligible for the next VIP voucher at Sep 07, 2025",
+                  'vip_voucher_message'.tr,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.primaryFontColor,
@@ -49,7 +49,7 @@ Future<void> vipVoucherDialog() async {
               ),
               SizedBox(height: 20),
               CustomButton(
-                label: 'Download QR',
+                label: 'download_qr'.tr,
                 onPressed: () {
                   Get.back();
                 },

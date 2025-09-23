@@ -40,7 +40,7 @@ class ReservationDetails extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-                CustomAppBar(lable: 'Details', back: '/navBarScreen'),
+                CustomAppBar(lable: 'details_title'.tr, back: '/navBarScreen'),
               ],
             ),
             Container(
@@ -78,7 +78,7 @@ class ReservationDetails extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        '4.9 (327 reviews)',
+                        'reviews'.trParams({'count': '327'}),
                         style: getTextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -140,7 +140,7 @@ class ReservationDetails extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Choose Seat:',
+                      'choose_seat'.tr,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -168,7 +168,7 @@ class ReservationDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 34),
                   CustomButton(
-                    label: 'Redeem VIP Voucher',
+                    label: 'redeem_voucher'.tr,
                     onPressed: () {
                       vipVoucherDialog();
                     },
@@ -214,7 +214,7 @@ class ReservationDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'About Restaurant',
+                    'about_restaurant'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -241,8 +241,8 @@ class ReservationDetails extends StatelessWidget {
                     child: Obx(
                       () => Text(
                         detailsController.isExpanded.value
-                            ? 'See Less'
-                            : 'Read more',
+                            ? 'see_less'.tr
+                            : 'read_more'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -253,7 +253,7 @@ class ReservationDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 25),
                   Text(
-                    'Facilities',
+                    'facilities'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -350,7 +350,7 @@ class ReservationDetails extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Rating:',
+                        'rating_label'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -385,7 +385,7 @@ class ReservationDetails extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        '4.7 (327 reviews)',
+                        'reviews'.trParams({'count': '327'}),
                         style: getTextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -424,7 +424,7 @@ class ReservationDetails extends StatelessWidget {
                           width: 1,
                         ),
                       ),
-                      hintText: 'Add a comment',
+                      hintText: 'add_comment_hint'.tr,
                     ),
                     style: getTextStyle(
                       fontSize: 14,
@@ -434,7 +434,7 @@ class ReservationDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   CustomSmallButton(
-                    text: 'Add Comments',
+                    text: 'add_comments'.tr,
                     onPressed: () {},
                     buttonColor: AppColors.buttonColor,
                     fontColor: Colors.white,
@@ -457,7 +457,7 @@ class ReservationDetails extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        '1h ago',
+                        'hours_ago'.trParams({'count': '1'}),
                         style: getTextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -517,7 +517,7 @@ class ReservationDetails extends StatelessWidget {
                       border: Border.all(width: 1, color: Color(0xFFD2D2D2)),
                     ),
                     child: Text(
-                      'Reply',
+                      'reply'.tr,
                       style: getTextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
