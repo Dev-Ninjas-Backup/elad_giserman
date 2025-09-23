@@ -1,3 +1,4 @@
+import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,8 +44,8 @@ class SignInController extends GetxController {
         print(
           'Sign in with: ${emailController.text}, ${passwordController.text}',
         );
-        Get.offAllNamed('/navBarScreen');
       }
+      Get.offAllNamed(AppRoute.navBarScreen);
     }
   }
 

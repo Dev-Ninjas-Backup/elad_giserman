@@ -16,11 +16,11 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SizedBox.expand(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           decoration: AppColors().buildGradientBackground(context),
-          child: SizedBox.expand(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
