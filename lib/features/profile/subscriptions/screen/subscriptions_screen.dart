@@ -5,6 +5,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SubscriptionsScreen extends StatelessWidget {
   const SubscriptionsScreen({super.key});
@@ -16,7 +17,7 @@ class SubscriptionsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(lable: 'Subscriptions', back: '/navBarScreen'),
+            CustomAppBar(lable: 'subscriptions'.tr, back: '/navBarScreen'),
             Container(
               padding: EdgeInsets.all(18),
               child: Column(
@@ -25,7 +26,7 @@ class SubscriptionsScreen extends StatelessWidget {
                   VipFeatures(),
                   SizedBox(height: 16),
                   Text(
-                    'Subscription Pricing',
+                    'subscription_pricing'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -37,7 +38,7 @@ class SubscriptionsScreen extends StatelessWidget {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: '\$14.99',
+                          text: 'monthly_price'.tr,
                           style: getTextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
@@ -45,7 +46,7 @@ class SubscriptionsScreen extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: '/month',
+                              text: 'per_month'.tr,
                               style: getTextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -57,7 +58,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        'Monthly',
+                        'monthly'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -96,7 +97,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Text(
-                        'Annually',
+                        'annually'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -109,7 +110,7 @@ class SubscriptionsScreen extends StatelessWidget {
                   Divider(),
                   SizedBox(height: 16),
                   Text(
-                    'VIP Benefits Banner',
+                    'vip_benefits_banner'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -126,7 +127,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Access to exclusive events & premium content',
+                          'benefit_exclusive_events'.tr,
                           style: getTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -146,7 +147,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Priority customer support',
+                          'benefit_priority_support'.tr,
                           style: getTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -166,7 +167,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Special member-only discounts & offers',
+                          'benefit_discounts'.tr,
                           style: getTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -186,7 +187,7 @@ class SubscriptionsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Early access to new features/services',
+                          'benefit_early_access'.tr,
                           style: getTextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -217,7 +218,7 @@ class SubscriptionsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   CustomButton(
-                    label: 'Pay with Stripe',
+                    label: 'pay_with_stripe'.tr,
                     onPressed: () {},
                     color: AppColors.buttonColor,
                     textColor: Colors.white,

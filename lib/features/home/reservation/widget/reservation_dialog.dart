@@ -24,7 +24,7 @@ Future<void> showConfirmationDialog() async {
               ),
               const SizedBox(height: 20),
               Text(
-                'Reservation Confirmed',
+                'reservation_confirmed_title'.tr,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -35,7 +35,7 @@ Future<void> showConfirmationDialog() async {
               SizedBox(
                 height: 84,
                 child: Text(
-                  "Thank you for booking with us! We’re excited to welcome you and make your dining experience unforgettable.",
+                  'reservation_confirmed_message'.tr,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.primaryFontColor,
@@ -47,7 +47,7 @@ Future<void> showConfirmationDialog() async {
               Column(
                 children: [
                   CustomButton(
-                    label: 'Got It!',
+                    label: 'got_it'.tr,
                     onPressed: () {
                       Get.back();
                     },
@@ -56,11 +56,11 @@ Future<void> showConfirmationDialog() async {
                   ),
                   const SizedBox(height: 12),
                   CustomButton(
-                    label: 'Invite Friends',
+                    label: 'invite_friends'.tr,
                     onPressed: () async {
                       await Share.share(
-                        'I just booked a table! Join me for an unforgettable dining experience! 😊',
-                        subject: 'Invite Friends to Dine',
+                        'share_invite_message'.tr,
+                        subject: 'share_invite_subject'.tr,
                       );
                     },
                     color: AppColors.textFieldFillColor,

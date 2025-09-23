@@ -65,7 +65,12 @@ class RecommendedTab extends StatelessWidget {
                         color: Colors.white38,
                       ),
                       child: Text(
-                        category,
+                        {
+                              'Restaurant': 'category_restaurant'.tr,
+                              'Cafe': 'category_cafe'.tr,
+                              'Bar': 'category_bar'.tr,
+                            }[category] ??
+                            category,
                         style: getTextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -91,20 +96,32 @@ class RecommendedTab extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: Row(
               children: [
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                SizedBox(width: 6),
-                Text(
-                  '$rating ($reviewNum reviews)',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.fontColor,
+                // In RTL languages (like Hebrew) show reviews before rating for natural reading order
+                if (Get.locale?.languageCode == 'he') ...[
+                  Text(
+                    '${'reviews'.trParams({'count': reviewNum.toString()})} (${rating.toString()})',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.fontColor,
+                    ),
                   ),
-                ),
+                ] else ...[
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  SizedBox(width: 6),
+                  Text(
+                    '${rating.toString()} (${'reviews'.trParams({'count': reviewNum.toString()})})',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.fontColor,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
@@ -142,7 +159,7 @@ class RecommendedTab extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 CustomSmallButton(
-                  text: 'Reserve a Seat',
+                  text: 'reserve_seat'.tr,
                   onPressed: () {},
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

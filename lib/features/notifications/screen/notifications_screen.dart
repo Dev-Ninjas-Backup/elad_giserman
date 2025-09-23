@@ -2,6 +2,7 @@ import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../widget/notification_item_widget.dart';
+import 'package:get/get.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -12,7 +13,7 @@ class NotificationsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFFCFCFC),
       body: Column(
         children: [
-          CustomAppBar(lable: 'Notifications'),
+          CustomAppBar(lable: 'notifications'.tr),
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -20,7 +21,7 @@ class NotificationsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Today',
+                    'today'.tr,
                     style: TextStyle(
                       color: AppColors.primaryFontColor,
                       fontSize: 18,
@@ -33,7 +34,7 @@ class NotificationsScreen extends StatelessWidget {
                     title: 'Congratulations!',
                     body:
                         'Your table for 2 at La Bella Café is confirmed for 7:30 PM tonight',
-                    timeAgo: '5 mins ago',
+                    timeAgo: 'minutes_ago'.trParams({'count': '5'}),
                     icon: Icons.check_circle,
                     iconColor: Colors.green,
                     highlighted: true,
@@ -43,7 +44,7 @@ class NotificationsScreen extends StatelessWidget {
                     title: 'Reminder',
                     body:
                         'Dinner reservation at Spice Garden tomorrow at 8:00 PM',
-                    timeAgo: '1h ago',
+                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
                     icon: Icons.notifications_active_outlined,
                     iconColor: Colors.purple,
                     highlighted: false,
@@ -53,7 +54,7 @@ class NotificationsScreen extends StatelessWidget {
                     title: 'Special Offer',
                     body:
                         'Get a free dessert with your booking at Sweet Tooth Diner 🍨',
-                    timeAgo: '1h ago',
+                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
                     icon: Icons.local_offer,
                     iconColor: Colors.redAccent,
                     highlighted: false,
@@ -64,7 +65,7 @@ class NotificationsScreen extends StatelessWidget {
                   SizedBox(height: 20),
 
                   Text(
-                    'Yesterday',
+                    'yesterday'.tr,
                     style: TextStyle(
                       color: AppColors.primaryFontColor,
                       fontSize: 18,
@@ -77,7 +78,7 @@ class NotificationsScreen extends StatelessWidget {
                     title: 'Special Offer',
                     body:
                         'Your VIP Subscription is expiring soon! Renew now to keep enjoying priority bookings, exclusive discounts & special offers.',
-                    timeAgo: '1h ago',
+                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
                     icon: Icons.local_offer,
                     iconColor: Colors.green,
                     highlighted: false,

@@ -3,6 +3,7 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VipFeatures extends StatelessWidget {
   const VipFeatures({super.key});
@@ -29,7 +30,7 @@ class VipFeatures extends StatelessWidget {
                   color: Colors.white24,
                 ),
                 child: Text(
-                  '• Expired',
+                  'vip_status_expired'.tr,
                   style: getTextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -39,7 +40,7 @@ class VipFeatures extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'VIP features activated',
+                'vip_activated'.tr,
                 style: getTextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -48,7 +49,7 @@ class VipFeatures extends StatelessWidget {
               ),
               SizedBox(height: 6),
               Text(
-                'Joining Date: Jul 15, 2025',
+                'vip_joining_date'.trParams({'date': 'Jul 15, 2025'}),
                 style: getTextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -57,7 +58,7 @@ class VipFeatures extends StatelessWidget {
               ),
               SizedBox(height: 6),
               Text(
-                'Expire Date: Aug 15,2025',
+                'vip_expire_date'.trParams({'date': 'Aug 15,2025'}),
                 style: getTextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -66,7 +67,7 @@ class VipFeatures extends StatelessWidget {
               ),
               SizedBox(height: 24),
               CustomSmallButton(
-                text: 'Renew Subscription',
+                text: 'vip_renew_btn'.tr,
                 onPressed: () {},
                 buttonColor: Colors.white,
                 fontColor: Colors.black,

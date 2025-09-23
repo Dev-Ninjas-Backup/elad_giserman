@@ -43,7 +43,7 @@ class DetailsScreen extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-                CustomAppBar(lable: 'Details', back: '/navBarScreen'),
+                CustomAppBar(lable: 'details_title'.tr, back: '/navBarScreen'),
               ],
             ),
             Container(
@@ -81,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        '$rating ($reviewNum reviews)',
+                        '${rating.toString()} (${'reviews'.trParams({'count': reviewNum.toString()})})',
                         style: getTextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -141,7 +141,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   CustomButton(
-                    label: 'Reserve Seats',
+                    label: 'reserve_seats'.tr,
                     onPressed: () {
                       Get.to(
                         () => ReservationScreen(image: image),
@@ -191,7 +191,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'About Restaurant',
+                    'about_restaurant'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -218,8 +218,8 @@ class DetailsScreen extends StatelessWidget {
                     child: Obx(
                       () => Text(
                         detailsController.isExpanded.value
-                            ? 'See Less'
-                            : 'Read more',
+                            ? 'see_less'.tr
+                            : 'read_more'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -230,7 +230,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 25),
                   Text(
-                    'Facilities',
+                    'facilities'.tr,
                     style: getTextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -327,7 +327,7 @@ class DetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Rating:',
+                        'rating_label'.tr,
                         style: getTextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -362,7 +362,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        '$rating ($reviewNum reviews)',
+                        '${rating.toString()} (${'reviews'.trParams({'count': reviewNum.toString()})})',
                         style: getTextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -401,7 +401,7 @@ class DetailsScreen extends StatelessWidget {
                           width: 1,
                         ),
                       ),
-                      hintText: 'Add a comment',
+                      hintText: 'add_a_comment'.tr,
                     ),
                     style: getTextStyle(
                       fontSize: 14,
@@ -411,7 +411,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   CustomSmallButton(
-                    text: 'Add Comments',
+                    text: 'add_comments_btn'.tr,
                     onPressed: () {},
                     buttonColor: AppColors.buttonColor,
                     fontColor: Colors.white,
@@ -434,7 +434,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        '1h ago',
+                        'hours_ago'.trParams({'count': '1'}),
                         style: getTextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -494,7 +494,7 @@ class DetailsScreen extends StatelessWidget {
                       border: Border.all(width: 1, color: Color(0xFFD2D2D2)),
                     ),
                     child: Text(
-                      'Reply',
+                      'reply'.tr,
                       style: getTextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

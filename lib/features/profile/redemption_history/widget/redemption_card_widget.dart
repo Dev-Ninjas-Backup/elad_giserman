@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../core/utils/constants/colors.dart';
 
 class RedemptionCardWidget extends StatelessWidget {
@@ -17,6 +18,14 @@ class RedemptionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusDisplay =
+        {
+          'Claimed': 'filter_claimed'.tr,
+          'Expired': 'filter_expired'.tr,
+          'All': 'filter_all'.tr,
+        }[status] ??
+        status;
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
@@ -92,7 +101,7 @@ class RedemptionCardWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        status,
+                        statusDisplay,
                         style: TextStyle(
                           color: AppColors.fontColor,
                           fontSize: 12,

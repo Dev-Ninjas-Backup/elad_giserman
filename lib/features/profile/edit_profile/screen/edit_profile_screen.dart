@@ -19,7 +19,7 @@ class EditProfileScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(lable: 'Edit Profile', back: '/navBarScreen'),
+          CustomAppBar(lable: 'edit_profile'.tr, back: '/navBarScreen'),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
             child: Stack(
@@ -53,25 +53,25 @@ class EditProfileScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
             child: CustomTextField(
-              labelText: 'Full Name',
+              labelText: 'full_name_label'.tr,
               controller: TextEditingController(),
-              hintText: 'Enter your full name',
+              hintText: 'full_name_hint'.tr,
               onChanged: (value) {},
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             child: CustomTextField(
-              labelText: 'Email',
+              labelText: 'email_label'.tr,
               controller: TextEditingController(),
-              hintText: 'Enter your email',
+              hintText: 'email_hint'.tr,
               onChanged: (value) {},
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Text(
-              'Phone number',
+              'phone_number_label'.tr,
               style: getTextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class EditProfileScreen extends StatelessWidget {
                     controller: controller.phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      hintText: "Enter phone number",
+                      hintText: "phone_hint".tr,
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 12,
                         horizontal: 12,
@@ -123,7 +123,7 @@ class EditProfileScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
             child: CustomButton(
-              label: 'Save',
+              label: 'save_btn'.tr,
               onPressed: () {
                 Get.offNamed('/profileScreen');
               },

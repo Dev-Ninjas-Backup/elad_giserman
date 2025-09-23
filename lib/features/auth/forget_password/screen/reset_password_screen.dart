@@ -20,7 +20,7 @@ class ResetPasswordScreen extends StatelessWidget {
           child: Column(
             children: [
               CustomAppBar(
-                lable: 'Verification',
+                lable: 'reset_appbar'.tr,
                 cancelText: true,
                 back: '/signInScreen',
               ),
@@ -30,7 +30,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Set new password',
+                      'reset_title'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -39,7 +39,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Please enter your new password and confirm password",
+                      'reset_instructions'.tr,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -49,9 +49,9 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: 30),
                     Obx(
                       () => CustomPasswordTextField(
-                        labelText: 'New Password',
+                        labelText: 'new_password_label'.tr,
                         controller: controller.resetPasswordController,
-                        hintText: '********',
+                        hintText: 'password_hint'.tr,
                         obscureText: !controller.showPassword.value,
                         suffixIcon: IconButton(
                           onPressed: controller.togglePasswordVisibility,
@@ -71,9 +71,9 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     Obx(
                       () => CustomPasswordTextField(
-                        labelText: 'Confirm Password',
+                        labelText: 'confirm_password_label'.tr,
                         controller: controller.confirmresetPasswordController,
-                        hintText: '********',
+                        hintText: 'password_hint'.tr,
                         obscureText: !controller.showPassword.value,
                         suffixIcon: IconButton(
                           onPressed: controller.togglePasswordVisibility,
@@ -93,7 +93,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     CustomButton(
-                      label: 'Confirm Password',
+                      label: 'confirm_password_btn'.tr,
                       onPressed: () {
                         Get.offAllNamed('/signInScreen');
                       },

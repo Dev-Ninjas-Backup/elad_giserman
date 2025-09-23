@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(lable: 'Profile', back: ''),
+            CustomAppBar(lable: 'profile_title'.tr, back: ''),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
               child: Column(
@@ -58,37 +58,37 @@ class ProfileScreen extends StatelessWidget {
                   VipFeatures(),
                   SizedBox(height: 16),
                   OptionButton(
-                    title: 'Edit Profile',
+                    title: 'edit_profile'.tr,
                     button: () {
                       Get.offNamed('/editProfileScreen');
                     },
                   ),
                   SizedBox(height: 8),
                   OptionButton(
-                    title: 'My Reservation',
+                    title: 'my_reservation'.tr,
                     button: () {
                       Get.offNamed('/reservationScreen');
                     },
                   ),
                   SizedBox(height: 8),
                   OptionButton(
-                    title: 'Redemption History',
+                    title: 'redemption_history'.tr,
                     button: () {
                       Get.offNamed(AppRoute.getRedemptionHistoryScreen());
                     },
                   ),
                   SizedBox(height: 8),
                   OptionButton(
-                    title: 'Subscriptions',
+                    title: 'subscriptions'.tr,
                     button: () {
                       Get.offNamed('/subscriptionScreen');
                     },
                   ),
                   SizedBox(height: 8),
-                  OptionButton(title: 'Update Password', button: () {}),
+                  OptionButton(title: 'update_password'.tr, button: () {}),
                   SizedBox(height: 8),
                   OptionButton(
-                    title: 'General Settings',
+                    title: 'general_settings'.tr,
                     button: () {
                       Get.offNamed('/generalSettingsScreen');
                     },

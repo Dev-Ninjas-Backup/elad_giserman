@@ -20,14 +20,14 @@ class ForgetPasswordScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(lable: 'Forget Password', cancelText: true),
+              CustomAppBar(lable: 'forget_password_title'.tr, cancelText: true),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Forget Password',
+                      'forget_password_title'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -36,7 +36,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Please enter your email address to request a password reset",
+                      'forget_password_instructions'.tr,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -46,9 +46,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                     SizedBox(height: 30),
                     Obx(
                       () => CustomTextField(
-                        labelText: 'Email',
+                        labelText: 'email_label'.tr,
                         controller: controller.forgetEmailController,
-                        hintText: 'example@gmail.com',
+                        hintText: 'email_hint'.tr,
                         suffixIcon: Icon(Icons.email_outlined),
                         onChanged: (value) => controller.validateEmail(value),
                         errorText: controller.forgetEmailError.value.isEmpty
@@ -58,7 +58,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     CustomButton(
-                      label: 'Continue',
+                      label: 'continue_btn'.tr,
                       onPressed: () {
                         Get.to(
                           VerificationScreen(

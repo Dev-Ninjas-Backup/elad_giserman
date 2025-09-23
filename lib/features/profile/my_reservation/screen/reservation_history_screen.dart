@@ -4,6 +4,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/profile/my_reservation/widget/reservation_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReservationHistoryScreen extends StatelessWidget {
   const ReservationHistoryScreen({super.key});
@@ -16,7 +17,10 @@ class ReservationHistoryScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomAppBar(lable: 'Reservation History', back: '/navBarScreen'),
+            CustomAppBar(
+              lable: 'reservation_history_title'.tr,
+              back: '/navBarScreen',
+            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
               child: Column(
@@ -24,7 +28,7 @@ class ReservationHistoryScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Today',
+                    'today'.tr,
                     style: getTextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -34,14 +38,14 @@ class ReservationHistoryScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   ReservationWidget(
                     image: ImagePath.recommended1,
-                    category: 'Restaurant',
+                    category: 'category_restaurant'.tr,
                     name: 'Olive & Thyme Mediterranean Kitchen',
                     onPressed: () {},
                   ),
                   SizedBox(height: 12),
                   ReservationWidget(
                     image: ImagePath.recommended1,
-                    category: 'Restaurant',
+                    category: 'category_restaurant'.tr,
                     name: 'Olive & Thyme Mediterranean Kitchen',
                     onPressed: () {},
                   ),
@@ -49,7 +53,7 @@ class ReservationHistoryScreen extends StatelessWidget {
                   Divider(),
                   SizedBox(height: 16),
                   Text(
-                    'Last Week',
+                    'last_week'.tr,
                     style: getTextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -59,14 +63,14 @@ class ReservationHistoryScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   ReservationWidget(
                     image: ImagePath.restaurant2,
-                    category: 'Cafe',
+                    category: 'category_cafe'.tr,
                     name: 'Olive & Thyme Mediterranean Kitchen',
                     onPressed: () {},
                   ),
                   SizedBox(height: 12),
                   ReservationWidget(
                     image: ImagePath.restaurant2,
-                    category: 'Bar',
+                    category: 'category_bar'.tr,
                     name: 'Olive & Thyme Mediterranean Kitchen',
                     onPressed: () {},
                   ),

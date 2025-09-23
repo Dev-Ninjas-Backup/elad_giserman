@@ -11,10 +11,10 @@ class SignInController extends GetxController {
 
   void validateEmail(String value) {
     if (value.isEmpty) {
-      emailError.value = 'Email or username cannot be empty';
+      emailError.value = 'err_email_empty'.tr;
     } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value) &&
         value.length < 3) {
-      emailError.value = 'Enter a valid email or username (min 3 characters)';
+      emailError.value = 'err_email_invalid'.tr;
     } else {
       emailError.value = '';
     }
@@ -22,9 +22,9 @@ class SignInController extends GetxController {
 
   void validatePassword(String value) {
     if (value.isEmpty) {
-      passwordError.value = 'Password cannot be empty';
+      passwordError.value = 'err_password_empty'.tr;
     } else if (value.length < 6) {
-      passwordError.value = 'Password must be at least 6 characters';
+      passwordError.value = 'err_password_short'.tr;
     } else {
       passwordError.value = '';
     }

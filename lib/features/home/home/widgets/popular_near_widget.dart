@@ -4,7 +4,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class PopularNearWidget extends StatelessWidget {
   final String image;
@@ -64,7 +64,12 @@ class PopularNearWidget extends StatelessWidget {
                         color: Colors.white38,
                       ),
                       child: Text(
-                        category,
+                        {
+                              'Restaurant': 'category_restaurant'.tr,
+                              'Cafe': 'category_cafe'.tr,
+                              'Bar': 'category_bar'.tr,
+                            }[category] ??
+                            category,
                         style: getTextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -90,20 +95,31 @@ class PopularNearWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                SizedBox(width: 6),
-                Text(
-                  '$rating ($reviewNum reviews)',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.fontColor,
+                if (Get.locale?.languageCode == 'he') ...[
+                  Text(
+                    '${'reviews'.trParams({'count': reviewNum.toString()})} (${rating.toString()})',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.fontColor,
+                    ),
                   ),
-                ),
+                ] else ...[
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                  SizedBox(width: 6),
+                  Text(
+                    '${rating.toString()} (${'reviews'.trParams({'count': reviewNum.toString()})})',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.fontColor,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
@@ -149,7 +165,7 @@ class PopularNearWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: CustomSmallButton(
-              text: 'Reserve a Seat',
+              text: 'reserve_seat'.tr,
               onPressed: () {
                 Get.to(
                   DetailsScreen(

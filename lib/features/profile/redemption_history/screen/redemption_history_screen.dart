@@ -14,11 +14,20 @@ class RedemptionHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> displayToValue = {
+      'filter_all'.tr: 'All',
+      'filter_claimed'.tr: 'Claimed',
+      'filter_expired'.tr: 'Expired',
+    };
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          CustomAppBar(lable: 'Redemption History', back: '/navBarScreen'),
+          CustomAppBar(
+            lable: 'redemption_history_title'.tr,
+            back: '/navBarScreen',
+          ),
 
           Expanded(
             child: SingleChildScrollView(
@@ -28,11 +37,23 @@ class RedemptionHistoryScreen extends StatelessWidget {
                 children: [
                   Obx(
                     () => PopupMenuButton<String>(
-                      onSelected: (v) => controller.setFilter(v),
+                      onSelected: (v) {
+                        final internal = displayToValue[v] ?? 'All';
+                        controller.setFilter(internal);
+                      },
                       itemBuilder: (context) => [
-                        PopupMenuItem(value: 'All', child: Text('All')),
-                        PopupMenuItem(value: 'Claimed', child: Text('Claimed')),
-                        PopupMenuItem(value: 'Expired', child: Text('Expired')),
+                        PopupMenuItem(
+                          value: 'filter_all'.tr,
+                          child: Text('filter_all'.tr),
+                        ),
+                        PopupMenuItem(
+                          value: 'filter_claimed'.tr,
+                          child: Text('filter_claimed'.tr),
+                        ),
+                        PopupMenuItem(
+                          value: 'filter_expired'.tr,
+                          child: Text('filter_expired'.tr),
+                        ),
                       ],
                       child: Container(
                         height: 30,
@@ -46,7 +67,13 @@ class RedemptionHistoryScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              controller.filter.value,
+                              displayToValue.entries
+                                  .firstWhere(
+                                    (e) => e.value == controller.filter.value,
+                                    orElse: () =>
+                                        MapEntry('filter_all'.tr, 'All'),
+                                  )
+                                  .key,
                               style: TextStyle(
                                 color: AppColors.primaryFontColor,
                                 fontSize: 14,
