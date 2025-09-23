@@ -14,73 +14,75 @@ class HelpScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(lable: 'Help & Support', back: '/generalSettingsScreen'),
+          CustomAppBar(
+            lable: 'help_screen_title'.tr,
+            back: '/generalSettingsScreen',
+          ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Frequently Asked Questions',
-                    style: TextStyle(
+                    'faq_heading'.tr,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.buttonColor,
                     ),
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   _buildFAQTile(
                     index: 0,
                     controller: controller,
-                    question: 'How do I reset my password?',
-                    answer:
-                        'To reset your password, go to the login screen, tap "Forgot Password," and follow the instructions to receive a reset link via email.',
+                    question: 'faq_q_reset_password'.tr,
+                    answer: 'faq_a_reset_password'.tr,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildFAQTile(
                     index: 1,
                     controller: controller,
-                    question: 'How can I update my profile?',
-                    answer:
-                        'Navigate to the Profile section in the app settings, tap "Edit Profile," and update your information as needed.',
+                    question: 'faq_q_update_profile'.tr,
+                    answer: 'faq_a_update_profile'.tr,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildFAQTile(
                     index: 2,
                     controller: controller,
-                    question: 'What should I do if the app crashes?',
-                    answer:
-                        'Ensure you have the latest app version. If the issue persists, contact support with details about the crash.',
+                    question: 'faq_q_app_crash'.tr,
+                    answer: 'faq_a_app_crash'.tr,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildFAQTile(
                     index: 3,
                     controller: controller,
-                    question: 'How do I delete my account?',
-                    answer:
-                        'Go to Settings, select "Account Management," and choose "Delete Account." Follow the prompts to confirm.',
+                    question: 'faq_q_delete_account'.tr,
+                    answer: 'faq_a_delete_account'.tr,
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Contact Us',
-                    style: TextStyle(
+                    'contact_us_heading'.tr,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.buttonColor,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    'For further assistance, reach out to us at:',
-                    style: TextStyle(fontSize: 16, height: 1.5),
+                    'contact_us_paragraph'.tr,
+                    style: const TextStyle(fontSize: 16, height: 1.5),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   ListTile(
-                    leading: Icon(Icons.email, color: AppColors.buttonColor),
-                    title: const Text(
-                      'support@example.com',
-                      style: TextStyle(fontSize: 16),
+                    leading: const Icon(
+                      Icons.email,
+                      color: AppColors.buttonColor,
+                    ),
+                    title: Text(
+                      'contact_email'.tr,
+                      style: const TextStyle(fontSize: 16),
                     ),
                     onTap: () {},
                   ),
@@ -89,9 +91,9 @@ class HelpScreen extends StatelessWidget {
                       Icons.phone,
                       color: AppColors.buttonColor,
                     ),
-                    title: const Text(
-                      '+1-800-123-4567',
-                      style: TextStyle(fontSize: 16),
+                    title: Text(
+                      'contact_phone'.tr,
+                      style: const TextStyle(fontSize: 16),
                     ),
                     onTap: () {},
                   ),

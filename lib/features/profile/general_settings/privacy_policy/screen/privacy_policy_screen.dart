@@ -16,7 +16,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(lable: 'Privacy Policy', back: '/generalSettingsScreen'),
+          CustomAppBar(
+            lable: 'privacy_policy'.tr,
+            back: '/generalSettingsScreen',
+          ),
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16.0),
@@ -24,7 +27,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '1. Introduction',
+                    'privacy_1_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -33,12 +36,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Welcome to our app. We value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information.',
+                    'privacy_1_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '2. Information We Collect',
+                    'privacy_2_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -47,15 +50,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'We may collect the following types of information:\n'
-                    '- Personal Information: Name, email, etc.\n'
-                    '- Usage Data: App interactions, device information, etc.\n'
-                    '- Cookies: For improving user experience.',
+                    'privacy_2_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '3. How We Use Your Information',
+                    'privacy_3_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -64,15 +64,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Your information is used to:\n'
-                    '- Provide and improve our services.\n'
-                    '- Personalize your experience.\n'
-                    '- Ensure security and compliance.',
+                    'privacy_3_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '4. Sharing Your Information',
+                    'privacy_4_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -81,12 +78,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'We do not share your personal information with third parties except as required by law or with your consent.',
+                    'privacy_4_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '5. Contact Us',
+                    'privacy_5_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -95,7 +92,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'If you have any questions about this Privacy Policy, please contact us at support@example.com.',
+                    'privacy_5_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 20),
@@ -121,7 +118,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 child: controller.isLoading.value
                     ? CircularProgressIndicator(color: Colors.white)
                     : Text(
-                        'Accept',
+                        'accept_terms'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

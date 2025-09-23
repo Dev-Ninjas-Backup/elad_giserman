@@ -25,14 +25,14 @@ class UpdatePasswordScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomAppBar(lable: 'Update Password', back: '/profileScreen'),
+              CustomAppBar(lable: 'update_password'.tr, back: '/profileScreen'),
               SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
                     Text(
-                      'Secure your account',
+                      'secure_account'.tr,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class UpdatePasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Choose a strong password',
+                      'choose_strong_password'.tr,
                       style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                       textAlign: TextAlign.center,
                     ),
@@ -52,8 +52,8 @@ class UpdatePasswordScreen extends StatelessWidget {
                             controller.oldPassword.value = value,
                         obscureText: !controller.oldPasswordVisible.value,
                         decoration: InputDecoration(
-                          labelText: 'Old Password',
-                          hintText: 'Enter your current password',
+                          labelText: 'old_password_label'.tr,
+                          hintText: 'old_password_hint'.tr,
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -79,8 +79,8 @@ class UpdatePasswordScreen extends StatelessWidget {
                             controller.newPassword.value = value,
                         obscureText: !controller.newPasswordVisible.value,
                         decoration: InputDecoration(
-                          labelText: 'New Password',
-                          hintText: 'Enter a new strong password',
+                          labelText: 'new_password_label'.tr,
+                          hintText: 'new_password_hint'.tr,
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -106,8 +106,8 @@ class UpdatePasswordScreen extends StatelessWidget {
                             controller.confirmPassword.value = value,
                         obscureText: !controller.confirmPasswordVisible.value,
                         decoration: InputDecoration(
-                          labelText: 'Confirm New Password',
-                          hintText: 'Re-enter your new password',
+                          labelText: 'confirm_new_password_label'.tr,
+                          hintText: 'confirm_new_password_hint'.tr,
                           prefixIcon: Icon(Icons.lock),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -129,7 +129,7 @@ class UpdatePasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 40),
                     CustomButton(
-                      label: 'Update Password',
+                      label: 'update_password'.tr,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           controller.updatePassword();
