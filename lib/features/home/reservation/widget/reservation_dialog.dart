@@ -58,6 +58,7 @@ Future<void> showConfirmationDialog() async {
                   CustomButton(
                     label: 'Invite Friends',
                     onPressed: () async {
+                      // ignore: deprecated_member_use
                       await Share.share(
                         'I just booked a table! Join me for an unforgettable dining experience! 😊',
                         subject: 'Invite Friends to Dine',
