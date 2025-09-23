@@ -85,7 +85,12 @@ class ProfileScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 8),
-                  OptionButton(title: 'update_password'.tr, button: () {}),
+                  OptionButton(
+                    title: 'update_password'.tr,
+                    button: () {
+                      Get.offNamed('/updatePasswordScreen');
+                    },
+                  ),
                   SizedBox(height: 8),
                   OptionButton(
                     title: 'general_settings'.tr,
