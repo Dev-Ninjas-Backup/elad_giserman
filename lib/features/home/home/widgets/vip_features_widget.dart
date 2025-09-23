@@ -45,7 +45,9 @@ class VipFeaturesWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: CustomSmallButton(
                   text: 'go_premium'.tr,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offNamed('/subscriptionScreen');
+                  },
                   buttonColor: Colors.white,
                   fontColor: Colors.black,
                 ),

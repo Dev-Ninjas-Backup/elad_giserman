@@ -16,122 +16,126 @@ class EditProfileScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppBar(lable: 'edit_profile'.tr, back: '/navBarScreen'),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-            child: Stack(
-              children: [
-                Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.asset(
-                      ImagePath.profileImage2,
-                      height: 100,
-                      width: 100,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(lable: 'edit_profile'.tr, back: '/navBarScreen'),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+              child: Stack(
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.asset(
+                        ImagePath.profileImage2,
+                        height: 100,
+                        width: 100,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: MediaQuery.of(context).size.width / 2 - 50,
-                  child: const CircleAvatar(
-                    radius: 15,
-                    backgroundColor: AppColors.fontColor,
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 15,
+                  Positioned(
+                    bottom: 0,
+                    right: MediaQuery.of(context).size.width / 2 - 50,
+                    child: const CircleAvatar(
+                      radius: 15,
+                      backgroundColor: AppColors.fontColor,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 15,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-            child: CustomTextField(
-              labelText: 'full_name_label'.tr,
-              controller: TextEditingController(),
-              hintText: 'full_name_hint'.tr,
-              onChanged: (value) {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            child: CustomTextField(
-              labelText: 'email_label'.tr,
-              controller: TextEditingController(),
-              hintText: 'email_hint'.tr,
-              onChanged: (value) {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Text(
-              'phone_number_label'.tr,
-              style: getTextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: AppColors.primaryFontColor,
+                ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            child: Row(
-              children: [
-                Obx(
-                  () => DropdownButton<String>(
-                    value: controller.selectedCountryCode.value,
-                    items: controller.countryCodes
-                        .map(
-                          (code) =>
-                              DropdownMenuItem(value: code, child: Text(code)),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        controller.selectedCountryCode.value = value;
-                      }
-                    },
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+              child: CustomTextField(
+                labelText: 'full_name_label'.tr,
+                controller: TextEditingController(),
+                hintText: 'full_name_hint'.tr,
+                onChanged: (value) {},
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: CustomTextField(
+                labelText: 'email_label'.tr,
+                controller: TextEditingController(),
+                hintText: 'email_hint'.tr,
+                onChanged: (value) {},
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Text(
+                'phone_number_label'.tr,
+                style: getTextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primaryFontColor,
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: Row(
+                children: [
+                  Obx(
+                    () => DropdownButton<String>(
+                      value: controller.selectedCountryCode.value,
+                      items: controller.countryCodes
+                          .map(
+                            (code) => DropdownMenuItem(
+                              value: code,
+                              child: Text(code),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          controller.selectedCountryCode.value = value;
+                        }
+                      },
+                    ),
+                  ),
 
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TextField(
-                    controller: controller.phoneController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      hintText: "phone_hint".tr,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 12,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: controller.phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        hintText: "phone_hint".tr,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 12,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-            child: CustomButton(
-              label: 'save_btn'.tr,
-              onPressed: () {
-                Get.offNamed('/profileScreen');
-              },
-              color: AppColors.buttonColor,
-              textColor: Colors.white,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+              child: CustomButton(
+                label: 'save_btn'.tr,
+                onPressed: () {
+                  Get.offNamed('/profileScreen');
+                },
+                color: AppColors.buttonColor,
+                textColor: Colors.white,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

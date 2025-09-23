@@ -2,6 +2,7 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -96,7 +97,6 @@ class RecommendedTab extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: Row(
               children: [
-                // In RTL languages (like Hebrew) show reviews before rating for natural reading order
                 if (Get.locale?.languageCode == 'he') ...[
                   Text(
                     '${'reviews'.trParams({'count': reviewNum.toString()})} (${rating.toString()})',
@@ -160,7 +160,17 @@ class RecommendedTab extends StatelessWidget {
                 SizedBox(height: 12),
                 CustomSmallButton(
                   text: 'reserve_seat'.tr,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(
+                      DetailsScreen(
+                        image: image,
+                        rating: rating,
+                        reviewNum: reviewNum,
+                        title: title,
+                        location: location,
+                      ),
+                    );
+                  },
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,
                   width: 150,

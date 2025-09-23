@@ -68,7 +68,9 @@ class VipFeatures extends StatelessWidget {
               SizedBox(height: 24),
               CustomSmallButton(
                 text: 'vip_renew_btn'.tr,
-                onPressed: () {},
+                onPressed: () {
+                  Get.offNamed('/subscriptionScreen');
+                },
                 buttonColor: Colors.white,
                 fontColor: Colors.black,
               ),

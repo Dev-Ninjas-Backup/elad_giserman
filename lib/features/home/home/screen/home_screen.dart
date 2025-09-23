@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/features/home/home/controller/home_ads_controller.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
 import 'package:elad_giserman/features/home/home/widgets/home_app_bar.dart';
 import 'package:elad_giserman/features/home/home/widgets/popular_near_widget.dart';
@@ -6,6 +7,7 @@ import 'package:elad_giserman/features/home/home/widgets/recommended_venue.dart'
 import 'package:elad_giserman/features/home/home/widgets/vip_features_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,12 +15,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
+    final HomeAdsController adsController = Get.put(HomeAdsController()); // new
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             HomeAppBar(),
+            Obx(() {
+              final ad = adsController.bannerAd1.value;
+              if (ad == null) return const SizedBox.shrink();
+              return SizedBox(
+                width: ad.size.width.toDouble(),
+                height: ad.size.height.toDouble(),
+                child: AdWidget(ad: ad),
+              );
+            }),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -72,7 +84,30 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
+                  Center(
+                    child: Obx(() {
+                      final ad = adsController.bannerAd3.value;
+                      if (ad == null) return const SizedBox.shrink();
+                      return SizedBox(
+                        width: ad.size.width.toDouble(),
+                        height: ad.size.height.toDouble(),
+                        child: AdWidget(ad: ad),
+                      );
+                    }),
+                  ),
                   VipFeaturesWidget(),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Obx(() {
+                      final ad = adsController.bannerAd2.value;
+                      if (ad == null) return const SizedBox.shrink();
+                      return SizedBox(
+                        width: ad.size.width.toDouble(),
+                        height: ad.size.height.toDouble(),
+                        child: AdWidget(ad: ad),
+                      );
+                    }),
+                  ),
                   SizedBox(height: 20),
                   Row(
                     children: [
@@ -120,6 +155,7 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
