@@ -25,7 +25,7 @@ class UpdatePasswordScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomAppBar(lable: 'update_password'.tr, back: '/profileScreen'),
+              CustomAppBar(lable: 'update_password'.tr, back: '/navBarScreen'),
               SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

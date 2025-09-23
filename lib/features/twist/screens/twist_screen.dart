@@ -25,10 +25,10 @@ class TwistScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
               child: Column(
                 children: [
-                  // Search Bar
                   SizedBox(
                     height: 42,
                     child: TextField(
+                      onChanged: (value) => controller.updateSearchQuery(value),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -50,10 +50,7 @@ class TwistScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Tabs
                   Obx(
                     () => Row(
                       children: [
@@ -110,11 +107,19 @@ class TwistScreen extends StatelessWidget {
                     child: Obx(() {
                       List items;
                       if (controller.selectedTab.value == 0) {
-                        items = controller.restaurants;
+                        items = controller.filteredRestaurants;
                       } else if (controller.selectedTab.value == 1) {
-                        items = controller.cafes;
+                        items = controller.filteredCafes;
                       } else {
-                        items = controller.bars;
+                        items = controller.filteredBars;
+                      }
+                      if (items.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'No results found',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        );
                       }
                       return ListView.separated(
                         padding: EdgeInsets.zero,
@@ -128,10 +133,23 @@ class TwistScreen extends StatelessWidget {
                             location: item['location'],
                             isFavorite: item['isFavorite'],
                             onFavoriteTap: () {
-                              controller.toggleFavorite(
-                                controller.selectedTab.value,
-                                index,
+                              final originalList =
+                                  controller.selectedTab.value == 0
+                                  ? controller.restaurants
+                                  : controller.selectedTab.value == 1
+                                  ? controller.cafes
+                                  : controller.bars;
+                              final originalIndex = originalList.indexWhere(
+                                (element) =>
+                                    element['title'] == item['title'] &&
+                                    element['location'] == item['location'],
                               );
+                              if (originalIndex != -1) {
+                                controller.toggleFavorite(
+                                  controller.selectedTab.value,
+                                  originalIndex,
+                                );
+                              }
                             },
                             category: item['category'],
                             rating: item['rating'],
