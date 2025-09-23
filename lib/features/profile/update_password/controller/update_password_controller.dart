@@ -20,7 +20,7 @@ class UpdatePasswordController extends GetxController {
     if (value == null || value.isEmpty) {
       return 'New password is required';
     }
-    if (value.length < 8) {
+    if (value.length < 6) {
       return 'Password must be at least 8 characters long';
     }
     if (!RegExp(r'(?=.*?[A-Z])').hasMatch(value)) {
