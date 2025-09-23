@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReservationWidget extends StatelessWidget {
   final String image;
@@ -19,7 +20,7 @@ class ReservationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 97,
+      height: 100,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,7 +59,7 @@ class ReservationWidget extends StatelessWidget {
                 Spacer(),
                 CustomSmallButton(
                   width: 100,
-                  text: 'View Details',
+                  text: 'view_details'.tr,
                   onPressed: onPressed,
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

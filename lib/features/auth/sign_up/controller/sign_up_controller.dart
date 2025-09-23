@@ -19,9 +19,9 @@ class SignUpController extends GetxController {
 
   void validateUsername(String value) {
     if (value.isEmpty) {
-      usernameError.value = 'Username cannot be empty';
+      usernameError.value = 'err_username_empty'.tr;
     } else if (value.length < 3) {
-      usernameError.value = 'Username must be at least 3 characters';
+      usernameError.value = 'err_username_short'.tr;
     } else {
       usernameError.value = '';
     }
@@ -29,9 +29,9 @@ class SignUpController extends GetxController {
 
   void validateEmail(String value) {
     if (value.isEmpty) {
-      emailError.value = 'Email cannot be empty';
+      emailError.value = 'err_email_empty_simple'.tr;
     } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      emailError.value = 'Enter a valid email';
+      emailError.value = 'err_email_invalid_simple'.tr;
     } else {
       emailError.value = '';
     }
@@ -39,9 +39,9 @@ class SignUpController extends GetxController {
 
   void validatePassword(String value) {
     if (value.isEmpty) {
-      passwordError.value = 'Password cannot be empty';
+      passwordError.value = 'err_password_empty'.tr;
     } else if (value.length < 6) {
-      passwordError.value = 'Password must be at least 6 characters';
+      passwordError.value = 'err_password_short'.tr;
     } else {
       passwordError.value = '';
     }
@@ -52,9 +52,9 @@ class SignUpController extends GetxController {
 
   void validateConfirmPassword(String value) {
     if (value.isEmpty) {
-      confirmPasswordError.value = 'Confirm password cannot be empty';
+      confirmPasswordError.value = 'err_confirm_password_empty'.tr;
     } else if (value != passwordController.text) {
-      confirmPasswordError.value = 'Passwords do not match';
+      confirmPasswordError.value = 'err_password_mismatch'.tr;
     } else {
       confirmPasswordError.value = '';
     }

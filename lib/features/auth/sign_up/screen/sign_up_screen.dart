@@ -25,14 +25,14 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(lable: 'Sign Up', back: '/signInScreen'),
+                CustomAppBar(lable: 'sign_up_title'.tr, back: '/signInScreen'),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
                   child: Column(
                     children: [
                       Center(
                         child: Text(
-                          'Sign Up',
+                          'sign_up_title'.tr,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
@@ -43,9 +43,9 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 24),
                       Obx(
                         () => CustomTextField(
-                          labelText: 'Username',
+                          labelText: 'username_label'.tr,
                           controller: controller.usernameController,
-                          hintText: 'Full Name',
+                          hintText: 'username_hint'.tr,
                           onChanged: (value) =>
                               controller.validateUsername(value),
                           errorText: controller.usernameError.value.isEmpty
@@ -57,9 +57,9 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       Obx(
                         () => CustomTextField(
-                          labelText: 'Email',
+                          labelText: 'email_label'.tr,
                           controller: controller.emailController,
-                          hintText: 'example@gmail.com',
+                          hintText: 'email_hint'.tr,
                           onChanged: (value) => controller.validateEmail(value),
                           errorText: controller.emailError.value.isEmpty
                               ? null
@@ -70,7 +70,7 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       Obx(
                         () => CustomPasswordTextField(
-                          labelText: 'Password',
+                          labelText: 'password_label'.tr,
                           controller: controller.passwordController,
                           hintText: '********',
                           obscureText: !controller.showPassword.value,
@@ -92,7 +92,7 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       Obx(
                         () => CustomPasswordTextField(
-                          labelText: 'Confirm Password',
+                          labelText: 'confirm_password_label'.tr,
                           controller: controller.confirmPasswordController,
                           hintText: '********',
                           obscureText: !controller.showConfirmPassword.value,
@@ -115,7 +115,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 24),
                       CustomButton(
-                        label: 'Sign Up',
+                        label: 'sign_up_btn'.tr,
                         onPressed: () {
                           controller.signUp();
                         },
@@ -124,7 +124,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'OR',
+                        'or_text'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xFF636363),
@@ -134,7 +134,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       CustomButton(
-                        label: 'Login with Google',
+                        label: 'login_with_google'.tr,
                         onPressed: () {
                           controller.signUpWithGoogle();
                         },
@@ -146,7 +146,7 @@ class SignUpScreen extends StatelessWidget {
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          text: "Already have an account? ",
+                          text: '${'already_have_account'.tr} ',
                           style: TextStyle(
                             color: AppColors.primaryFontColor,
                             fontSize: 14,
@@ -154,7 +154,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: ' Sign In',
+                              text: ' ${'sign_in'.tr}',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFFFFFFFF),

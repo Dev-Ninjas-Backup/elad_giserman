@@ -29,7 +29,7 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: 97),
                 Center(
                   child: Text(
-                    'Sign In',
+                    'sign_in_title'.tr,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -40,9 +40,9 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: 24),
                 Obx(
                   () => CustomTextField(
-                    labelText: 'Email',
+                    labelText: 'email_label'.tr,
                     controller: controller.emailController,
-                    hintText: 'example@gmail.com',
+                    hintText: 'email_hint'.tr,
                     suffixIcon: Icon(Icons.email_outlined),
                     onChanged: (value) => controller.validateEmail(value),
                     errorText: controller.emailError.value.isEmpty
@@ -53,10 +53,10 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 Obx(
                   () => CustomPasswordTextField(
-                    labelText: 'Password',
+                    labelText: 'password_label'.tr,
                     controller: controller.passwordController,
                     obscureText: !controller.showPassword.value,
-                    hintText: '*********',
+                    hintText: 'password_hint'.tr,
                     suffixIcon: IconButton(
                       onPressed: controller.togglePasswordVisibility,
                       icon: Icon(
@@ -106,7 +106,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'Remember me',
+                      'remember_me'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -119,7 +119,7 @@ class SignInScreen extends StatelessWidget {
                         Get.toNamed('/forgetPasswordScreen');
                       },
                       child: Text(
-                        'Forget Password?',
+                        'forget_password'.tr,
                         style: TextStyle(
                           color: Color(0xFF0088A3),
                           fontSize: 14,
@@ -131,7 +131,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 35),
                 CustomButton(
-                  label: 'Log In',
+                  label: 'log_in'.tr,
                   onPressed: () {
                     controller.signIn();
                   },
@@ -140,7 +140,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'OR',
+                  'or_text'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF636363),
@@ -150,7 +150,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 CustomButton(
-                  label: 'Login with Google',
+                  label: 'login_with_google'.tr,
                   onPressed: () {
                     controller.signInWithGoogle();
                   },
@@ -162,7 +162,7 @@ class SignInScreen extends StatelessWidget {
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: "Don't have an account? ",
+                    text: '${'dont_have_account'.tr} ',
                     style: TextStyle(
                       color: AppColors.primaryFontColor,
                       fontSize: 14,
@@ -170,7 +170,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: ' Sign Up',
+                        text: ' ${'sign_up'.tr}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xFFFFFFFF),

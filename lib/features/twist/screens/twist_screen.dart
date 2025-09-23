@@ -18,7 +18,7 @@ class TwistScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(lable: 'Twist', back: '/navBarScreen'),
+          CustomAppBar(lable: 'twist_title'.tr, back: '/navBarScreen'),
 
           Expanded(
             child: Container(
@@ -42,7 +42,7 @@ class TwistScreen extends StatelessWidget {
                           minWidth: 36,
                           minHeight: 36,
                         ),
-                        hintText: 'Search',
+                        hintText: 'twist_search_hint'.tr,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: const BorderSide(color: Colors.grey),
@@ -59,7 +59,7 @@ class TwistScreen extends StatelessWidget {
                       children: [
                         TabWidget(
                           image: IconPath.tab1,
-                          title: 'Restaurants',
+                          title: 'tab_restaurants'.tr,
                           iconColor: controller.selectedTab.value == 0
                               ? Colors.white
                               : Colors.black,
@@ -74,7 +74,7 @@ class TwistScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         TabWidget(
                           image: IconPath.tab2,
-                          title: 'Cafe',
+                          title: 'tab_cafe'.tr,
                           iconColor: controller.selectedTab.value == 1
                               ? Colors.white
                               : Colors.black,
@@ -89,7 +89,7 @@ class TwistScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         TabWidget(
                           image: IconPath.tab3,
-                          title: 'Bar',
+                          title: 'tab_bar'.tr,
                           iconColor: controller.selectedTab.value == 2
                               ? Colors.white
                               : Colors.black,

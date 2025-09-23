@@ -52,7 +52,7 @@ class HomeAppBar extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'Login',
+                      'login'.tr,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class HomeAppBar extends StatelessWidget {
           ),
           SizedBox(height: 18),
           Text(
-            'Welcome back!',
+            'welcome_back'.tr,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -83,7 +83,7 @@ class HomeAppBar extends StatelessWidget {
             ),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search restaurant, bar, cafe ',
+                hintText: 'search_hint'.tr,
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

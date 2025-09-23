@@ -3,6 +3,7 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VipFeaturesWidget extends StatelessWidget {
   const VipFeaturesWidget({super.key});
@@ -23,7 +24,7 @@ class VipFeaturesWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Upgrade to Premium\n& Unlock VIP Features',
+                'vip_title'.tr,
                 style: getTextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -32,7 +33,7 @@ class VipFeaturesWidget extends StatelessWidget {
               ),
               SizedBox(height: 6),
               Text(
-                'Enjoy more with weekly free\ndrinks & first class seats\naccess at live events.',
+                'vip_description'.tr,
                 style: getTextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -43,7 +44,7 @@ class VipFeaturesWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: CustomSmallButton(
-                  text: 'Go Premium',
+                  text: 'go_premium'.tr,
                   onPressed: () {},
                   buttonColor: Colors.white,
                   fontColor: Colors.black,

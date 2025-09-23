@@ -17,11 +17,11 @@ class VenueScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(lable: 'Venues', back: '/navBarScreen'),
+            CustomAppBar(lable: 'venues_title'.tr, back: '/navBarScreen'),
             Padding(
               padding: const EdgeInsets.fromLTRB(18, 22, 18, 0),
               child: Text(
-                'Popular Near You',
+                'popular_near_you'.tr,
                 style: getTextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,

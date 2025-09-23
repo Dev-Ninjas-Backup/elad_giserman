@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Popular Near You',
+                        'popular_near_you'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        'See All >',
+                        'see_all'.tr,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Recommended Venues',
+                        'recommended_venues'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () => Get.offNamed('/venueScreen'),
                         child: Text(
-                          'See All >',
+                          'see_all'.tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,

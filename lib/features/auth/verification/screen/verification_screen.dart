@@ -3,7 +3,7 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class VerificationScreen extends StatelessWidget {
   final String verificationEmail;
@@ -26,7 +26,7 @@ class VerificationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(lable: 'Verification'),
+              CustomAppBar(lable: 'verification_title'.tr),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 24, 20, 30),
                 child: Column(
@@ -34,7 +34,7 @@ class VerificationScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Verification',
+                      'verification_title'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -43,7 +43,9 @@ class VerificationScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "We've send you the verification code\non - $verificationEmail",
+                      'verification_sent'.trParams({
+                        'email': verificationEmail,
+                      }),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -76,7 +78,7 @@ class VerificationScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     CustomButton(
-                      label: 'Verify',
+                      label: 'verify_btn'.tr,
                       onPressed: () {
                         if (previousScreen == '/signUpScreen') {
                           Get.offAllNamed('/navBarScreen');
@@ -90,7 +92,7 @@ class VerificationScreen extends StatelessWidget {
                     SizedBox(height: 45),
                     Center(
                       child: Text(
-                        'Re-send code in 0.20',
+                        'resend_in'.trParams({'time': '0.20'}),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,

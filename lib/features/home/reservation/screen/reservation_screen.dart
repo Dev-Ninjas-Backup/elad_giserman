@@ -24,7 +24,7 @@ class ReservationScreen extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(image),
-                CustomAppBar(lable: 'Reserve Seat'),
+                CustomAppBar(lable: 'reserve_seat'.tr),
                 Container(
                   width: Get.width,
                   height: Get.height,
@@ -47,7 +47,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Fill Details',
+                          'fill_details'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -61,7 +61,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Select Date:',
+                          'select_date'.tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -72,13 +72,13 @@ class ReservationScreen extends StatelessWidget {
                       SizedBox(height: 14),
                       Row(
                         children: [
-                          SelectDateTab(title: 'Today'),
+                          SelectDateTab(title: 'today'.tr),
                           SizedBox(width: 8),
-                          SelectDateTab(title: 'Tomorrow'),
+                          SelectDateTab(title: 'tomorrow'.tr),
                           SizedBox(width: 8),
                           SelectDateTab(
                             icon: Icon(Icons.calendar_month),
-                            title: 'Choose Date',
+                            title: 'choose_date'.tr,
                           ),
                         ],
                       ),
@@ -86,7 +86,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Select Time:',
+                          'select_time'.tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: SelectTimeTab(
-                          title: 'Choose Time',
+                          title: 'choose_time'.tr,
                           icon: Icon(Icons.alarm),
                         ),
                       ),
@@ -114,7 +114,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Choose Seat:',
+                          'choose_seat'.tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -142,7 +142,7 @@ class ReservationScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 247),
                       CustomButton(
-                        label: 'Confirm Reservation',
+                        label: 'confirm_reservation'.tr,
                         onPressed: () {
                           showConfirmationDialog();
                         },
