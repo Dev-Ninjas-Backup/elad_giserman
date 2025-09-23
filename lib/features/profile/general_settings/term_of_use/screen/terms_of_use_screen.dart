@@ -14,15 +14,18 @@ class TermsOfUseScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(lable: 'Terms of Use', back: '/generalSettingsScreen'),
+          CustomAppBar(
+            lable: 'terms_of_use_title'.tr,
+            back: '/generalSettingsScreen',
+          ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    '1. Acceptance of Terms',
+                    'terms_1_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -31,12 +34,12 @@ class TermsOfUseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'By accessing or using our app, you agree to be bound by these Terms of Use. If you do not agree, please do not use the app.',
+                    'terms_1_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '2. Use of the App',
+                    'terms_2_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -45,15 +48,12 @@ class TermsOfUseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'You agree to use the app only for lawful purposes and in accordance with these terms. Prohibited activities include:\n'
-                    '- Violating any applicable laws or regulations.\n'
-                    '- Attempting to interfere with the app’s functionality.\n'
-                    '- Using the app to transmit harmful content.',
+                    'terms_2_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '3. Intellectual Property',
+                    'terms_3_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -62,12 +62,12 @@ class TermsOfUseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'All content, trademarks, and other intellectual property in the app are owned by us or our licensors. You may not copy, modify, or distribute any content without permission.',
+                    'terms_3_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '4. Termination',
+                    'terms_4_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -76,12 +76,12 @@ class TermsOfUseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'We may terminate or suspend your access to the app at any time, without notice, for conduct that violates these terms or is harmful to other users or us.',
+                    'terms_4_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    '5. Contact Us',
+                    'terms_5_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class TermsOfUseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'For questions about these Terms of Use, contact us at support@example.com.',
+                    'terms_5_content'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 20),
@@ -107,19 +107,16 @@ class TermsOfUseScreen extends StatelessWidget {
                     : () => controller.acceptTerms(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.buttonColor,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 32,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  minimumSize: const Size(double.infinity, 50),
+                  minimumSize: Size(double.infinity, 50),
                 ),
                 child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Accept',
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        'accept_terms'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

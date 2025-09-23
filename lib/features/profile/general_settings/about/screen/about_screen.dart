@@ -14,15 +14,18 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(lable: 'About', back: '/generalSettingsScreen'),
+          CustomAppBar(
+            lable: 'about_app_title'.tr,
+            back: '/generalSettingsScreen',
+          ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'About Us',
+                    'about_us_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -31,12 +34,12 @@ class AboutScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Our app is designed to provide a seamless and intuitive experience for users. We aim to deliver high-quality features and services to enhance your productivity and enjoyment.',
+                    'about_us_paragraph'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Our Mission',
+                    'our_mission_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -45,12 +48,12 @@ class AboutScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'To empower users with innovative tools and a user-friendly interface, ensuring accessibility and reliability in every interaction.',
+                    'our_mission_paragraph'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Our Team',
+                    'our_team_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -59,12 +62,12 @@ class AboutScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'We are a dedicated team of developers, designers, and innovators working together to bring you the best app experience. Our goal is to continuously improve and adapt to your needs.',
+                    'our_team_paragraph'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'Contact Us',
+                    'contact_us_heading'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -73,21 +76,21 @@ class AboutScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Have questions or feedback? Reach out to us at:',
+                    'contact_us_paragraph'.tr,
                     style: TextStyle(fontSize: 16, height: 1.5),
                   ),
                   SizedBox(height: 8),
                   ListTile(
                     leading: Icon(Icons.email, color: AppColors.buttonColor),
                     title: Text(
-                      'support@example.com',
+                      'contact_email'.tr,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
                   ListTile(
                     leading: Icon(Icons.phone, color: AppColors.buttonColor),
                     title: Text(
-                      '+1-800-123-4567',
+                      'contact_phone'.tr,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
