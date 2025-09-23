@@ -6,7 +6,6 @@ import 'package:elad_giserman/features/profile/my_reservation/screen/reservation
 import 'package:elad_giserman/features/profile/my_reservation/widget/reservation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 
 class ReservationHistoryScreen extends StatelessWidget {
   const ReservationHistoryScreen({super.key});
