@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 
 class TwistController extends GetxController {
   final selectedTab = 0.obs;
+  final searchQuery = ''.obs;
 
   void changeTab(int index) {
     selectedTab.value = index;
+    searchQuery.value = '';
   }
 
   final RxList<Map<String, dynamic>> restaurants = <Map<String, dynamic>>[
@@ -88,6 +90,43 @@ class TwistController extends GetxController {
       "isFavorite": true,
     },
   ].obs;
+
+  List<Map<String, dynamic>> get filteredRestaurants {
+    if (searchQuery.value.isEmpty) return restaurants;
+    return restaurants.where((item) {
+      final title = item['title'].toString().toLowerCase();
+      final location = item['location'].toString().toLowerCase();
+      final query = searchQuery.value.toLowerCase().trim();
+      return title.contains(query) || location.contains(query);
+    }).toList();
+  }
+
+  List<Map<String, dynamic>> get filteredCafes {
+    if (searchQuery.value.isEmpty) return cafes;
+    return cafes.where((item) {
+      final title = item['title'].toString().toLowerCase();
+      final location = item['location'].toString().toLowerCase();
+      final query = searchQuery.value.toLowerCase().trim();
+      return title.contains(query) || location.contains(query);
+    }).toList();
+  }
+
+  List<Map<String, dynamic>> get filteredBars {
+    if (searchQuery.value.isEmpty) return bars;
+    return bars.where((item) {
+      final title = item['title'].toString().toLowerCase();
+      final location = item['location'].toString().toLowerCase();
+      final query = searchQuery.value.toLowerCase().trim();
+      return title.contains(query) || location.contains(query);
+    }).toList();
+  }
+
+  void updateSearchQuery(String query) {
+    // Validate: Only update if query is not just whitespace
+    if (query.trim().isNotEmpty || query.isEmpty) {
+      searchQuery.value = query;
+    }
+  }
 
   void toggleFavorite(int tabIndex, int itemIndex) {
     RxList<Map<String, dynamic>> list;
