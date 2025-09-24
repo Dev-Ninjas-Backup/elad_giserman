@@ -1,9 +1,9 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
-import 'package:elad_giserman/features/twist/controller/twist_controller.dart';
-import 'package:elad_giserman/features/twist/widgets/recommended_tab.dart';
-import 'package:elad_giserman/features/twist/widgets/tab_widget.dart';
+import 'package:elad_giserman/features/home/twist/controller/twist_controller.dart';
+import 'package:elad_giserman/features/home/twist/widgets/recommended_tab.dart';
+import 'package:elad_giserman/features/home/twist/widgets/tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
