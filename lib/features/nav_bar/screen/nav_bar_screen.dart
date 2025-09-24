@@ -4,7 +4,7 @@ import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dar
 import 'package:elad_giserman/features/profile/main/screen/profile_screen.dart';
 import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
 import 'package:elad_giserman/features/profile/subscriptions/screen/subscriptions_screen.dart';
-import 'package:elad_giserman/features/twist/screens/twist_screen.dart';
+import 'package:elad_giserman/features/home/twist/screens/twist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
