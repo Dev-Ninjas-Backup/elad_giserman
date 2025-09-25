@@ -21,4 +21,7 @@ class IconPath {
   static const String leftSeat = 'assets/icons/leftSeat.png';
   static const String middleSeat = 'assets/icons/middleSeat.png';
   static const String rightSeat = 'assets/icons/rightSeat.png';
+
+  static const String congratulationIcon =
+      'assets/icons/congratulationIcon.png';
 }
