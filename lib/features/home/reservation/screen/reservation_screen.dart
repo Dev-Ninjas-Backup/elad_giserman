@@ -3,7 +3,6 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/features/home/reservation/controller/reservation_controller.dart';
 import 'package:elad_giserman/features/home/reservation/widget/reservation_dialog.dart';
-import 'package:elad_giserman/features/home/reservation/widget/seat_book_widget.dart';
 import 'package:elad_giserman/features/home/reservation/widget/select_date_tab.dart';
 import 'package:elad_giserman/features/home/reservation/widget/select_time_tab.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +113,7 @@ class ReservationScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'choose_seat'.tr,
+                          'Phone Number:',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -122,25 +121,30 @@ class ReservationScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 13),
-                      SeatBookWidget(
-                        leftSeatNumber: 1,
-                        middleSeatNumber: 2,
-                        rightSeatNumber: 3,
-                        leftSeatColor: AppColors.color2,
-                        middleSeatColor: AppColors.color1,
-                        rightSeatColor: AppColors.color2,
+                      SizedBox(height: 8),
+                      TextField(
+                        controller: TextEditingController(),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your phone number',
+                          hintStyle: const TextStyle(
+                            color: Color(0xFF636363),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          filled: true,
+                          fillColor: AppColors.textFieldFillColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 16,
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 22),
-                      SeatBookWidget(
-                        leftSeatNumber: 4,
-                        middleSeatNumber: 5,
-                        rightSeatNumber: 6,
-                        leftSeatColor: AppColors.color2,
-                        middleSeatColor: AppColors.color3,
-                        rightSeatColor: AppColors.color1,
-                      ),
-                      SizedBox(height: 247),
+                      SizedBox(height: 30),
                       CustomButton(
                         label: 'confirm_reservation'.tr,
                         onPressed: () {
