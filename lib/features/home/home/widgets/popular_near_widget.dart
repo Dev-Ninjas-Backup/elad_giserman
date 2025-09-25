@@ -3,6 +3,7 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
+import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +49,7 @@ class PopularNearWidget extends StatelessWidget {
                 ),
                 child: Image.asset(
                   image,
-                  height: 130,
+                  height: 120,
                   width: Get.width,
                   fit: BoxFit.fill,
                 ),
@@ -163,9 +164,9 @@ class PopularNearWidget extends StatelessWidget {
           ),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: CustomSmallButton(
-              text: 'reserve_seat'.tr,
+              text: 'View Details',
               onPressed: () {
                 Get.to(
                   DetailsScreen(
@@ -181,6 +182,23 @@ class PopularNearWidget extends StatelessWidget {
               fontColor: Colors.white,
             ),
           ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: CustomSmallButton(
+              text: 'reserve_seat'.tr,
+              onPressed: () {
+                Get.to(
+                  () => ReservationScreen(image: image),
+                  transition: Transition.downToUp,
+                  duration: const Duration(milliseconds: 400),
+                );
+              },
+              buttonColor: AppColors.buttonColor,
+              fontColor: Colors.white,
+            ),
+          ),
+          SizedBox(height: 10),
         ],
       ),
     );

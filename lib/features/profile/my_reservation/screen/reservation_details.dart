@@ -7,7 +7,6 @@ import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
 import 'package:elad_giserman/features/home/reservation/controller/reservation_controller.dart';
-import 'package:elad_giserman/features/home/reservation/widget/seat_book_widget.dart';
 import 'package:elad_giserman/features/profile/my_reservation/widget/vip_vouchar_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -137,36 +136,7 @@ class ReservationDetails extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 22),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'choose_seat'.tr,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryFontColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 13),
-                  SeatBookWidget(
-                    leftSeatNumber: 1,
-                    middleSeatNumber: 2,
-                    rightSeatNumber: 3,
-                    leftSeatColor: AppColors.color2,
-                    middleSeatColor: AppColors.color1,
-                    rightSeatColor: AppColors.color2,
-                  ),
-                  SizedBox(height: 22),
-                  SeatBookWidget(
-                    leftSeatNumber: 4,
-                    middleSeatNumber: 5,
-                    rightSeatNumber: 6,
-                    leftSeatColor: AppColors.color2,
-                    middleSeatColor: AppColors.color3,
-                    rightSeatColor: AppColors.color1,
-                  ),
-                  SizedBox(height: 34),
+
                   CustomButton(
                     label: 'redeem_voucher'.tr,
                     onPressed: () {
