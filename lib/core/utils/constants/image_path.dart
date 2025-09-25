@@ -13,4 +13,5 @@ class ImagePath {
   static String restaurant4 = 'assets/images/restaurant4.png';
   static String reservationConfirm = 'assets/images/reservation_confirm.png';
   static String qrCodeScan = 'assets/images/qr-code-scan.png';
+  static String spinBackground = 'assets/images/spinBackground.png';
 }
