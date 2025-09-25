@@ -49,7 +49,7 @@ class PopularNearWidget extends StatelessWidget {
                 ),
                 child: Image.asset(
                   image,
-                  height: 120,
+                  height: 119,
                   width: Get.width,
                   fit: BoxFit.fill,
                 ),
@@ -161,7 +161,7 @@ class PopularNearWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: CustomSmallButton(
-              text: 'View Details',
+              text: 'view_details'.tr,
               onPressed: () {
                 Get.to(
                   DetailsScreen(
