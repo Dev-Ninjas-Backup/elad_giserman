@@ -94,7 +94,7 @@ class NavbarScreen extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: SizedBox(height: 24),
-                      label: 'Twist',
+                      label: 'Spin',
                     ),
                     BottomNavigationBarItem(
                       icon: Image.asset(
