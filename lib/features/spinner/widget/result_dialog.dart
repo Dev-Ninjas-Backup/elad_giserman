@@ -1,3 +1,4 @@
+import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,15 @@ class ResultDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(IconPath.congratulationIcon, width: 80, height: 80),
+            SizedBox(height: 16),
+            Text(
+              "Congratulations",
+              style: TextStyle(
+                fontSize: 24,
+                color: AppColors.buttonColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             SizedBox(height: 16),
             Text(
               "You have got $result",
