@@ -128,7 +128,7 @@ class NavbarScreen extends StatelessWidget {
                 onTap: () {
                   controller.changeTabIndex(2);
                 },
-                child: Image.asset(IconPath.activeTwist, width: 70, height: 70),
+                child: Image.asset(IconPath.activeSpin, width: 70, height: 70),
               ),
             ),
           ],

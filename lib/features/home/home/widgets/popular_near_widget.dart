@@ -65,12 +65,7 @@ class PopularNearWidget extends StatelessWidget {
                         color: Colors.white38,
                       ),
                       child: Text(
-                        {
-                              'Restaurant': 'category_restaurant'.tr,
-                              'Cafe': 'category_cafe'.tr,
-                              'Bar': 'category_bar'.tr,
-                            }[category] ??
-                            category,
+                        '1 + 1',
                         style: getTextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

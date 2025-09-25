@@ -1,7 +1,7 @@
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:get/get.dart';
 
-class Restaurant {
+class Place {
   final String image;
   final String title;
   final String subTitle;
@@ -10,7 +10,7 @@ class Restaurant {
   final String category;
   bool isFavorite;
 
-  Restaurant({
+  Place({
     required this.image,
     required this.title,
     required this.subTitle,
@@ -38,14 +38,14 @@ class Recommended {
 }
 
 class HomeController extends GetxController {
-  var restaurants = <Restaurant>[].obs;
+  var restaurants = <Place>[].obs;
   var recommended = <Recommended>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     restaurants.value = [
-      Restaurant(
+      Place(
         image: ImagePath.popularRestaurant1,
         title: "Olive & Thyme Mediterranean Kitchen",
         subTitle: "Rothschild Blvd 22, Tel Aviv, Israel",
@@ -53,7 +53,7 @@ class HomeController extends GetxController {
         reviewNum: 327,
         category: "Restaurant",
       ),
-      Restaurant(
+      Place(
         image: ImagePath.popularRestaurant2,
         title: "Café Europa",
         subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
@@ -61,7 +61,7 @@ class HomeController extends GetxController {
         reviewNum: 210,
         category: "Bar",
       ),
-      Restaurant(
+      Place(
         image: ImagePath.popularRestaurant1,
         title: "Olive & Thyme Mediterranean Kitchen",
         subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
@@ -69,7 +69,73 @@ class HomeController extends GetxController {
         reviewNum: 210,
         category: "Cafe",
       ),
-      Restaurant(
+      Place(
+        image: ImagePath.popularRestaurant2,
+        title: "Café Europa",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.8,
+        reviewNum: 210,
+        category: "Bar",
+      ),
+
+      Place(
+        image: ImagePath.popularRestaurant1,
+        title: "Olive & Thyme Mediterranean Kitchen",
+        subTitle: "Rothschild Blvd 22, Tel Aviv, Israel",
+        rating: 4.9,
+        reviewNum: 327,
+        category: "Restaurant",
+      ),
+      Place(
+        image: ImagePath.popularRestaurant2,
+        title: "Café Europa",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.7,
+        reviewNum: 210,
+        category: "Bar",
+      ),
+      Place(
+        image: ImagePath.popularRestaurant1,
+        title: "Olive & Thyme Mediterranean Kitchen",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.5,
+        reviewNum: 210,
+        category: "Cafe",
+      ),
+      Place(
+        image: ImagePath.popularRestaurant2,
+        title: "Café Europa",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.8,
+        reviewNum: 210,
+        category: "Bar",
+      ),
+
+      Place(
+        image: ImagePath.popularRestaurant1,
+        title: "Olive & Thyme Mediterranean Kitchen",
+        subTitle: "Rothschild Blvd 22, Tel Aviv, Israel",
+        rating: 4.9,
+        reviewNum: 327,
+        category: "Restaurant",
+      ),
+      Place(
+        image: ImagePath.popularRestaurant2,
+        title: "Café Europa",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.7,
+        reviewNum: 210,
+        category: "Bar",
+      ),
+      Place(
+        image: ImagePath.popularRestaurant1,
+        title: "Olive & Thyme Mediterranean Kitchen",
+        subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",
+        rating: 4.5,
+        reviewNum: 210,
+        category: "Cafe",
+      ),
+      Place(
         image: ImagePath.popularRestaurant2,
         title: "Café Europa",
         subTitle: "Ben Yehuda St 99, Tel Aviv, Israel",

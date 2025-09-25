@@ -32,6 +32,7 @@ class TabWidget extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(image, color: iconColor),
             const SizedBox(width: 5),

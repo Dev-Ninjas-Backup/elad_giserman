@@ -19,7 +19,6 @@ class TwistScreen extends StatelessWidget {
       body: Column(
         children: [
           CustomAppBar(lable: 'twist_title'.tr, back: '/navBarScreen'),
-
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
