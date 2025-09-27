@@ -38,68 +38,72 @@ class HomeScreen extends StatelessWidget {
             }),
             const SizedBox(height: 12),
             Obx(
-              () => Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(width: 20),
-                  TabWidget(
-                    image: IconPath.tab1,
-                    title: 'tab_restaurants'.tr,
-                    iconColor: selectedTab.value == 0
-                        ? Colors.white
-                        : Colors.black,
-                    fontColor: selectedTab.value == 0
-                        ? Colors.white
-                        : Colors.black,
-                    buttonColor: selectedTab.value == 0
-                        ? AppColors.primaryFontColor
-                        : const Color(0xFFF2F2F2),
-                    onTap: () => selectedTab.value = 0,
-                  ),
-                  const SizedBox(width: 10),
-                  TabWidget(
-                    image: IconPath.tab2,
-                    title: 'tab_cafe'.tr,
-                    iconColor: selectedTab.value == 1
-                        ? Colors.white
-                        : Colors.black,
-                    fontColor: selectedTab.value == 1
-                        ? Colors.white
-                        : Colors.black,
-                    buttonColor: selectedTab.value == 1
-                        ? AppColors.primaryFontColor
-                        : const Color(0xFFF2F2F2),
-                    onTap: () => selectedTab.value = 1,
-                  ),
-                  const SizedBox(width: 10),
-                  TabWidget(
-                    image: IconPath.tab3,
-                    title: 'tab_bar'.tr,
-                    iconColor: selectedTab.value == 2
-                        ? Colors.white
-                        : Colors.black,
-                    fontColor: selectedTab.value == 2
-                        ? Colors.white
-                        : Colors.black,
-                    buttonColor: selectedTab.value == 2
-                        ? AppColors.primaryFontColor
-                        : const Color(0xFFF2F2F2),
-                    onTap: () => selectedTab.value = 2,
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () => Get.to(TwistScreen()),
-                    child: Text(
-                      'see_all'.tr,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.fontColor,
+              () => SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 20),
+                    TabWidget(
+                      image: IconPath.tab1,
+                      title: 'tab_restaurants'.tr,
+                      iconColor: selectedTab.value == 0
+                          ? Colors.white
+                          : Colors.black,
+                      fontColor: selectedTab.value == 0
+                          ? Colors.white
+                          : Colors.black,
+                      buttonColor: selectedTab.value == 0
+                          ? AppColors.primaryFontColor
+                          : const Color(0xFFF2F2F2),
+                      onTap: () => selectedTab.value = 0,
+                    ),
+                    const SizedBox(width: 10),
+                    TabWidget(
+                      image: IconPath.tab2,
+                      title: 'tab_cafe'.tr,
+                      iconColor: selectedTab.value == 1
+                          ? Colors.white
+                          : Colors.black,
+                      fontColor: selectedTab.value == 1
+                          ? Colors.white
+                          : Colors.black,
+                      buttonColor: selectedTab.value == 1
+                          ? AppColors.primaryFontColor
+                          : const Color(0xFFF2F2F2),
+                      onTap: () => selectedTab.value = 1,
+                    ),
+                    const SizedBox(width: 10),
+                    TabWidget(
+                      image: IconPath.tab3,
+                      title: 'tab_bar'.tr,
+                      iconColor: selectedTab.value == 2
+                          ? Colors.white
+                          : Colors.black,
+                      fontColor: selectedTab.value == 2
+                          ? Colors.white
+                          : Colors.black,
+                      buttonColor: selectedTab.value == 2
+                          ? AppColors.primaryFontColor
+                          : const Color(0xFFF2F2F2),
+                      onTap: () => selectedTab.value = 2,
+                    ),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => Get.to(TwistScreen()),
+                      child: Text(
+                        'see_all'.tr,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.fontColor,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                ],
+                    const SizedBox(width: 20),
+                  ],
+                ),
               ),
             ),
             Padding(

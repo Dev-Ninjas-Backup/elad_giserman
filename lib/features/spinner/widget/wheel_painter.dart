@@ -15,19 +15,22 @@ class WheelPainter extends CustomPainter {
     final Rect rect = Rect.fromCircle(center: center, radius: radius);
     final Paint paint = Paint()..style = PaintingStyle.fill;
 
-    // generate colors
     final List<Color> colors = List.generate(n, (i) {
       final double hue = (i * 360 / n);
-      return HSLColor.fromAHSL(1.0, hue, 0.62, 0.60).toColor();
+      return HSLColor.fromAHSL(1.0, hue, 0.72, 0.52).toColor();
     });
 
-    // draw segments
     for (int i = 0; i < n; i++) {
       final double start = -math.pi / 2 + i * angle;
-      paint.color = colors[i];
+      paint.shader = LinearGradient(
+        // ignore: deprecated_member_use
+        colors: [colors[i], Colors.black.withOpacity(0.2)], // changed
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ).createShader(rect);
+
       canvas.drawArc(rect, start, angle, true, paint);
 
-      // label
       final String label = items[i];
       final double labelAngle = start + angle / 2;
       final double textRadius = radius * 0.62;
@@ -40,8 +43,11 @@ class WheelPainter extends CustomPainter {
         text: label,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          shadows: [
+            Shadow(color: Colors.black54, offset: Offset(1, 1), blurRadius: 2),
+          ],
         ),
       );
       final TextPainter tp = TextPainter(
@@ -62,11 +68,9 @@ class WheelPainter extends CustomPainter {
       tp.paint(canvas, Offset(-tp.width / 2, -tp.height / 2));
       canvas.restore();
     }
-
-    // inner ring
     final Paint innerPaint = Paint()
       // ignore: deprecated_member_use
-      ..color = Colors.white.withOpacity(0.06)
+      ..color = Colors.white.withOpacity(0.12)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(center, radius * 0.92, innerPaint);
   }

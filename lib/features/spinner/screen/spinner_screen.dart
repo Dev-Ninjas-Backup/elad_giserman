@@ -31,9 +31,15 @@ class SpinnerScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.deepPurple.shade900, Colors.black],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
           image: DecorationImage(
             image: AssetImage(ImagePath.spinBackground),
             fit: BoxFit.cover,
+            opacity: 0.3,
           ),
         ),
         child: Column(
@@ -46,9 +52,10 @@ class SpinnerScreen extends StatelessWidget {
                   child: Text(
                     'Spinning...',
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amberAccent,
+                      letterSpacing: 1.2,
                     ),
                   ),
                 );
@@ -58,9 +65,10 @@ class SpinnerScreen extends StatelessWidget {
                 child: Text(
                   'Tap SPIN to try your luck!',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    letterSpacing: 1.2,
                   ),
                 ),
               );
@@ -88,14 +96,17 @@ class SpinnerScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: const LinearGradient(
-                            colors: [Colors.white, Color(0xFFEEF2FF)],
+                            colors: [
+                              Color(0xFFFFD700),
+                              Color(0xFFFFA500),
+                            ], // changed
                           ),
                           boxShadow: [
                             BoxShadow(
                               // ignore: deprecated_member_use
-                              color: Colors.black.withOpacity(0.06),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
+                              color: Colors.amber.withOpacity(0.6),
+                              blurRadius: 20,
+                              spreadRadius: 3,
                             ),
                           ],
                         ),
@@ -107,27 +118,29 @@ class SpinnerScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+
                       Positioned(
                         top: 4,
                         child: Container(
-                          width: 36,
-                          height: 36,
+                          width: 42,
+                          height: 42,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
                                 // ignore: deprecated_member_use
-                                color: Colors.black.withOpacity(0.12),
-                                blurRadius: 6,
+                                color: Colors.red.withOpacity(0.3),
+                                blurRadius: 10,
+                                spreadRadius: 2,
                               ),
                             ],
                           ),
                           child: Center(
                             child: Icon(
                               Icons.arrow_drop_down,
-                              size: 28,
-                              color: Colors.red.shade700,
+                              size: 34,
+                              color: Colors.red.shade800,
                             ),
                           ),
                         ),
@@ -147,18 +160,21 @@ class SpinnerScreen extends StatelessWidget {
                     onPressed: spinning ? null : controller.startSpin,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.buttonColor,
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 18),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      // ignore: deprecated_member_use
+                      shadowColor: Colors.black.withOpacity(0.3),
+                      elevation: 8,
                     ),
                     child: Text(
                       spinning ? 'Spinning...' : 'SPIN',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
+                        letterSpacing: 2.0,
                       ),
                     ),
                   ),
