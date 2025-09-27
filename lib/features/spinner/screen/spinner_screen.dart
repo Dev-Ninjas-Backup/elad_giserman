@@ -101,7 +101,7 @@ class SpinnerScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: Image.asset(
-                            IconPath.appIcon,
+                            IconPath.spinIcon,
                             height: 80,
                             width: 80,
                           ),

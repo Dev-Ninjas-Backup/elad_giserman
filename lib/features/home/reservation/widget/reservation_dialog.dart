@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
+import 'package:elad_giserman/features/profile/my_reservation/widget/vip_vouchar_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -47,9 +48,10 @@ Future<void> showConfirmationDialog() async {
               Column(
                 children: [
                   CustomButton(
-                    label: 'got_it'.tr,
+                    label: 'Redeem Voucher'.tr,
                     onPressed: () {
                       Get.back();
+                      vipVoucherDialog();
                     },
                     color: AppColors.buttonColor,
                     textColor: Colors.white,

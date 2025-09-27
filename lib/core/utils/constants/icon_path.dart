@@ -1,6 +1,7 @@
 class IconPath {
   IconPath();
   static const String appIcon = 'assets/icons/appIcon.png';
+  static const String spinIcon = 'assets/icons/spinIcon.png';
   static const String googleIcon = 'assets/icons/googleIcon.png';
 
   //Nav bar icon
