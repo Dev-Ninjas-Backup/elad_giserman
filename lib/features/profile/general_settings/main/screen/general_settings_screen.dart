@@ -151,7 +151,9 @@ class GeneralSettingsScreen extends StatelessWidget {
                   SettingTileWidget(
                     title: 'delete_account'.tr,
                     titleColor: Color(0xFFE54400),
-                    onTap: () {},
+                    onTap: () {
+                      Get.offAllNamed('/signInScreen');
+                    },
                   ),
                 ],
               ),

@@ -20,61 +20,63 @@ class VipFeatures extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(27),
-                  color: Colors.white24,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(27),
+                    color: Colors.white24,
+                  ),
+                  child: Text(
+                    'vip_status_expired'.tr,
+                    style: getTextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFFFF3300),
+                    ),
+                  ),
                 ),
-                child: Text(
-                  'vip_status_expired'.tr,
+                SizedBox(height: 8),
+                Text(
+                  'vip_activated'.tr,
+                  style: getTextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 6),
+                Text(
+                  'vip_joining_date'.trParams({'date': 'Jul 15, 2025'}),
                   style: getTextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFFFF3300),
+                    color: Colors.white,
                   ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'vip_activated'.tr,
-                style: getTextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                SizedBox(height: 6),
+                Text(
+                  'vip_expire_date'.trParams({'date': 'Aug 15,2025'}),
+                  style: getTextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              SizedBox(height: 6),
-              Text(
-                'vip_joining_date'.trParams({'date': 'Jul 15, 2025'}),
-                style: getTextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
+                SizedBox(height: 24),
+                CustomSmallButton(
+                  text: 'vip_renew_btn'.tr,
+                  onPressed: () {
+                    Get.offNamed('/subscriptionScreen');
+                  },
+                  buttonColor: Colors.white,
+                  fontColor: Colors.black,
                 ),
-              ),
-              SizedBox(height: 6),
-              Text(
-                'vip_expire_date'.trParams({'date': 'Aug 15,2025'}),
-                style: getTextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 24),
-              CustomSmallButton(
-                text: 'vip_renew_btn'.tr,
-                onPressed: () {
-                  Get.offNamed('/subscriptionScreen');
-                },
-                buttonColor: Colors.white,
-                fontColor: Colors.black,
-              ),
-            ],
+              ],
+            ),
           ),
           Spacer(),
           Image.asset(ImagePath.strawGlass, scale: 4),

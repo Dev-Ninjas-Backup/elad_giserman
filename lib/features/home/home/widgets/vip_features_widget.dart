@@ -20,41 +20,43 @@ class VipFeaturesWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'vip_title'.tr,
-                style: getTextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'vip_title'.tr,
+                  style: getTextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              SizedBox(height: 6),
-              Text(
-                'vip_description'.tr,
-                style: getTextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
+                SizedBox(height: 6),
+                Text(
+                  'vip_description'.tr,
+                  style: getTextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              SizedBox(height: 14),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CustomSmallButton(
-                  text: 'go_premium'.tr,
-                  onPressed: () {
-                    Get.offNamed('/subscriptionScreen');
-                  },
-                  buttonColor: Colors.white,
-                  fontColor: Colors.black,
+                SizedBox(height: 14),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CustomSmallButton(
+                    text: 'go_premium'.tr,
+                    onPressed: () {
+                      Get.offNamed('/subscriptionScreen');
+                    },
+                    buttonColor: Colors.white,
+                    fontColor: Colors.black,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Spacer(),
+
           Image.asset(ImagePath.strawGlass, scale: 4),
         ],
       ),
