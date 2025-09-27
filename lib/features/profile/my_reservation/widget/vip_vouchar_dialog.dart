@@ -20,7 +20,7 @@ Future<void> vipVoucherDialog() async {
                 alignment: Alignment.topRight,
                 child: IconButton(
                   onPressed: () {
-                    Get.back();
+                    Get.toNamed('/navBarScreen');
                   },
                   icon: Icon(Icons.close),
                 ),
@@ -51,7 +51,7 @@ Future<void> vipVoucherDialog() async {
               CustomButton(
                 label: 'download_qr'.tr,
                 onPressed: () {
-                  Get.back();
+                  Get.toNamed('/navBarScreen');
                 },
                 color: AppColors.buttonColor,
                 textColor: Colors.white,

@@ -17,6 +17,7 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           decoration: AppColors().buildGradientBackground(context),
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
