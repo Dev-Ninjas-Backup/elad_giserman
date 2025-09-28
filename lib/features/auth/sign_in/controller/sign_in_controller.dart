@@ -54,11 +54,4 @@ class SignInController extends GetxController {
       print('Initiating Google sign-up');
     }
   }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 }
