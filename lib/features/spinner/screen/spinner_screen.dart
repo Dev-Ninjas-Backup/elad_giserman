@@ -27,162 +27,155 @@ class SpinnerScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade900, Colors.black],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-          image: DecorationImage(
-            image: AssetImage(ImagePath.spinBackground),
-            fit: BoxFit.cover,
-            opacity: 0.3,
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: 90),
-            Obx(() {
-              if (controller.isSpinning.value) {
-                return const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text(
-                    'Spinning...',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amberAccent,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                );
-              }
-              return const Padding(
-                padding: EdgeInsets.all(12),
-                child: Text(
-                  'Tap SPIN to try your luck!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              );
-            }),
-            Expanded(
-              child: Center(
-                child: SizedBox(
-                  width: wheelSize,
-                  height: wheelSize,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Obx(() {
-                        return Transform.rotate(
-                          angle: controller.rotation.value,
-                          child: CustomPaint(
-                            size: Size(wheelSize, wheelSize),
-                            painter: WheelPainter(items: controller.items),
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.deepPurple.shade900, Colors.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              image: DecorationImage(
+                image: AssetImage(ImagePath.spinBackground),
+                fit: BoxFit.cover,
+                opacity: 0.3,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 90),
+                    Obx(() {
+                      if (controller.isSpinning.value) {
+                        return const Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Text(
+                            'Spinning...',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amberAccent,
+                              letterSpacing: 1.2,
+                            ),
                           ),
                         );
-                      }),
-                      Container(
-                        width: wheelSize * 0.28,
-                        height: wheelSize * 0.28,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFFFD700),
-                              Color(0xFFFFA500),
-                            ], // changed
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              // ignore: deprecated_member_use
-                              color: Colors.amber.withOpacity(0.6),
-                              blurRadius: 20,
-                              spreadRadius: 3,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            IconPath.spinIcon,
-                            height: 80,
-                            width: 80,
-                          ),
-                        ),
-                      ),
-
-                      Positioned(
-                        top: 4,
-                        child: Container(
-                          width: 42,
-                          height: 42,
-                          decoration: BoxDecoration(
+                      }
+                      return const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Text(
+                          'Tap SPIN to try your luck!',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                // ignore: deprecated_member_use
-                                color: Colors.red.withOpacity(0.3),
-                                blurRadius: 10,
-                                spreadRadius: 2,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      );
+                    }),
+                    Expanded(
+                      child: Center(
+                        child: SizedBox(
+                          width: wheelSize,
+                          height: wheelSize,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Obx(() {
+                                return Transform.rotate(
+                                  angle: controller.rotation.value,
+                                  child: CustomPaint(
+                                    size: Size(wheelSize, wheelSize),
+                                    painter: WheelPainter(
+                                      items: controller.items,
+                                    ),
+                                  ),
+                                );
+                              }),
+                              Container(
+                                width: wheelSize * 0.28,
+                                height: wheelSize * 0.28,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFFD700),
+                                      Color(0xFFFFA500),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      // ignore: deprecated_member_use
+                                      color: Colors.amber.withOpacity(0.6),
+                                      blurRadius: 20,
+                                      spreadRadius: 3,
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    IconPath.spinIcon,
+                                    height: 80,
+                                    width: 80,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Icon(
-                              Icons.arrow_drop_down,
-                              size: 34,
-                              color: Colors.red.shade800,
-                            ),
-                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 30),
+                      child: Obx(() {
+                        final spinning = controller.isSpinning.value;
+                        return SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: spinning ? null : controller.startSpin,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.buttonColor,
+                              padding: EdgeInsets.symmetric(vertical: 18),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              // ignore: deprecated_member_use
+                              shadowColor: Colors.black.withOpacity(0.3),
+                              elevation: 8,
+                            ),
+                            child: Text(
+                              spinning ? 'Spinning...' : 'SPIN',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 2.0,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 30),
-              child: Obx(() {
-                final spinning = controller.isSpinning.value;
-                return SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: spinning ? null : controller.startSpin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.buttonColor,
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      // ignore: deprecated_member_use
-                      shadowColor: Colors.black.withOpacity(0.3),
-                      elevation: 8,
-                    ),
-                    child: Text(
-                      spinning ? 'Spinning...' : 'SPIN',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                      ),
-                    ),
-                  ),
-                );
-              }),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: MediaQuery.of(context).size.height > 700 ? 250 : 100,
+            child: Image.asset(
+              IconPath.whilePointer,
+              height: MediaQuery.of(context).size.height > 700 ? 150 : 120,
+              width: MediaQuery.of(context).size.height > 700 ? 150 : 120,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

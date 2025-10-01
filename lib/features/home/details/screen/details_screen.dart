@@ -1,12 +1,12 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
-import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
 import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
+import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -140,18 +140,93 @@ class DetailsScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 30),
-                  CustomButton(
-                    label: 'reserve_seats'.tr,
-                    onPressed: () {
-                      Get.to(
-                        () => ReservationScreen(image: image),
-                        transition: Transition.downToUp,
-                        duration: const Duration(milliseconds: 400),
-                      );
-                    },
-                    color: AppColors.buttonColor,
-                    textColor: Colors.white,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          width: Get.width / 2,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.buttonColor,
+                              padding: EdgeInsets.symmetric(vertical: 12.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              shadowColor: const Color.fromRGBO(
+                                0,
+                                136,
+                                163,
+                                0.20,
+                              ),
+                              elevation: 10,
+                            ),
+                            onPressed: () {
+                              Get.to(
+                                () => ReservationScreen(image: image),
+                                transition: Transition.downToUp,
+                                duration: const Duration(milliseconds: 400),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'reserve_seats'.tr,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: SizedBox(
+                          width: Get.width / 2,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.buttonColor,
+                              padding: EdgeInsets.symmetric(vertical: 12.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              shadowColor: const Color.fromRGBO(
+                                0,
+                                136,
+                                163,
+                                0.20,
+                              ),
+                              elevation: 10,
+                            ),
+                            onPressed: () {
+                              Get.offNamed(
+                                AppRoute.getRedemptionHistoryScreen(),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Redeem Voucher',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+
                   SizedBox(height: 24),
                   Divider(),
                   SizedBox(height: 24),
