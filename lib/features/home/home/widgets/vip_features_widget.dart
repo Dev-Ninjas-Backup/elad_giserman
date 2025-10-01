@@ -43,8 +43,9 @@ class VipFeaturesWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 14),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(bottom: 10.0),
                   child: CustomSmallButton(
+                    width: 130,
                     text: 'go_premium'.tr,
                     onPressed: () {
                       Get.offNamed('/subscriptionScreen');
