@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/features/auth/verification/controller/verification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -9,11 +10,13 @@ class VerificationScreen extends StatelessWidget {
   final String verificationEmail;
   final String previousScreen;
 
-  const VerificationScreen({
+  VerificationScreen({
     super.key,
     required this.verificationEmail,
     required this.previousScreen,
   });
+
+  final VerificationController controller = Get.put(VerificationController());
 
   @override
   Widget build(BuildContext context) {
@@ -91,14 +94,31 @@ class VerificationScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 45),
                     Center(
-                      child: Text(
-                        'resend_in'.trParams({'time': '0.20'}),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF636363),
-                        ),
-                      ),
+                      child: Obx(() {
+                        return controller.showResendButton.value
+                            ? GestureDetector(
+                                onTap: () {
+                                  controller.resendCode();
+                                },
+                                child: Text(
+                                  "Resend Code",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.buttonColor,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "Resend in ${controller.formatTime(controller.remainingSeconds.value)}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFF636363),
+                                ),
+                              );
+                      }),
                     ),
                   ],
                 ),

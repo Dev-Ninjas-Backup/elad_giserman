@@ -113,6 +113,7 @@ class SignUpController extends GetxController {
           "Success",
           data["message"] ?? "Registration successful",
           snackPosition: SnackPosition.BOTTOM,
+          // ignore: deprecated_member_use
           backgroundColor: Colors.green.withOpacity(0.2),
         );
         Get.to(
@@ -126,6 +127,7 @@ class SignUpController extends GetxController {
           "Error",
           data["message"] ?? "Something went wrong",
           snackPosition: SnackPosition.BOTTOM,
+          // ignore: deprecated_member_use
           backgroundColor: Colors.red.withOpacity(0.2),
         );
       }
