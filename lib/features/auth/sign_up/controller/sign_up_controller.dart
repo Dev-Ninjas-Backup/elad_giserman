@@ -4,7 +4,6 @@ import 'package:elad_giserman/features/auth/verification/screen/verification_scr
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignUpController extends GetxController {
   final AuthService _authService = AuthService();
@@ -87,7 +86,12 @@ class SignUpController extends GetxController {
       return;
     }
 
-    EasyLoading.show(status: "Creating account...");
+    Get.snackbar(
+      "Please wait",
+      "Creating your account...",
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 1),
+    );
 
     await Future.delayed(Duration(milliseconds: 500));
 
@@ -105,8 +109,12 @@ class SignUpController extends GetxController {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 201 && data["success"] == true) {
-        EasyLoading.showSuccess(data["message"] ?? "Registration successful");
-
+        Get.snackbar(
+          "Success",
+          data["message"] ?? "Registration successful",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.2),
+        );
         Get.to(
           VerificationScreen(
             verificationEmail: emailController.text,
@@ -114,16 +122,25 @@ class SignUpController extends GetxController {
           ),
         );
       } else {
-        EasyLoading.showError(data["message"] ?? "Registration failed");
+        Get.snackbar(
+          "Error",
+          data["message"] ?? "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.2),
+        );
       }
     } catch (e) {
-      EasyLoading.showError("Something went wrong.");
+      Get.snackbar(
+        "Network Error",
+        "Please check your internet connection.",
+        snackPosition: SnackPosition.BOTTOM,
+        // ignore: deprecated_member_use
+        backgroundColor: Colors.red.withOpacity(0.2),
+      );
 
       if (kDebugMode) {
         print("SignUp Error: $e");
       }
-    } finally {
-      EasyLoading.dismiss();
     }
   }
 
