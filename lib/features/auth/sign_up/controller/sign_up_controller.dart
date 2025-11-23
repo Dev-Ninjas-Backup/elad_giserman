@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'package:elad_giserman/features/auth/sign_up/service/auth_service.dart';
 import 'package:elad_giserman/features/auth/verification/screen/verification_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignUpController extends GetxController {
+  final AuthService _authService = AuthService();
+
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -45,6 +50,7 @@ class SignUpController extends GetxController {
     } else {
       passwordError.value = '';
     }
+
     if (confirmPasswordController.text.isNotEmpty) {
       validateConfirmPassword(confirmPasswordController.text);
     }
@@ -68,27 +74,56 @@ class SignUpController extends GetxController {
     showConfirmPassword.value = !showConfirmPassword.value;
   }
 
-  void signUp() {
+  Future<void> signUp() async {
     validateUsername(usernameController.text);
     validateEmail(emailController.text);
     validatePassword(passwordController.text);
     validateConfirmPassword(confirmPasswordController.text);
 
-    if (usernameError.value.isEmpty &&
-        emailError.value.isEmpty &&
-        passwordError.value.isEmpty &&
-        confirmPasswordError.value.isEmpty) {
-      if (kDebugMode) {
-        print(
-          'Sign up with: ${usernameController.text}, ${emailController.text}, ${passwordController.text}',
-        );
-      }
-      Get.to(
-        VerificationScreen(
-          verificationEmail: emailController.text,
-          previousScreen: '/signUpScreen',
-        ),
+    if (usernameError.value.isNotEmpty ||
+        emailError.value.isNotEmpty ||
+        passwordError.value.isNotEmpty ||
+        confirmPasswordError.value.isNotEmpty) {
+      return;
+    }
+
+    EasyLoading.show(status: "Creating account...");
+
+    await Future.delayed(Duration(milliseconds: 500));
+
+    try {
+      final response = await _authService.signUp(
+        email: emailController.text,
+        username: usernameController.text,
+        password: passwordController.text,
       );
+      if (kDebugMode) {
+        print("SignUp API Status Code: ${response.statusCode}");
+        print("Response Body: ${response.body}");
+      }
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 201 && data["success"] == true) {
+        EasyLoading.showSuccess(data["message"] ?? "Registration successful");
+
+        Get.to(
+          VerificationScreen(
+            verificationEmail: emailController.text,
+            previousScreen: '/signUpScreen',
+          ),
+        );
+      } else {
+        EasyLoading.showError(data["message"] ?? "Registration failed");
+      }
+    } catch (e) {
+      EasyLoading.showError("Something went wrong.");
+
+      if (kDebugMode) {
+        print("SignUp Error: $e");
+      }
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -96,7 +131,6 @@ class SignUpController extends GetxController {
     if (kDebugMode) {
       print('Initiating Google sign-up');
     }
-    // Get.offAllNamed('/navbarScreen');
   }
 
   @override
