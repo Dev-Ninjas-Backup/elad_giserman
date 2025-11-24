@@ -77,21 +77,30 @@ class VerificationScreen extends StatelessWidget {
                         focusedBorderColor: Colors.black,
                         borderWidth: 1,
                         cursorColor: Colors.black,
+                        onSubmit: (code) {
+                          controller.otpCode = code;
+                        },
                       ),
                     ),
                     SizedBox(height: 20),
                     CustomButton(
                       label: 'verify_btn'.tr,
-                      onPressed: () {
-                        if (previousScreen == '/signUpScreen') {
-                          Get.offAllNamed('/navBarScreen');
-                        } else {
-                          Get.offAllNamed('/resetPasswordScreen');
+                      onPressed: () async {
+                        final isVerified = await controller.verifyOtpRequest(
+                          verificationEmail,
+                        );
+                        if (isVerified) {
+                          if (previousScreen == '/signUpScreen') {
+                            Get.offAllNamed('/navBarScreen');
+                          } else {
+                            Get.offAllNamed('/resetPasswordScreen');
+                          }
                         }
                       },
                       color: AppColors.buttonColor,
                       textColor: Colors.white,
                     ),
+
                     SizedBox(height: 45),
                     Center(
                       child: Obx(() {
