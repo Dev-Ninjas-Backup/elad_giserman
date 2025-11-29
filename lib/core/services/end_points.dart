@@ -3,4 +3,5 @@ class Urls {
 
   static const String register = '$baseUrl/auth/register';
   static const String verifyOtp = '$baseUrl/auth/verify-otp';
+  static const String resendOtp = '$baseUrl/auth/resend-otp';
 }
