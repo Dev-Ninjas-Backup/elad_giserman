@@ -107,7 +107,9 @@ class VerificationScreen extends StatelessWidget {
                         return controller.showResendButton.value
                             ? GestureDetector(
                                 onTap: () {
-                                  controller.resendCode();
+                                  controller.resendCodeRequest(
+                                    verificationEmail,
+                                  );
                                 },
                                 child: Text(
                                   "Resend Code",
@@ -121,7 +123,7 @@ class VerificationScreen extends StatelessWidget {
                               )
                             : Text(
                                 "Resend in ${controller.formatTime(controller.remainingSeconds.value)}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: Color(0xFF636363),
