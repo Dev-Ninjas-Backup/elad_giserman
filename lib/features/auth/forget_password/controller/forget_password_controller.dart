@@ -121,6 +121,82 @@ class ForgetPasswordController extends GetxController {
     }
   }
 
+  // Future<bool> resetPassword() async {
+  //   validateOtp(otpController.text);
+  //   validateEmail(forgetEmailController.text);
+  //   validatePassword(resetPasswordController.text);
+  //   validateConfirmPassword(confirmresetPasswordController.text);
+
+  //   if (otpError.value.isNotEmpty ||
+  //       forgetEmailError.value.isNotEmpty ||
+  //       resetPasswordError.value.isNotEmpty ||
+  //       confirmResetPasswordError.value.isNotEmpty) {
+  //     return false; // If any error exists, do not proceed
+  //   }
+
+  //   isLoading.value = true;
+
+  //   try {
+  //     final url = Uri.parse(
+  //       Urls.resetPassword,
+  //     ); // Make sure to add this in EndPoints
+
+  //     final body = jsonEncode({
+  //       "otp": otpController.text.trim(),
+  //       "email": forgetEmailController.text.trim(),
+  //       "newPassword": resetPasswordController.text.trim(),
+  //     });
+
+  //     final response = await http.post(
+  //       url,
+  //       headers: {"Content-Type": "application/json"},
+  //       body: body,
+  //     );
+
+  //     if (kDebugMode) {
+  //       print("RESET PASSWORD STATUS: ${response.statusCode}");
+  //       print("RESET PASSWORD BODY: ${response.body}");
+  //     }
+
+  //     if (response.statusCode == 201) {
+  //       final Map<String, dynamic> data = jsonDecode(response.body);
+  //       if (data["success"] == true) {
+  //         isLoading.value = false;
+  //         Get.snackbar(
+  //           "Success",
+  //           data["message"] ?? "Password reset successfully",
+  //           snackPosition: SnackPosition.BOTTOM,
+  //         );
+  //         return true;
+  //       } else {
+  //         isLoading.value = false;
+  //         Get.snackbar(
+  //           "Error",
+  //           data["message"] ?? "Failed to reset password",
+  //           snackPosition: SnackPosition.BOTTOM,
+  //         );
+  //         return false;
+  //       }
+  //     } else {
+  //       isLoading.value = false;
+  //       Get.snackbar(
+  //         "Error",
+  //         "Failed to reset password",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //       );
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     isLoading.value = false;
+  //     Get.snackbar(
+  //       "Error",
+  //       "Network error: $e",
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //     return false;
+  //   }
+  // }
+
   @override
   void onClose() {
     forgetEmailController.dispose();

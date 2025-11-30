@@ -7,7 +7,7 @@ import 'package:elad_giserman/features/profile/main/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../controller/profile_controller.dart';
 import '../../../../routes/app_routes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -15,97 +15,143 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomAppBar(lable: 'profile_title'.tr, back: ''),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        ImagePath.profileImage2,
-                        height: 68,
-                        width: 68,
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        children: [
-                          Text(
-                            'Franklin Clinton',
-                            style: getTextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primaryFontColor,
-                            ),
-                          ),
-                          Text(
-                            'franklinclinton@gmail.com',
-                            style: getTextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  VipFeatures(),
-                  SizedBox(height: 16),
-                  OptionButton(
-                    title: 'edit_profile'.tr,
-                    button: () {
-                      Get.offNamed('/editProfileScreen');
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  OptionButton(
-                    title: 'my_reservation'.tr,
-                    button: () {
-                      Get.offNamed('/reservationScreen');
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  OptionButton(
-                    title: 'redemption_history'.tr,
-                    button: () {
-                      Get.offNamed(AppRoute.getRedemptionHistoryScreen());
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  OptionButton(
-                    title: 'subscriptions'.tr,
-                    button: () {
-                      Get.offNamed('/subscriptionScreen');
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  OptionButton(
-                    title: 'update_password'.tr,
-                    button: () {
-                      Get.offNamed('/updatePasswordScreen');
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  OptionButton(
-                    title: 'general_settings'.tr,
-                    button: () {
-                      Get.offNamed('/generalSettingsScreen');
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  LogOutButton(),
-                ],
-              ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final user = controller.profile.value;
+
+        if (user == null) {
+          return const Center(
+            child: Text(
+              "Failed to load profile",
+              style: TextStyle(fontSize: 18),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomAppBar(lable: 'profile_title'.tr, back: ''),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 34,
+                          backgroundImage: NetworkImage(
+                            user.avatarUrl.isNotEmpty
+                                ? user.avatarUrl
+                                : ImagePath.profileImage2,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.name,
+                              style: getTextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryFontColor,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              user.email,
+                              style: getTextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.fontColor,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Username: ${user.username}",
+                              style: getTextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+                    VipFeatures(),
+                    const SizedBox(height: 16),
+
+                    OptionButton(
+                      title: 'edit_profile'.tr,
+                      button: () {
+                        Get.offNamed('/editProfileScreen');
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
+                      title: 'my_reservation'.tr,
+                      button: () {
+                        Get.offNamed('/reservationScreen');
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
+                      title: 'redemption_history'.tr,
+                      button: () {
+                        Get.offNamed(AppRoute.getRedemptionHistoryScreen());
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
+                      title: 'subscriptions'.tr,
+                      button: () {
+                        Get.offNamed('/subscriptionScreen');
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
+                      title: 'update_password'.tr,
+                      button: () {
+                        Get.offNamed('/updatePasswordScreen');
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
+                      title: 'general_settings'.tr,
+                      button: () {
+                        Get.offNamed('/generalSettingsScreen');
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    LogOutButton(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

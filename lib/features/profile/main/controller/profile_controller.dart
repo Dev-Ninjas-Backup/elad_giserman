@@ -1,10 +1,43 @@
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/features/profile/main/model/profile_model.dart';
+import 'package:elad_giserman/features/profile/main/service/profile_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   final phoneController = TextEditingController();
 
+  var isLoading = false.obs;
+  var profile = Rx<ProfileModel?>(null);
+  final service = ProfileService();
+
+  @override
+  void onInit() {
+    loadProfile();
+    super.onInit();
+  }
+
   var selectedCountryCode = "+880".obs;
 
   final countryCodes = ["+880", "+91", "+1", "+44", "+61"];
+  Future<void> loadProfile() async {
+    isLoading.value = true;
+
+    String? token = await SharedPreferencesHelper.getAccessToken();
+
+    if (token == null || token.isEmpty) {
+      if (kDebugMode) {
+        print("⛔ No token found");
+      }
+      isLoading.value = false;
+      return;
+    }
+
+    final data = await service.fetchProfile(token);
+
+    profile.value = data;
+
+    isLoading.value = false;
+  }
 }
