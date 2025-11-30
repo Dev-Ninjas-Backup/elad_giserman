@@ -46,6 +46,7 @@ dependencies:
   share_plus: ^12.0.0
   google_mobile_ads: ^6.0.0
   http: ^1.6.0
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:

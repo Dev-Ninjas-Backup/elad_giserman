@@ -4,9 +4,11 @@ import 'package:elad_giserman/features/profile/main/service/profile_service.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileController extends GetxController {
   final phoneController = TextEditingController();
+  var selectedImagePath = ''.obs;
 
   var isLoading = false.obs;
   var profile = Rx<ProfileModel?>(null);
@@ -39,5 +41,15 @@ class ProfileController extends GetxController {
     profile.value = data;
 
     isLoading.value = false;
+  }
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
+    }
   }
 }

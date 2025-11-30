@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
@@ -9,7 +11,9 @@ import 'package:get/get.dart';
 import '../../main/controller/profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+  final String email;
+  final String name;
+  const EditProfileScreen({super.key, required this.email, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +30,38 @@ class EditProfileScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        ImagePath.profileImage2,
-                        height: 100,
-                        width: 100,
+                    child: Obx(
+                      () => ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: controller.selectedImagePath.isEmpty
+                            ? Image.asset(
+                                ImagePath.profileImage2,
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                File(controller.selectedImagePath.value),
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
                   Positioned(
                     bottom: 0,
                     right: MediaQuery.of(context).size.width / 2 - 50,
-                    child: const CircleAvatar(
-                      radius: 15,
-                      backgroundColor: AppColors.fontColor,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 15,
+                    child: GestureDetector(
+                      onTap: () => controller.pickImage(),
+                      child: const CircleAvatar(
+                        radius: 15,
+                        backgroundColor: AppColors.fontColor,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
                     ),
                   ),
@@ -56,7 +73,7 @@ class EditProfileScreen extends StatelessWidget {
               child: CustomTextField(
                 labelText: 'full_name_label'.tr,
                 controller: TextEditingController(),
-                hintText: 'full_name_hint'.tr,
+                hintText: name,
                 onChanged: (value) {},
               ),
             ),
@@ -65,10 +82,11 @@ class EditProfileScreen extends StatelessWidget {
               child: CustomTextField(
                 labelText: 'email_label'.tr,
                 controller: TextEditingController(),
-                hintText: 'email_hint'.tr,
+                hintText: email,
                 onChanged: (value) {},
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Text(

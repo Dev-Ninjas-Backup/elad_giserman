@@ -2,6 +2,7 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
+import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/profile/main/widgets/log_out_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
@@ -99,7 +100,9 @@ class ProfileScreen extends StatelessWidget {
                     OptionButton(
                       title: 'edit_profile'.tr,
                       button: () {
-                        Get.offNamed('/editProfileScreen');
+                        Get.to(
+                          EditProfileScreen(email: user.email, name: user.name),
+                        );
                       },
                     ),
                     const SizedBox(height: 8),
