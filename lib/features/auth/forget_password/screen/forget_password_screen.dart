@@ -57,19 +57,28 @@ class ForgetPasswordScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    CustomButton(
-                      label: 'continue_btn'.tr,
-                      onPressed: () {
-                        Get.to(
-                          VerificationScreen(
-                            verificationEmail:
-                                controller.forgetEmailController.text,
-                            previousScreen: '/resetPasswordScreen',
-                          ),
-                        );
-                      },
-                      color: AppColors.buttonColor,
-                      textColor: Colors.white,
+                    Obx(
+                      () => CustomButton(
+                        label: 'continue_btn'.tr,
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () async {
+                                final success = await controller
+                                    .sendForgetPassword();
+
+                                if (success) {
+                                  Get.to(
+                                    VerificationScreen(
+                                      verificationEmail:
+                                          controller.forgetEmailController.text,
+                                      previousScreen: '/resetPasswordScreen',
+                                    ),
+                                  );
+                                }
+                              },
+                        color: AppColors.buttonColor,
+                        textColor: Colors.white,
+                      ),
                     ),
                   ],
                 ),
