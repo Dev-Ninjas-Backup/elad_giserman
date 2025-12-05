@@ -11,12 +11,39 @@ import 'package:get/get.dart';
 import '../controller/profile_controller.dart';
 import '../../../../routes/app_routes.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserver {
+  late ProfileController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(ProfileController());
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Reload profile data when app is resumed/screen comes back to focus
+      controller.loadProfile();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
 
     return Scaffold(
       body: Obx(() {
@@ -57,6 +84,9 @@ class ProfileScreen extends StatelessWidget {
                                 ? user.avatarUrl
                                 : ImagePath.profileImage2,
                           ),
+                          onBackgroundImageError: (exception, stackTrace) {
+                            // Fallback image
+                          },
                         ),
                         const SizedBox(width: 20),
                         Column(
@@ -101,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                       title: 'edit_profile'.tr,
                       button: () {
                         Get.to(
-                          EditProfileScreen(),
+                          const EditProfileScreen(),
                         );
                       },
                     ),
