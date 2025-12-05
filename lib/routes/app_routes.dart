@@ -12,6 +12,7 @@ import 'package:elad_giserman/features/profile/main/screen/profile_screen.dart';
 import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
 import 'package:elad_giserman/features/profile/subscriptions/screen/subscriptions_screen.dart';
 import 'package:elad_giserman/features/profile/update_password/screen/update_password_screen.dart';
+import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/splash/screens/splash_screen.dart';
 import 'package:elad_giserman/features/venue/screen/venue_screen.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class AppRoute {
   static String detailsScreen = "/detailsScreen";
   static String venueScreen = "/venueScreen";
   static String profileScreen = "/profileScreen";
+  static String editProfileScreen = "/editProfileScreen";
   static String reservationScreen = "/reservationScreen";
   static String subscriptionScreen = "/subscriptionScreen";
   static String redemptionHistoryScreen = "/redemptionHistoryScreen";
@@ -50,6 +52,7 @@ class AppRoute {
   static String getHomeScreen() => homeScreen;
   static String getVenueScreen() => venueScreen;
   static String getProfileScreen() => profileScreen;
+  static String getEditProfileScreen() => editProfileScreen;
   static String getReservationScreen() => reservationScreen;
   static String getSubscriptionScreen() => subscriptionScreen;
   static String getDetailsScreen() => detailsScreen;
@@ -101,7 +104,11 @@ class AppRoute {
       page: () => ProfileScreen(),
       transition: Transition.upToDown,
     ),
-
+    GetPage(
+      name: editProfileScreen,
+      page: () => EditProfileScreen(),
+      transition: Transition.upToDown,
+    ),
     GetPage(
       name: reservationScreen,
       page: () => ReservationHistoryScreen(),

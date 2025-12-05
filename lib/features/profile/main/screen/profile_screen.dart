@@ -6,45 +6,19 @@ import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_
 import 'package:elad_giserman/features/profile/main/widgets/log_out_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
+import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/profile_controller.dart';
 import '../../../../routes/app_routes.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen>
-    with WidgetsBindingObserver {
-  late ProfileController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Get.put(ProfileController());
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // Reload profile data when app is resumed/screen comes back to focus
-      controller.loadProfile();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
+
     return Scaffold(
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -65,7 +39,15 @@ class _ProfileScreenState extends State<ProfileScreen>
         return SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(lable: 'profile_title'.tr, back: ''),
+              CustomAppBar(
+                lable: 'profile_title'.tr,
+                back: '',
+                onBackPressed: () {
+                  final navBarController = Get.find<NavbarController>();
+                  navBarController.changeTabIndex(0);
+                  Get.offNamed('/navBarScreen');
+                },
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 18,
@@ -84,9 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 ? user.avatarUrl
                                 : ImagePath.profileImage2,
                           ),
-                          onBackgroundImageError: (exception, stackTrace) {
-                            // Fallback image
-                          },
                         ),
                         const SizedBox(width: 20),
                         Column(
@@ -130,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     OptionButton(
                       title: 'edit_profile'.tr,
                       button: () {
-                        Get.to(const EditProfileScreen());
+                        Get.to(EditProfileScreen());
                       },
                     ),
                     const SizedBox(height: 8),
