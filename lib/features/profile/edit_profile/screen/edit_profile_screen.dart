@@ -6,7 +6,6 @@ import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
-import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../main/controller/profile_controller.dart';
@@ -23,15 +22,7 @@ class EditProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(
-              lable: 'edit_profile'.tr,
-              back: '',
-              onBackPressed: () {
-                final navBarController = Get.find<NavbarController>();
-                navBarController.changeTabIndex(0);
-                Get.offNamed('/navBarScreen');
-              },
-            ),
+            CustomAppBar(lable: 'edit_profile'.tr, back: '/navBarScreen'),
             Obx(
               () => controller.isLoading.value
                   ? const Padding(

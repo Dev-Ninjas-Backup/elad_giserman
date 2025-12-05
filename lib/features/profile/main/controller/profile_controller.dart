@@ -15,12 +15,29 @@ class ProfileController extends GetxController {
 
   var isLoading = false.obs;
   var isSaving = false.obs;
+  var isInitialLoad = true.obs;
   var profile = Rx<ProfileModel?>(null);
   final service = ProfileService();
 
   @override
   void onInit() {
-    loadProfile();
+    loadProfile(showLoading: true);
+    try {
+      final NavbarController navbarController = Get.find();
+      ever(navbarController.selectedIndex, (index) {
+        if (index == 4) {
+          // Profile tab is selected, reload the data silently
+          loadProfile(showLoading: false);
+        }
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(
+          "NavbarController not found, profile reload on tab change disabled",
+        );
+      }
+    }
+
     super.onInit();
   }
 
@@ -28,41 +45,53 @@ class ProfileController extends GetxController {
 
   final countryCodes = ["+880", "+91", "+1", "+44", "+61"];
 
-  Future<void> loadProfile() async {
-    isLoading.value = true;
-
-    String? token = await SharedPreferencesHelper.getAccessToken();
-
-    if (token == null || token.isEmpty) {
-      if (kDebugMode) {
-        print("⛔ No token found");
-      }
-      isLoading.value = false;
-      return;
+  Future<void> loadProfile({bool showLoading = true}) async {
+    // Only show loading on initial load
+    if (showLoading && isInitialLoad.value) {
+      isLoading.value = true;
     }
 
-    final data = await service.fetchProfile(token);
+    try {
+      String? token = await SharedPreferencesHelper.getAccessToken();
 
-    profile.value = data;
+      if (token == null || token.isEmpty) {
+        if (kDebugMode) {
+          print("⛔ No token found");
+        }
+        isLoading.value = false;
+        return;
+      }
 
-    // Populate text fields with profile data
-    if (data != null) {
-      nameController.text = data.name;
-      phoneController.text = data.mobile ?? '';
+      final data = await service.fetchProfile(token);
 
-      // Parse country code from phone number if available
-      if (data.mobile != null && data.mobile!.isNotEmpty) {
-        // Try to extract country code from the phone number
-        for (String code in countryCodes) {
-          if (data.mobile!.startsWith(code)) {
-            selectedCountryCode.value = code;
-            break;
+      profile.value = data;
+
+      // Populate text fields with profile data
+      if (data != null) {
+        nameController.text = data.name;
+        phoneController.text = data.mobile ?? '';
+
+        // Parse country code from phone number if available
+        if (data.mobile != null && data.mobile!.isNotEmpty) {
+          // Try to extract country code from the phone number
+          for (String code in countryCodes) {
+            if (data.mobile!.startsWith(code)) {
+              selectedCountryCode.value = code;
+              break;
+            }
           }
         }
       }
-    }
 
-    isLoading.value = false;
+      isLoading.value = false;
+      isInitialLoad.value = false;
+    } catch (e) {
+      if (kDebugMode) {
+        print("❌ Error loading profile: $e");
+      }
+      isLoading.value = false;
+      isInitialLoad.value = false;
+    }
   }
 
   Future<void> pickImage() async {
@@ -101,9 +130,7 @@ class ProfileController extends GetxController {
 
     if (success) {
       Get.snackbar('Success', 'Profile updated successfully');
-      final navBarController = Get.find<NavbarController>();
-      navBarController.changeTabIndex(0);
-      Get.offNamed('/navBarScreen');
+      Get.offNamed('/profileScreen');
     } else {
       Get.snackbar('Error', 'Failed to update profile');
     }

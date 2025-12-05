@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReservationHistoryScreen extends StatelessWidget {
-  const ReservationHistoryScreen({super.key});
+  final bool isFromBottomNav;
+
+  const ReservationHistoryScreen({super.key, this.isFromBottomNav = true});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class ReservationHistoryScreen extends StatelessWidget {
           children: [
             CustomAppBar(
               lable: 'reservation_history_title'.tr,
+              showBackButton: !isFromBottomNav,
               back: '/navBarScreen',
             ),
             Container(
