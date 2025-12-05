@@ -6,7 +6,7 @@ import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_
 import 'package:elad_giserman/features/profile/main/widgets/log_out_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
-import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
+import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/profile_controller.dart';
@@ -17,11 +17,17 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
+    // Initialize controller if not already present
+    if (!Get.isRegistered<ProfileController>()) {
+      Get.put(ProfileController());
+    }
+
+    final controller = Get.find<ProfileController>();
 
     return Scaffold(
       body: Obx(() {
-        if (controller.isLoading.value) {
+        // Show loading only on initial load
+        if (controller.isLoading.value && controller.isInitialLoad.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -39,15 +45,7 @@ class ProfileScreen extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              CustomAppBar(
-                lable: 'profile_title'.tr,
-                back: '',
-                onBackPressed: () {
-                  final navBarController = Get.find<NavbarController>();
-                  navBarController.changeTabIndex(0);
-                  Get.offNamed('/navBarScreen');
-                },
-              ),
+              CustomAppBar(lable: 'profile_title'.tr, showBackButton: false),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 18,
@@ -117,7 +115,9 @@ class ProfileScreen extends StatelessWidget {
                     OptionButton(
                       title: 'my_reservation'.tr,
                       button: () {
-                        Get.offNamed('/reservationScreen');
+                        Get.to(
+                          ReservationHistoryScreen(isFromBottomNav: false),
+                        );
                       },
                     ),
                     const SizedBox(height: 8),

@@ -17,7 +17,7 @@ class SubscriptionsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(lable: 'subscriptions'.tr, back: '/navBarScreen'),
+            CustomAppBar(lable: 'subscriptions'.tr, showBackButton: false),
             Container(
               padding: EdgeInsets.all(18),
               child: Column(

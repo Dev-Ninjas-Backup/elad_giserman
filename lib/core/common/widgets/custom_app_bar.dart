@@ -7,14 +7,12 @@ class CustomAppBar extends StatelessWidget {
   final String? back;
   final bool? cancelText;
   final bool showBackButton;
-  final VoidCallback? onBackPressed;
   const CustomAppBar({
     super.key,
     required this.lable,
     this.cancelText,
     this.back,
     this.showBackButton = true,
-    this.onBackPressed,
   });
 
   @override
@@ -33,47 +31,51 @@ class CustomAppBar extends StatelessWidget {
           bottomRight: Radius.circular(20),
         ),
       ),
-      child: Row(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          if (showBackButton)
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () {
-                if (onBackPressed != null) {
-                  onBackPressed!();
-                } else if (back == null) {
-                  Navigator.pop(context);
-                } else {
-                  Get.offAllNamed(back!);
-                }
-              },
-            )
-          else
-            SizedBox(width: 48),
-          SizedBox(width: 5),
-          Text(
-            lable,
-            style: TextStyle(
-              color: AppColors.primaryFontColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Spacer(),
-          if (cancelText == true)
-            TextButton(
-              onPressed: () {
-                Get.offNamed('/signInScreen');
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: AppColors.primaryFontColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+          Center(
+            child: Text(
+              lable,
+              style: TextStyle(
+                color: AppColors.primaryFontColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
               ),
             ),
+          ),
+          Row(
+            children: [
+              if (showBackButton)
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                  onPressed: () {
+                    if (back == null) {
+                      Navigator.pop(context);
+                    } else {
+                      Get.offAllNamed(back!);
+                    }
+                  },
+                )
+              else
+                SizedBox(width: 48),
+              Spacer(),
+              if (cancelText == true)
+                TextButton(
+                  onPressed: () {
+                    Get.offNamed('/signInScreen');
+                  },
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: AppColors.primaryFontColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );
