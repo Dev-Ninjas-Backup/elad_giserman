@@ -31,7 +31,9 @@ class EditProfileScreen extends StatelessWidget {
                     )
                   : Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 20),
+                        horizontal: 18,
+                        vertical: 20,
+                      ),
                       child: Stack(
                         children: [
                           Center(
@@ -40,32 +42,35 @@ class EditProfileScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(100),
                                 child: controller.selectedImagePath.isEmpty
                                     ? (controller.profile.value?.avatarUrl !=
-                                            null
-                                        ? Image.network(
-                                            controller.profile.value!
-                                                .avatarUrl,
-                                            height: 100,
-                                            width: 100,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (context, error,
-                                                stackTrace) {
-                                              return Image.asset(
-                                                ImagePath.profileImage2,
-                                                height: 100,
-                                                width: 100,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                          )
-                                        : Image.asset(
-                                            ImagePath.profileImage2,
-                                            height: 100,
-                                            width: 100,
-                                            fit: BoxFit.cover,
-                                          ))
+                                              null
+                                          ? Image.network(
+                                              controller
+                                                  .profile
+                                                  .value!
+                                                  .avatarUrl,
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                    return Image.asset(
+                                                      ImagePath.profileImage2,
+                                                      height: 100,
+                                                      width: 100,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                            )
+                                          : Image.asset(
+                                              ImagePath.profileImage2,
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                            ))
                                     : Image.file(
-                                        File(controller.selectedImagePath
-                                            .value),
+                                        File(
+                                          controller.selectedImagePath.value,
+                                        ),
                                         height: 100,
                                         width: 100,
                                         fit: BoxFit.cover,

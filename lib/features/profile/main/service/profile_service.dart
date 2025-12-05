@@ -35,22 +35,22 @@ class ProfileService {
     File? imageFile,
   }) async {
     final url = Uri.parse(Urls.updateProfile);
-    
+
     var request = http.MultipartRequest('PATCH', url);
     request.headers['Authorization'] = 'Bearer $token';
-    
+
     request.fields['name'] = name;
     request.fields['phone'] = phone;
-    
+
     if (imageFile != null && imageFile.existsSync()) {
       request.files.add(
         await http.MultipartFile.fromPath('file', imageFile.path),
       );
     }
-    
+
     try {
       final response = await request.send();
-      
+
       if (response.statusCode == 200) {
         if (kDebugMode) {
           print("✅ Profile updated successfully");

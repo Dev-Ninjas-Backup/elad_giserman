@@ -18,7 +18,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserver {
+class _ProfileScreenState extends State<ProfileScreen>
+    with WidgetsBindingObserver {
   late ProfileController controller;
 
   @override
@@ -44,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserv
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -130,9 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserv
                     OptionButton(
                       title: 'edit_profile'.tr,
                       button: () {
-                        Get.to(
-                          const EditProfileScreen(),
-                        );
+                        Get.to(const EditProfileScreen());
                       },
                     ),
                     const SizedBox(height: 8),
