@@ -11,9 +11,7 @@ import 'package:get/get.dart';
 import '../../main/controller/profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  final String email;
-  final String name;
-  const EditProfileScreen({super.key, required this.email, required this.name});
+  const EditProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,68 +23,85 @@ class EditProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAppBar(lable: 'edit_profile'.tr, back: '/navBarScreen'),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-              child: Stack(
-                children: [
-                  Center(
-                    child: Obx(
-                      () => ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: controller.selectedImagePath.isEmpty
-                            ? Image.asset(
-                                ImagePath.profileImage2,
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                File(controller.selectedImagePath.value),
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
+            Obx(
+              () => controller.isLoading.value
+                  ? const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 20),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Obx(
+                              () => ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: controller.selectedImagePath.isEmpty
+                                    ? (controller.profile.value?.avatarUrl !=
+                                            null
+                                        ? Image.network(
+                                            controller.profile.value!
+                                                .avatarUrl,
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error,
+                                                stackTrace) {
+                                              return Image.asset(
+                                                ImagePath.profileImage2,
+                                                height: 100,
+                                                width: 100,
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
+                                          )
+                                        : Image.asset(
+                                            ImagePath.profileImage2,
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
+                                          ))
+                                    : Image.file(
+                                        File(controller.selectedImagePath
+                                            .value),
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: MediaQuery.of(context).size.width / 2 - 50,
+                            child: GestureDetector(
+                              onTap: () => controller.pickImage(),
+                              child: const CircleAvatar(
+                                radius: 15,
+                                backgroundColor: AppColors.fontColor,
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: MediaQuery.of(context).size.width / 2 - 50,
-                    child: GestureDetector(
-                      onTap: () => controller.pickImage(),
-                      child: const CircleAvatar(
-                        radius: 15,
-                        backgroundColor: AppColors.fontColor,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
               child: CustomTextField(
                 labelText: 'full_name_label'.tr,
-                controller: TextEditingController(),
-                hintText: name,
+                controller: controller.nameController,
+                hintText: 'Enter your name',
                 onChanged: (value) {},
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-              child: CustomTextField(
-                labelText: 'email_label'.tr,
-                controller: TextEditingController(),
-                hintText: email,
-                onChanged: (value) {},
-              ),
-            ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Text(
@@ -120,7 +135,6 @@ class EditProfileScreen extends StatelessWidget {
                       },
                     ),
                   ),
-
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
@@ -143,13 +157,17 @@ class EditProfileScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-              child: CustomButton(
-                label: 'save_btn'.tr,
-                onPressed: () {
-                  Get.offNamed('/profileScreen');
-                },
-                color: AppColors.buttonColor,
-                textColor: Colors.white,
+              child: Obx(
+                () => CustomButton(
+                  label: 'save_btn'.tr,
+                  onPressed: controller.isSaving.value
+                      ? null
+                      : () {
+                          controller.updateProfile();
+                        },
+                  color: AppColors.buttonColor,
+                  textColor: Colors.white,
+                ),
               ),
             ),
           ],

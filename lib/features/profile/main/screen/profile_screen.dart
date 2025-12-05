@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                       title: 'edit_profile'.tr,
                       button: () {
                         Get.to(
-                          EditProfileScreen(email: user.email, name: user.name),
+                          EditProfileScreen(),
                         );
                       },
                     ),
