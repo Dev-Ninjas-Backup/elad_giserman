@@ -26,7 +26,7 @@ class ProfileController extends GetxController {
   var selectedCountryCode = "+880".obs;
 
   final countryCodes = ["+880", "+91", "+1", "+44", "+61"];
-  
+
   Future<void> loadProfile() async {
     isLoading.value = true;
 
@@ -43,12 +43,12 @@ class ProfileController extends GetxController {
     final data = await service.fetchProfile(token);
 
     profile.value = data;
-    
+
     // Populate text fields with profile data
     if (data != null) {
       nameController.text = data.name;
       phoneController.text = data.mobile ?? '';
-      
+
       // Parse country code from phone number if available
       if (data.mobile != null && data.mobile!.isNotEmpty) {
         // Try to extract country code from the phone number
@@ -76,28 +76,28 @@ class ProfileController extends GetxController {
 
   Future<void> updateProfile() async {
     isSaving.value = true;
-    
+
     String? token = await SharedPreferencesHelper.getAccessToken();
-    
+
     if (token == null || token.isEmpty) {
       Get.snackbar('Error', 'No authentication token found');
       isSaving.value = false;
       return;
     }
-    
-    File? imageFile = selectedImagePath.isNotEmpty 
-        ? File(selectedImagePath.value) 
+
+    File? imageFile = selectedImagePath.isNotEmpty
+        ? File(selectedImagePath.value)
         : null;
-    
+
     final success = await service.updateProfile(
       token: token,
       name: nameController.text,
       phone: phoneController.text,
       imageFile: imageFile,
     );
-    
+
     isSaving.value = false;
-    
+
     if (success) {
       Get.snackbar('Success', 'Profile updated successfully');
       Get.offNamed('/profileScreen');
