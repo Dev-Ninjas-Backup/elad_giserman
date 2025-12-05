@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
 import 'package:elad_giserman/features/profile/main/model/profile_model.dart';
 import 'package:elad_giserman/features/profile/main/service/profile_service.dart';
 import 'package:flutter/foundation.dart';
@@ -100,7 +101,9 @@ class ProfileController extends GetxController {
 
     if (success) {
       Get.snackbar('Success', 'Profile updated successfully');
-      Get.offNamed('/profileScreen');
+      final navBarController = Get.find<NavbarController>();
+      navBarController.changeTabIndex(0);
+      Get.offNamed('/navBarScreen');
     } else {
       Get.snackbar('Error', 'Failed to update profile');
     }

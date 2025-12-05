@@ -6,11 +6,15 @@ class CustomAppBar extends StatelessWidget {
   final String lable;
   final String? back;
   final bool? cancelText;
+  final bool showBackButton;
+  final VoidCallback? onBackPressed;
   const CustomAppBar({
     super.key,
     required this.lable,
     this.cancelText,
     this.back,
+    this.showBackButton = true,
+    this.onBackPressed,
   });
 
   @override
@@ -31,16 +35,21 @@ class CustomAppBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () {
-              if (back == null) {
-                Navigator.pop(context);
-              } else {
-                Get.offAllNamed(back!);
-              }
-            },
-          ),
+          if (showBackButton)
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () {
+                if (onBackPressed != null) {
+                  onBackPressed!();
+                } else if (back == null) {
+                  Navigator.pop(context);
+                } else {
+                  Get.offAllNamed(back!);
+                }
+              },
+            )
+          else
+            SizedBox(width: 48),
           SizedBox(width: 5),
           Text(
             lable,
