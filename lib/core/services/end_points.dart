@@ -11,4 +11,6 @@ class Urls {
   static const String myProfile = '$baseUrl/user-info/my-profile';
   static const String updateProfile = '$baseUrl/user-info';
   static const String spinHistory = '$baseUrl/user-info/spin-history';
+  static const String categories = '$baseUrl/category/all';
+  static const String businessProfiles = '$baseUrl/business-profiles/profile';
 }

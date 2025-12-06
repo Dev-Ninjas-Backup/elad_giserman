@@ -1,4 +1,8 @@
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
+import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
+import 'package:elad_giserman/features/home/home/model/category_model.dart';
+import 'package:elad_giserman/features/home/home/service/business_profile_service.dart';
+import 'package:elad_giserman/features/home/home/service/category_service.dart';
 import 'package:get/get.dart';
 
 class Place {
@@ -40,10 +44,17 @@ class Recommended {
 class HomeController extends GetxController {
   var restaurants = <Place>[].obs;
   var recommended = <Recommended>[].obs;
+  var categories = <CategoryModel>[].obs;
+  var businessProfiles = <BusinessProfile>[].obs;
+
+  final CategoryService _categoryService = CategoryService();
+  final BusinessProfileService _profileService = BusinessProfileService();
 
   @override
   void onInit() {
     super.onInit();
+    fetchCategories();
+    fetchBusinessProfiles();
     restaurants.value = [
       Place(
         image: ImagePath.popularRestaurant1,
@@ -186,5 +197,15 @@ class HomeController extends GetxController {
     if (index < 0 || index >= recommended.length) return;
     recommended[index].isFavorite = !recommended[index].isFavorite;
     recommended.refresh();
+  }
+
+  Future<void> fetchCategories() async {
+    final fetchedCategories = await _categoryService.getCategories();
+    categories.value = fetchedCategories;
+  }
+
+  Future<void> fetchBusinessProfiles() async {
+    final fetchedProfiles = await _profileService.getAllProfiles();
+    businessProfiles.value = fetchedProfiles;
   }
 }

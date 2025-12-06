@@ -41,12 +41,27 @@ class RecommendedVenue extends StatelessWidget {
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
-                child: Image.asset(
-                  image,
-                  height: 150,
-                  width: Get.width,
-                  fit: BoxFit.fill,
-                ),
+                child: image.startsWith('http')
+                    ? Image.network(
+                        image,
+                        height: 150,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 150,
+                            width: Get.width,
+                            color: Colors.grey[300],
+                            child: Icon(Icons.image_not_supported),
+                          );
+                        },
+                      )
+                    : Image.asset(
+                        image,
+                        height: 150,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                      ),
               ),
               Positioned(
                 right: 8,
