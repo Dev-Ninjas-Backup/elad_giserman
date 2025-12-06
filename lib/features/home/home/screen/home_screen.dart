@@ -92,16 +92,22 @@ class HomeScreen extends StatelessWidget {
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
-                        itemCount: _getFilteredProfiles(controller, selectedTab.value).length,
+                        itemCount: _getFilteredProfiles(
+                          controller,
+                          selectedTab.value,
+                        ).length,
                         separatorBuilder: (_, __) => const SizedBox(width: 20),
                         itemBuilder: (context, index) {
-                          final filteredProfiles = _getFilteredProfiles(controller, selectedTab.value);
+                          final filteredProfiles = _getFilteredProfiles(
+                            controller,
+                            selectedTab.value,
+                          );
                           final profile = filteredProfiles[index];
-                          
+
                           return PopularNearWidget(
-                            image: profile.gallery.isNotEmpty 
-                              ? profile.gallery.first.url 
-                              : 'https://via.placeholder.com/300',
+                            image: profile.gallery.isNotEmpty
+                                ? profile.gallery.first.url
+                                : 'https://via.placeholder.com/300',
                             title: profile.title,
                             subTitle: profile.location,
                             rating: profile.avgRating ?? 0.0,
@@ -109,6 +115,7 @@ class HomeScreen extends StatelessWidget {
                             category: profile.category.name,
                             isFavorite: false,
                             onFavoriteTap: () {},
+                            profileId: profile.id,
                           );
                         },
                       ),
@@ -170,18 +177,20 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.recommended.length,
+                      itemCount: controller.businessProfiles.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 20),
                       itemBuilder: (context, index) {
-                        final item = controller.recommended[index];
+                        final profile = controller.businessProfiles[index];
                         return RecommendedVenue(
-                          image: item.image,
-                          title: item.title,
-                          description: item.description,
-                          location: item.location,
-                          isFavorite: item.isFavorite,
-                          onFavoriteTap: () =>
-                              controller.toggleRecommendedFavorite(index),
+                          image: profile.gallery.isNotEmpty
+                              ? profile.gallery.first.url
+                              : 'https://via.placeholder.com/300',
+                          title: profile.title,
+                          description: profile.description,
+                          location: profile.location,
+                          isFavorite: false,
+                          onFavoriteTap: () {},
+                          profileId: profile.id,
                         );
                       },
                     ),
@@ -196,7 +205,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<BusinessProfile> _getFilteredProfiles(HomeController controller, int selectedTabIndex) {
+  List<BusinessProfile> _getFilteredProfiles(
+    HomeController controller,
+    int selectedTabIndex,
+  ) {
     if (selectedTabIndex == -1) {
       // Show all profiles
       return controller.businessProfiles;

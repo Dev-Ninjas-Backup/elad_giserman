@@ -15,6 +15,8 @@ class RecommendedTab extends StatelessWidget {
   final String category;
   final double rating;
   final int reviewNum;
+  final String profileId;
+
   const RecommendedTab({
     super.key,
     required this.image,
@@ -25,6 +27,7 @@ class RecommendedTab extends StatelessWidget {
     required this.category,
     required this.rating,
     required this.reviewNum,
+    required this.profileId,
   });
 
   @override
@@ -176,15 +179,7 @@ class RecommendedTab extends StatelessWidget {
                 CustomSmallButton(
                   text: 'reserve_seat'.tr,
                   onPressed: () {
-                    Get.to(
-                      DetailsScreen(
-                        image: image,
-                        rating: rating,
-                        reviewNum: reviewNum,
-                        title: title,
-                        location: location,
-                      ),
-                    );
+                    Get.to(() => DetailsScreen(profileId: profileId));
                   },
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

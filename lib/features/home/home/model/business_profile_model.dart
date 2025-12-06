@@ -45,9 +45,7 @@ class OwnerInfo {
   OwnerInfo({required this.name});
 
   factory OwnerInfo.fromJson(Map<String, dynamic> json) {
-    return OwnerInfo(
-      name: json['name'] ?? '',
-    );
+    return OwnerInfo(name: json['name'] ?? '');
   }
 }
 
@@ -153,15 +151,20 @@ class BusinessProfile {
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
       category: ProfileCategory.fromJson(json['category'] ?? {}),
-      gallery: (json['gallery'] as List<dynamic>?)
-              ?.map((item) => GalleryItem.fromJson(item as Map<String, dynamic>))
+      gallery:
+          (json['gallery'] as List<dynamic>?)
+              ?.map(
+                (item) => GalleryItem.fromJson(item as Map<String, dynamic>),
+              )
               .toList() ??
           [],
       owner: OwnerInfo.fromJson(json['owner'] ?? {}),
       totalOffers: json['totalOffers'] ?? 0,
       totalRedemptions: json['totalRedemptions'] ?? 0,
       reviewCount: json['reviewCount'] ?? 0,
-      avgRating: json['avgRating'] is num ? (json['avgRating'] as num).toDouble() : null,
+      avgRating: json['avgRating'] is num
+          ? (json['avgRating'] as num).toDouble()
+          : null,
     );
   }
 }

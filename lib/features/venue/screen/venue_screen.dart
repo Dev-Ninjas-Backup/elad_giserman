@@ -36,18 +36,20 @@ class VenueScreen extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: controller.recommended.length,
+                  itemCount: controller.businessProfiles.length,
                   separatorBuilder: (_, __) => SizedBox(height: 20),
                   itemBuilder: (context, index) {
-                    final item = controller.recommended[index];
+                    final profile = controller.businessProfiles[index];
                     return RecommendedVenue(
-                      image: item.image,
-                      title: item.title,
-                      description: item.description,
-                      location: item.location,
-                      isFavorite: item.isFavorite,
-                      onFavoriteTap: () =>
-                          controller.toggleRecommendedFavorite(index),
+                      image: profile.gallery.isNotEmpty
+                          ? profile.gallery.first.url
+                          : 'https://via.placeholder.com/300',
+                      title: profile.title,
+                      description: profile.description,
+                      location: profile.location,
+                      isFavorite: false,
+                      onFavoriteTap: () {},
+                      profileId: profile.id,
                     );
                   },
                 ),

@@ -22,10 +22,15 @@ class TwistController extends GetxController {
 
   List<BusinessProfile> get filteredProfiles {
     // Get profiles for the selected category
-    final categoryProfiles = selectedTab.value < homeController.categories.length
-        ? businessProfiles.where((profile) =>
-            profile.categoryId == homeController.categories[selectedTab.value].id)
-            .toList()
+    final categoryProfiles =
+        selectedTab.value < homeController.categories.length
+        ? businessProfiles
+              .where(
+                (profile) =>
+                    profile.categoryId ==
+                    homeController.categories[selectedTab.value].id,
+              )
+              .toList()
         : businessProfiles;
 
     // Filter by search query

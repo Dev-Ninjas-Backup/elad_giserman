@@ -13,6 +13,8 @@ class RecommendedVenue extends StatelessWidget {
   final String location;
   final bool isFavorite;
   final VoidCallback onFavoriteTap;
+  final String profileId;
+
   const RecommendedVenue({
     super.key,
     required this.image,
@@ -21,6 +23,7 @@ class RecommendedVenue extends StatelessWidget {
     required this.location,
     required this.isFavorite,
     required this.onFavoriteTap,
+    required this.profileId,
   });
 
   @override
@@ -124,15 +127,7 @@ class RecommendedVenue extends StatelessWidget {
                 CustomSmallButton(
                   text: 'view_details'.tr,
                   onPressed: () {
-                    Get.to(
-                      DetailsScreen(
-                        image: image,
-                        rating: 4.7,
-                        reviewNum: 227,
-                        title: title,
-                        location: location,
-                      ),
-                    );
+                    Get.to(() => DetailsScreen(profileId: profileId));
                   },
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

@@ -26,8 +26,9 @@ class BusinessProfileService {
         final List<dynamic> data = jsonResponse['data'] ?? [];
 
         final profiles = data
-            .map((item) =>
-                BusinessProfile.fromJson(item as Map<String, dynamic>))
+            .map(
+              (item) => BusinessProfile.fromJson(item as Map<String, dynamic>),
+            )
             .toList();
 
         print('✅ Business Profiles Fetched: ${profiles.length} profiles');

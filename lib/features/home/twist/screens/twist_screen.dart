@@ -69,7 +69,8 @@ class TwistScreen extends StatelessWidget {
                                 fontColor: controller.selectedTab.value == index
                                     ? Colors.white
                                     : Colors.black,
-                                buttonColor: controller.selectedTab.value == index
+                                buttonColor:
+                                    controller.selectedTab.value == index
                                     ? AppColors.primaryFontColor
                                     : const Color(0xFFF2F2F2),
                                 onTap: () => controller.changeTab(index),
@@ -110,6 +111,7 @@ class TwistScreen extends StatelessWidget {
                             category: profile.category.name,
                             rating: profile.avgRating ?? 0.0,
                             reviewNum: profile.reviewCount,
+                            profileId: profile.id,
                           );
                         },
                       );

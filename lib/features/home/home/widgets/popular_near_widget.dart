@@ -15,6 +15,7 @@ class PopularNearWidget extends StatelessWidget {
   final String category;
   final bool isFavorite;
   final VoidCallback onFavoriteTap;
+  final String profileId;
 
   const PopularNearWidget({
     super.key,
@@ -26,6 +27,7 @@ class PopularNearWidget extends StatelessWidget {
     required this.category,
     required this.isFavorite,
     required this.onFavoriteTap,
+    required this.profileId,
   });
 
   @override
@@ -177,15 +179,7 @@ class PopularNearWidget extends StatelessWidget {
             child: CustomSmallButton(
               text: 'view_details'.tr,
               onPressed: () {
-                Get.to(
-                  DetailsScreen(
-                    image: image,
-                    rating: rating,
-                    reviewNum: reviewNum,
-                    title: title,
-                    location: subTitle,
-                  ),
-                );
+                Get.to(() => DetailsScreen(profileId: profileId));
               },
               buttonColor: AppColors.buttonColor,
               fontColor: Colors.white,
