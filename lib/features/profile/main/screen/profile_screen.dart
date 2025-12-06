@@ -4,6 +4,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/profile/edit_profile/screen/edit_profile_screen.dart';
 import 'package:elad_giserman/features/profile/main/widgets/log_out_button.dart';
+import 'package:elad_giserman/features/profile/main/widgets/login_card.dart';
 import 'package:elad_giserman/features/profile/main/widgets/option_button.dart';
 import 'package:elad_giserman/features/profile/main/widgets/vip_features.dart';
 import 'package:elad_giserman/features/profile/my_reservation/screen/reservation_history_screen.dart';
@@ -33,13 +34,9 @@ class ProfileScreen extends StatelessWidget {
 
         final user = controller.profile.value;
 
+        // Show login card if user is not logged in
         if (user == null) {
-          return const Center(
-            child: Text(
-              "Failed to load profile",
-              style: TextStyle(fontSize: 18),
-            ),
-          );
+          return const LoginCard();
         }
 
         return SingleChildScrollView(

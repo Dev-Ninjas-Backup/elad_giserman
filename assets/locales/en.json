@@ -158,7 +158,6 @@
   "snack_success": "Success",
   "snack_password_updated": "Password updated successfully",
   "general_settings": "General Settings",
-
   "about_app_title": "About",
   "about_us_heading": "About Us",
   "about_us_paragraph": "Our app is designed to provide a seamless and intuitive experience for users. We aim to deliver high-quality features and services to enhance your productivity and enjoyment.",
@@ -170,7 +169,6 @@
   "contact_us_paragraph": "Have questions or feedback? Reach out to us at:",
   "contact_email": "support@example.com",
   "contact_phone": "+1-800-123-4567",
-
   "help_screen_title": "Help & Support",
   "faq_heading": "Frequently Asked Questions",
   "faq_q_reset_password": "How do I reset my password?",
@@ -181,7 +179,6 @@
   "faq_a_app_crash": "Ensure you have the latest app version. If the issue persists, contact support with details about the crash.",
   "faq_q_delete_account": "How do I delete my account?",
   "faq_a_delete_account": "Go to Settings, select \"Account Management,\" and choose \"Delete Account.\" Follow the prompts to confirm.",
-
   "terms_of_use_title": "Terms of Use",
   "terms_1_heading": "1. Acceptance of Terms",
   "terms_1_content": "By accessing or using our app, you agree to be bound by these Terms of Use. If you do not agree, please do not use the app.",
@@ -194,7 +191,6 @@
   "terms_5_heading": "5. Contact Us",
   "terms_5_content": "For questions about these Terms of Use, contact us at support@example.com.",
   "accept_terms": "Accept",
-
   "privacy_1_heading": "1. Introduction",
   "privacy_1_content": "Welcome to our app. We value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information.",
   "privacy_2_heading": "2. Information We Collect",
@@ -205,10 +201,12 @@
   "privacy_4_content": "We do not share your personal information with third parties except as required by law or with your consent.",
   "privacy_5_heading": "5. Contact Us",
   "privacy_5_content": "If you have any questions about this Privacy Policy, please contact us at support@example.com.",
-
   "twist_title": "Twist",
   "twist_search_hint": "Search",
   "tab_restaurants": "Restaurants",
   "tab_cafe": "Cafe",
-  "tab_bar": "Bar"
+  "tab_bar": "Bar",
+  "login_required": "Login Required",
+  "login_description": "Please sign in to view your profile and access all features.",
+  "sign_in": "Sign In"
 }
