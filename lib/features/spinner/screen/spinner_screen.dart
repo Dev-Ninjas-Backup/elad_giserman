@@ -28,7 +28,7 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
     } else {
       controller = Get.put(SpinnerController());
     }
-    
+
     // Set up listener only once when widget is first created
     ever(controller.selectedIndex, (index) {
       if (index != -1 && !_dialogShown && controller.spinSuccessful.value) {
