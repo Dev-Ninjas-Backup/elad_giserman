@@ -40,11 +40,6 @@ class UpdatePasswordScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 8),
-                    Text(
-                      'choose_strong_password'.tr,
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                      textAlign: TextAlign.center,
-                    ),
                     SizedBox(height: 40),
                     Obx(
                       () => TextFormField(
@@ -128,15 +123,21 @@ class UpdatePasswordScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 40),
-                    CustomButton(
-                      label: 'update_password'.tr,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.updatePassword();
-                        }
-                      },
-                      color: AppColors.buttonColor,
-                      textColor: Colors.white,
+                    Obx(
+                      () => CustomButton(
+                        label: controller.isSubmitting.value
+                            ? 'Updating...'
+                            : 'update_password'.tr,
+                        onPressed: controller.isSubmitting.value
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller.updatePassword();
+                                }
+                              },
+                        color: AppColors.buttonColor,
+                        textColor: Colors.white,
+                      ),
                     ),
                   ],
                 ),
