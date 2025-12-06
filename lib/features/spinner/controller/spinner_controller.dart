@@ -1,4 +1,9 @@
+import 'dart:convert';
 import 'dart:math' as math;
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/features/spinner/model/spin_result_model.dart';
+import 'package:elad_giserman/features/spinner/service/spinner_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,18 +27,24 @@ class SpinnerController extends GetxController
   final RxDouble rotation = 0.0.obs;
   final RxInt selectedIndex = (-1).obs;
   final RxBool isSpinning = false.obs;
+  final Rx<SpinResultData?> spinResult = Rx<SpinResultData?>(null);
+  final RxBool isSubmitting = false.obs;
+  final RxBool spinSuccessful = false.obs;
 
   final math.Random _rand = math.Random();
+  final SpinnerService _service = SpinnerService();
 
   @override
   void onInit() {
     super.onInit();
     animationController = AnimationController(vsync: this);
     animationController.addListener(() {
-      rotation.value = animation.value;
+      if (!isClosed) {
+        rotation.value = animation.value;
+      }
     });
     animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
+      if (!isClosed && status == AnimationStatus.completed) {
         final sel = _computeSelectedIndex();
         setSelected(sel);
       }
@@ -65,9 +76,127 @@ class SpinnerController extends GetxController
     selectedIndex.value = index;
     isSpinning.value = false;
 
+    // Submit spin result to API
+    _submitSpinResult(index);
+
     Future.delayed(Duration(milliseconds: 300), () {
       selectedIndex.value = -1;
     });
+  }
+
+  Future<void> _submitSpinResult(int resultIndex) async {
+    // Check if user is logged in
+    final token = await SharedPreferencesHelper.getAccessToken();
+    if (token == null || token.isEmpty) {
+      if (kDebugMode) {
+        print("❌ User not logged in");
+      }
+      if (!isClosed) {
+        Get.snackbar(
+          "Error",
+          "Please login to save your spin result",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+      return;
+    }
+
+    if (!isClosed) {
+      isSubmitting.value = true;
+    }
+    try {
+      if (kDebugMode) {
+        print("🎬 Starting to submit spin result with index: $resultIndex");
+      }
+
+      final response = await _service.submitSpinResult(result: resultIndex);
+
+      if (isClosed) return;
+
+      if (kDebugMode) {
+        print("📊 Response received with status: ${response.statusCode}");
+        print("📊 Response body: ${response.body}");
+      }
+
+      if (response.statusCode == 201) {
+        final jsonResponse = jsonDecode(response.body);
+        if (kDebugMode) {
+          print("✅ Spin result submitted successfully: ${response.statusCode}");
+          print("✅ Response data: ${jsonResponse.toString()}");
+        }
+
+        // Parse and store the spin result
+        if (jsonResponse['data'] != null) {
+          spinResult.value = SpinResultData.fromJson(jsonResponse['data']);
+          spinSuccessful.value = true; // Mark as successful
+          if (kDebugMode) {
+            print("✅ Spin result saved: ${spinResult.value?.id}");
+          }
+          // Show success message
+          Get.snackbar(
+            "Success",
+            "Spin result saved successfully!",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        } else {
+          if (kDebugMode) {
+            print("⚠️ Response data is null");
+          }
+          spinSuccessful.value = false;
+        }
+      } else {
+        if (kDebugMode) {
+          print("❌ Failed to submit spin result: ${response.statusCode}");
+          print("❌ Response body: ${response.body}");
+        }
+
+        spinSuccessful.value = false; // Mark as failed
+
+        // Try to parse error message from response
+        String errorMessage = "Failed to save spin result";
+        try {
+          final jsonResponse = jsonDecode(response.body);
+          if (jsonResponse['message'] != null) {
+            errorMessage = jsonResponse['message'];
+          } else if (jsonResponse['data'] != null &&
+              jsonResponse['data']['message'] != null) {
+            errorMessage = jsonResponse['data']['message'];
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print("⚠️ Could not parse error message: $e");
+          }
+        }
+
+        Get.snackbar(
+          "Unable to Save Spin",
+          errorMessage,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+          duration: Duration(seconds: 4),
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("❌ Error submitting spin result: $e");
+        print("❌ Stack trace: ${StackTrace.current}");
+      }
+      spinSuccessful.value = false; // Mark as failed
+      if (!isClosed) {
+        Get.snackbar(
+          "Error",
+          "Network error. Please try again.",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } finally {
+      if (!isClosed) {
+        isSubmitting.value = false;
+      }
+    }
   }
 
   String get selectedText =>
@@ -99,5 +228,11 @@ class SpinnerController extends GetxController
 
     rotation.value = rotation.value % (2 * math.pi);
     return bestIndex;
+  }
+
+  @override
+  void onClose() {
+    animationController.dispose();
+    super.onClose();
   }
 }
