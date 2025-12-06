@@ -8,23 +8,53 @@ import 'package:elad_giserman/features/spinner/widget/wheel_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SpinnerScreen extends StatelessWidget {
+class SpinnerScreen extends StatefulWidget {
   const SpinnerScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final SpinnerController controller = Get.put(SpinnerController());
-    final size = MediaQuery.of(context).size;
-    final wheelSize = math.min(size.width, size.height) * 0.78;
+  State<SpinnerScreen> createState() => _SpinnerScreenState();
+}
 
+class _SpinnerScreenState extends State<SpinnerScreen> {
+  late SpinnerController controller;
+  bool _dialogShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Use getOrPut to avoid creating duplicate controllers
+    if (Get.isRegistered<SpinnerController>()) {
+      controller = Get.find<SpinnerController>();
+    } else {
+      controller = Get.put(SpinnerController());
+    }
+    
+    // Set up listener only once when widget is first created
     ever(controller.selectedIndex, (index) {
-      if (index != -1) {
-        Get.dialog(
-          ResultDialog(result: controller.selectedText),
-          barrierDismissible: false,
-        );
+      if (index != -1 && !_dialogShown && controller.spinSuccessful.value) {
+        _dialogShown = true;
+        Future.delayed(Duration.zero, () {
+          if (mounted) {
+            Get.dialog(
+              ResultDialog(result: controller.selectedText),
+              barrierDismissible: false,
+            );
+          }
+        });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _dialogShown = false;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final wheelSize = math.min(size.width, size.height) * 0.78;
 
     return Scaffold(
       body: Stack(

@@ -9,4 +9,5 @@ class Urls {
   static const String resetPassword = '$baseUrl/auth/reset-password';
   static const String myProfile = '$baseUrl/user-info/my-profile';
   static const String updateProfile = '$baseUrl/user-info';
+  static const String spinHistory = '$baseUrl/user-info/spin-history';
 }
