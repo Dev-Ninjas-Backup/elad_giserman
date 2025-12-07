@@ -1,8 +1,10 @@
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/model/category_model.dart';
+import 'package:elad_giserman/features/home/home/model/favorite_model.dart';
 import 'package:elad_giserman/features/home/home/service/business_profile_service.dart';
 import 'package:elad_giserman/features/home/home/service/category_service.dart';
+import 'package:elad_giserman/features/home/home/service/favorite_service.dart';
 import 'package:get/get.dart';
 
 class Place {
@@ -46,9 +48,12 @@ class HomeController extends GetxController {
   var recommended = <Recommended>[].obs;
   var categories = <CategoryModel>[].obs;
   var businessProfiles = <BusinessProfile>[].obs;
+  var favorites = <Favorite>[].obs;
+  var isLoadingFavorites = false.obs;
 
   final CategoryService _categoryService = CategoryService();
   final BusinessProfileService _profileService = BusinessProfileService();
+  final FavoriteService _favoriteService = FavoriteService();
 
   @override
   void onInit() {
@@ -207,5 +212,32 @@ class HomeController extends GetxController {
   Future<void> fetchBusinessProfiles() async {
     final fetchedProfiles = await _profileService.getAllProfiles();
     businessProfiles.value = fetchedProfiles;
+  }
+
+  Future<void> fetchMyFavorites() async {
+    isLoadingFavorites.value = true;
+    try {
+      final fetchedFavorites = await _favoriteService.getMyFavorites();
+      favorites.value = fetchedFavorites;
+      print('✅ Favorites loaded: ${favorites.length} items');
+    } catch (e) {
+      print('❌ Error fetching favorites: $e');
+    } finally {
+      isLoadingFavorites.value = false;
+    }
+  }
+
+  Future<void> toggleFavoriteBusiness(String restaurantId) async {
+    try {
+      await _favoriteService.toggleFavorite(restaurantId);
+      // Always refresh favorites list after toggle (success or failure)
+      await fetchMyFavorites();
+    } catch (e) {
+      print('❌ Error toggling favorite: $e');
+    }
+  }
+
+  bool isFavoriteBusiness(String restaurantId) {
+    return _favoriteService.isFavorite(restaurantId, favorites);
   }
 }
