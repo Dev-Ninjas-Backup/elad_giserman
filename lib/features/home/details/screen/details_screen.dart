@@ -4,6 +4,7 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
+import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
 import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
 import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -243,9 +244,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                               ),
                               Spacer(),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.favorite, color: Colors.grey),
+                              Obx(
+                                () {
+                                  final homeController = Get.find<HomeController>();
+                                  final isFav = homeController.isFavoriteBusiness(widget.profileId);
+                                  return IconButton(
+                                    onPressed: () {
+                                      homeController.toggleFavoriteBusiness(widget.profileId);
+                                    },
+                                    icon: Icon(
+                                      Icons.favorite,
+                                      color: isFav ? Colors.red : Colors.grey,
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),

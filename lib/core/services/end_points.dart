@@ -15,4 +15,6 @@ class Urls {
   static const String businessProfiles = '$baseUrl/business-profiles/profile';
   static const String postReview = '$baseUrl/review';
   static const String replyReview = '$baseUrl/review/reply';
+  static const String addFavorite = '$baseUrl/user-favorite';
+  static const String myFavorites = '$baseUrl/user-favorite/my-favorite';
 }

@@ -22,6 +22,11 @@ class HomeScreen extends StatelessWidget {
 
     final selectedTab = (-1).obs; // -1 means show all categories
 
+    // Fetch favorites on screen load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.fetchMyFavorites();
+    });
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -104,18 +109,23 @@ class HomeScreen extends StatelessWidget {
                           );
                           final profile = filteredProfiles[index];
 
-                          return PopularNearWidget(
-                            image: profile.gallery.isNotEmpty
-                                ? profile.gallery.first.url
-                                : 'https://via.placeholder.com/300',
-                            title: profile.title,
-                            subTitle: profile.location,
-                            rating: profile.avgRating ?? 0.0,
-                            reviewNum: profile.reviewCount,
-                            category: profile.category.name,
-                            isFavorite: false,
-                            onFavoriteTap: () {},
-                            profileId: profile.id,
+                          return Obx(
+                            () => PopularNearWidget(
+                              image: profile.gallery.isNotEmpty
+                                  ? profile.gallery.first.url
+                                  : 'https://via.placeholder.com/300',
+                              title: profile.title,
+                              subTitle: profile.location,
+                              rating: profile.avgRating ?? 0.0,
+                              reviewNum: profile.reviewCount,
+                              category: profile.category.name,
+                              isFavorite:
+                                  controller.isFavoriteBusiness(profile.id),
+                              onFavoriteTap: () {
+                                controller.toggleFavoriteBusiness(profile.id);
+                              },
+                              profileId: profile.id,
+                            ),
                           );
                         },
                       ),
@@ -181,16 +191,21 @@ class HomeScreen extends StatelessWidget {
                       separatorBuilder: (_, __) => const SizedBox(height: 20),
                       itemBuilder: (context, index) {
                         final profile = controller.businessProfiles[index];
-                        return RecommendedVenue(
-                          image: profile.gallery.isNotEmpty
-                              ? profile.gallery.first.url
-                              : 'https://via.placeholder.com/300',
-                          title: profile.title,
-                          description: profile.description,
-                          location: profile.location,
-                          isFavorite: false,
-                          onFavoriteTap: () {},
-                          profileId: profile.id,
+                        return Obx(
+                          () => RecommendedVenue(
+                            image: profile.gallery.isNotEmpty
+                                ? profile.gallery.first.url
+                                : 'https://via.placeholder.com/300',
+                            title: profile.title,
+                            description: profile.description,
+                            location: profile.location,
+                            isFavorite:
+                                controller.isFavoriteBusiness(profile.id),
+                            onFavoriteTap: () {
+                              controller.toggleFavoriteBusiness(profile.id);
+                            },
+                            profileId: profile.id,
+                          ),
                         );
                       },
                     ),
