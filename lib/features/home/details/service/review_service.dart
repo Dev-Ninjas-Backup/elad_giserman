@@ -74,7 +74,10 @@ class ReviewService {
 
       if (response.statusCode == 201) {
         final jsonResponse = jsonDecode(response.body);
-        final replyData = jsonResponse['data'];
+        // The API returns the reply data directly
+        final replyData = jsonResponse is Map
+            ? jsonResponse
+            : jsonResponse['data'];
 
         if (replyData != null) {
           final reply = ReviewReply.fromJson(replyData as Map<String, dynamic>);
