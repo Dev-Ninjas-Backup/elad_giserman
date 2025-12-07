@@ -2,7 +2,7 @@ import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:flutter/material.dart';
 
 class TabWidget extends StatelessWidget {
-  final String image;
+  final String? image;
   final String title;
   final Color buttonColor;
   final Color iconColor;
@@ -11,7 +11,7 @@ class TabWidget extends StatelessWidget {
 
   const TabWidget({
     super.key,
-    required this.image,
+    this.image,
     required this.title,
     required this.iconColor,
     required this.fontColor,
@@ -34,8 +34,10 @@ class TabWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(image, color: iconColor),
-            const SizedBox(width: 5),
+            if (image != null) ...[
+              Image.asset(image!, color: iconColor),
+              const SizedBox(width: 5),
+            ],
             Text(
               title,
               style: getTextStyle(

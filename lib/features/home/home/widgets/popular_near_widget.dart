@@ -15,6 +15,7 @@ class PopularNearWidget extends StatelessWidget {
   final String category;
   final bool isFavorite;
   final VoidCallback onFavoriteTap;
+  final String profileId;
 
   const PopularNearWidget({
     super.key,
@@ -26,6 +27,7 @@ class PopularNearWidget extends StatelessWidget {
     required this.category,
     required this.isFavorite,
     required this.onFavoriteTap,
+    required this.profileId,
   });
 
   @override
@@ -46,12 +48,27 @@ class PopularNearWidget extends StatelessWidget {
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
-                child: Image.asset(
-                  image,
-                  height: 120,
-                  width: Get.width,
-                  fit: BoxFit.fill,
-                ),
+                child: image.startsWith('http')
+                    ? Image.network(
+                        image,
+                        height: 120,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 120,
+                            width: Get.width,
+                            color: Colors.grey[300],
+                            child: Icon(Icons.image_not_supported),
+                          );
+                        },
+                      )
+                    : Image.asset(
+                        image,
+                        height: 120,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -162,15 +179,7 @@ class PopularNearWidget extends StatelessWidget {
             child: CustomSmallButton(
               text: 'view_details'.tr,
               onPressed: () {
-                Get.to(
-                  DetailsScreen(
-                    image: image,
-                    rating: rating,
-                    reviewNum: reviewNum,
-                    title: title,
-                    location: subTitle,
-                  ),
-                );
+                Get.to(() => DetailsScreen(profileId: profileId));
               },
               buttonColor: AppColors.buttonColor,
               fontColor: Colors.white,

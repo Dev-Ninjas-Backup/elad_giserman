@@ -13,6 +13,8 @@ class RecommendedVenue extends StatelessWidget {
   final String location;
   final bool isFavorite;
   final VoidCallback onFavoriteTap;
+  final String profileId;
+
   const RecommendedVenue({
     super.key,
     required this.image,
@@ -21,6 +23,7 @@ class RecommendedVenue extends StatelessWidget {
     required this.location,
     required this.isFavorite,
     required this.onFavoriteTap,
+    required this.profileId,
   });
 
   @override
@@ -41,12 +44,27 @@ class RecommendedVenue extends StatelessWidget {
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
-                child: Image.asset(
-                  image,
-                  height: 150,
-                  width: Get.width,
-                  fit: BoxFit.fill,
-                ),
+                child: image.startsWith('http')
+                    ? Image.network(
+                        image,
+                        height: 150,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 150,
+                            width: Get.width,
+                            color: Colors.grey[300],
+                            child: Icon(Icons.image_not_supported),
+                          );
+                        },
+                      )
+                    : Image.asset(
+                        image,
+                        height: 150,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                      ),
               ),
               Positioned(
                 right: 8,
@@ -109,15 +127,7 @@ class RecommendedVenue extends StatelessWidget {
                 CustomSmallButton(
                   text: 'view_details'.tr,
                   onPressed: () {
-                    Get.to(
-                      DetailsScreen(
-                        image: image,
-                        rating: 4.7,
-                        reviewNum: 227,
-                        title: title,
-                        location: location,
-                      ),
-                    );
+                    Get.to(() => DetailsScreen(profileId: profileId));
                   },
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

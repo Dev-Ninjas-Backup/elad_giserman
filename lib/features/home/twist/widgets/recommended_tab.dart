@@ -15,6 +15,8 @@ class RecommendedTab extends StatelessWidget {
   final String category;
   final double rating;
   final int reviewNum;
+  final String profileId;
+
   const RecommendedTab({
     super.key,
     required this.image,
@@ -25,6 +27,7 @@ class RecommendedTab extends StatelessWidget {
     required this.category,
     required this.rating,
     required this.reviewNum,
+    required this.profileId,
   });
 
   @override
@@ -45,12 +48,27 @@ class RecommendedTab extends StatelessWidget {
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
-                child: Image.asset(
-                  image,
-                  height: 130,
-                  width: Get.width,
-                  fit: BoxFit.fill,
-                ),
+                child: image.startsWith('http')
+                    ? Image.network(
+                        image,
+                        height: 130,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 130,
+                            width: Get.width,
+                            color: Colors.grey[300],
+                            child: Icon(Icons.image_not_supported),
+                          );
+                        },
+                      )
+                    : Image.asset(
+                        image,
+                        height: 130,
+                        width: Get.width,
+                        fit: BoxFit.fill,
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -161,15 +179,7 @@ class RecommendedTab extends StatelessWidget {
                 CustomSmallButton(
                   text: 'reserve_seat'.tr,
                   onPressed: () {
-                    Get.to(
-                      DetailsScreen(
-                        image: image,
-                        rating: rating,
-                        reviewNum: reviewNum,
-                        title: title,
-                        location: location,
-                      ),
-                    );
+                    Get.to(() => DetailsScreen(profileId: profileId));
                   },
                   buttonColor: AppColors.buttonColor,
                   fontColor: Colors.white,

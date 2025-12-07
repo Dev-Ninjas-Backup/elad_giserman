@@ -1,7 +1,7 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
-import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/home/controller/home_ads_controller.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/widgets/home_app_bar.dart';
 import 'package:elad_giserman/features/home/home/widgets/popular_near_widget.dart';
 import 'package:elad_giserman/features/home/home/widgets/recommended_venue.dart';
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     final HomeController controller = Get.put(HomeController());
     final HomeAdsController adsController = Get.put(HomeAdsController());
 
-    final selectedTab = 0.obs;
+    final selectedTab = (-1).obs; // -1 means show all categories
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -45,51 +45,26 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(width: 20),
-                    TabWidget(
-                      image: IconPath.tab1,
-                      title: 'tab_restaurants'.tr,
-                      iconColor: selectedTab.value == 0
-                          ? Colors.white
-                          : Colors.black,
-                      fontColor: selectedTab.value == 0
-                          ? Colors.white
-                          : Colors.black,
-                      buttonColor: selectedTab.value == 0
-                          ? AppColors.primaryFontColor
-                          : const Color(0xFFF2F2F2),
-                      onTap: () => selectedTab.value = 0,
+                    ...List.generate(
+                      controller.categories.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: TabWidget(
+                          image: null,
+                          title: controller.categories[index].name,
+                          iconColor: selectedTab.value == index
+                              ? Colors.white
+                              : Colors.black,
+                          fontColor: selectedTab.value == index
+                              ? Colors.white
+                              : Colors.black,
+                          buttonColor: selectedTab.value == index
+                              ? AppColors.primaryFontColor
+                              : const Color(0xFFF2F2F2),
+                          onTap: () => selectedTab.value = index,
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 10),
-                    TabWidget(
-                      image: IconPath.tab2,
-                      title: 'tab_cafe'.tr,
-                      iconColor: selectedTab.value == 1
-                          ? Colors.white
-                          : Colors.black,
-                      fontColor: selectedTab.value == 1
-                          ? Colors.white
-                          : Colors.black,
-                      buttonColor: selectedTab.value == 1
-                          ? AppColors.primaryFontColor
-                          : const Color(0xFFF2F2F2),
-                      onTap: () => selectedTab.value = 1,
-                    ),
-                    const SizedBox(width: 10),
-                    TabWidget(
-                      image: IconPath.tab3,
-                      title: 'tab_bar'.tr,
-                      iconColor: selectedTab.value == 2
-                          ? Colors.white
-                          : Colors.black,
-                      fontColor: selectedTab.value == 2
-                          ? Colors.white
-                          : Colors.black,
-                      buttonColor: selectedTab.value == 2
-                          ? AppColors.primaryFontColor
-                          : const Color(0xFFF2F2F2),
-                      onTap: () => selectedTab.value = 2,
-                    ),
-                    SizedBox(width: 10),
                     GestureDetector(
                       onTap: () => Get.to(TwistScreen()),
                       child: Text(
@@ -117,36 +92,30 @@ class HomeScreen extends StatelessWidget {
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
-                        itemCount: controller.restaurants
-                            .where(
-                              (item) =>
-                                  item.category ==
-                                  _getCategory(selectedTab.value),
-                            )
-                            .length,
+                        itemCount: _getFilteredProfiles(
+                          controller,
+                          selectedTab.value,
+                        ).length,
                         separatorBuilder: (_, __) => const SizedBox(width: 20),
                         itemBuilder: (context, index) {
-                          final filteredItems = controller.restaurants
-                              .asMap()
-                              .entries
-                              .where(
-                                (entry) =>
-                                    entry.value.category ==
-                                    _getCategory(selectedTab.value),
-                              )
-                              .toList();
-                          final item = filteredItems[index].value;
-                          final originalIndex = filteredItems[index].key;
+                          final filteredProfiles = _getFilteredProfiles(
+                            controller,
+                            selectedTab.value,
+                          );
+                          final profile = filteredProfiles[index];
+
                           return PopularNearWidget(
-                            image: item.image,
-                            title: item.title,
-                            subTitle: item.subTitle,
-                            rating: item.rating,
-                            reviewNum: item.reviewNum,
-                            category: item.category,
-                            isFavorite: item.isFavorite,
-                            onFavoriteTap: () =>
-                                controller.toggleFavorite(originalIndex),
+                            image: profile.gallery.isNotEmpty
+                                ? profile.gallery.first.url
+                                : 'https://via.placeholder.com/300',
+                            title: profile.title,
+                            subTitle: profile.location,
+                            rating: profile.avgRating ?? 0.0,
+                            reviewNum: profile.reviewCount,
+                            category: profile.category.name,
+                            isFavorite: false,
+                            onFavoriteTap: () {},
+                            profileId: profile.id,
                           );
                         },
                       ),
@@ -208,18 +177,20 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.recommended.length,
+                      itemCount: controller.businessProfiles.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 20),
                       itemBuilder: (context, index) {
-                        final item = controller.recommended[index];
+                        final profile = controller.businessProfiles[index];
                         return RecommendedVenue(
-                          image: item.image,
-                          title: item.title,
-                          description: item.description,
-                          location: item.location,
-                          isFavorite: item.isFavorite,
-                          onFavoriteTap: () =>
-                              controller.toggleRecommendedFavorite(index),
+                          image: profile.gallery.isNotEmpty
+                              ? profile.gallery.first.url
+                              : 'https://via.placeholder.com/300',
+                          title: profile.title,
+                          description: profile.description,
+                          location: profile.location,
+                          isFavorite: false,
+                          onFavoriteTap: () {},
+                          profileId: profile.id,
                         );
                       },
                     ),
@@ -234,16 +205,20 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  String _getCategory(int tabIndex) {
-    switch (tabIndex) {
-      case 0:
-        return 'Restaurant';
-      case 1:
-        return 'Cafe';
-      case 2:
-        return 'Bar';
-      default:
-        return 'Restaurant';
+  List<BusinessProfile> _getFilteredProfiles(
+    HomeController controller,
+    int selectedTabIndex,
+  ) {
+    if (selectedTabIndex == -1) {
+      // Show all profiles
+      return controller.businessProfiles;
+    } else if (selectedTabIndex < controller.categories.length) {
+      // Filter by selected category
+      final selectedCategoryId = controller.categories[selectedTabIndex].id;
+      return controller.businessProfiles
+          .where((profile) => profile.categoryId == selectedCategoryId)
+          .toList();
     }
+    return controller.businessProfiles;
   }
 }
