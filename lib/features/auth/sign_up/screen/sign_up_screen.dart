@@ -30,16 +30,16 @@ class SignUpScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
                   child: Column(
                     children: [
-                      Center(
-                        child: Text(
-                          'sign_up_title'.tr,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryFontColor,
-                          ),
-                        ),
-                      ),
+                      // Center(
+                      //   child: Text(
+                      //     'sign_up_title'.tr,
+                      //     style: TextStyle(
+                      //       fontSize: 22,
+                      //       fontWeight: FontWeight.w600,
+                      //       color: AppColors.primaryFontColor,
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 24),
                       Obx(
                         () => CustomTextField(

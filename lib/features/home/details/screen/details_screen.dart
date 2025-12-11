@@ -244,21 +244,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                               ),
                               Spacer(),
-                              Obx(
-                                () {
-                                  final homeController = Get.find<HomeController>();
-                                  final isFav = homeController.isFavoriteBusiness(widget.profileId);
-                                  return IconButton(
-                                    onPressed: () {
-                                      homeController.toggleFavoriteBusiness(widget.profileId);
-                                    },
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      color: isFav ? Colors.red : Colors.grey,
-                                    ),
-                                  );
-                                },
-                              ),
+                              Obx(() {
+                                final homeController =
+                                    Get.find<HomeController>();
+                                final isFav = homeController.isFavoriteBusiness(
+                                  widget.profileId,
+                                );
+                                return IconButton(
+                                  onPressed: () {
+                                    homeController.toggleFavoriteBusiness(
+                                      widget.profileId,
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: isFav ? Colors.red : Colors.grey,
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                           SizedBox(height: 13),

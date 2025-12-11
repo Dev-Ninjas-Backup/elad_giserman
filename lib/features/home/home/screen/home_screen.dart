@@ -119,8 +119,9 @@ class HomeScreen extends StatelessWidget {
                               rating: profile.avgRating ?? 0.0,
                               reviewNum: profile.reviewCount,
                               category: profile.category.name,
-                              isFavorite:
-                                  controller.isFavoriteBusiness(profile.id),
+                              isFavorite: controller.isFavoriteBusiness(
+                                profile.id,
+                              ),
                               onFavoriteTap: () {
                                 controller.toggleFavoriteBusiness(profile.id);
                               },
@@ -199,8 +200,9 @@ class HomeScreen extends StatelessWidget {
                             title: profile.title,
                             description: profile.description,
                             location: profile.location,
-                            isFavorite:
-                                controller.isFavoriteBusiness(profile.id),
+                            isFavorite: controller.isFavoriteBusiness(
+                              profile.id,
+                            ),
                             onFavoriteTap: () {
                               controller.toggleFavoriteBusiness(profile.id);
                             },
