@@ -10,9 +10,7 @@ class FavoriteService {
     try {
       final token = await SharedPreferencesHelper.getAccessToken();
 
-      final body = jsonEncode({
-        'restaurantId': restaurantId,
-      });
+      final body = jsonEncode({'restaurantId': restaurantId});
 
       final response = await http.post(
         Uri.parse(Urls.addFavorite),
@@ -32,7 +30,9 @@ class FavoriteService {
         final favoriteData = jsonResponse['favorite'];
 
         if (favoriteData != null) {
-          final favorite = Favorite.fromJson(favoriteData as Map<String, dynamic>);
+          final favorite = Favorite.fromJson(
+            favoriteData as Map<String, dynamic>,
+          );
           print('✅ Favorite Toggled Successfully');
           return favorite;
         }
@@ -52,9 +52,7 @@ class FavoriteService {
 
       final response = await http.get(
         Uri.parse(Urls.myFavorites),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
+        headers: {'Authorization': 'Bearer $token'},
       );
 
       print('❤️ Get Favorites API Response:');
@@ -63,7 +61,9 @@ class FavoriteService {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         final data = jsonResponse['data'] as List;
-        final favorites = data.map((item) => Favorite.fromJson(item as Map<String, dynamic>)).toList();
+        final favorites = data
+            .map((item) => Favorite.fromJson(item as Map<String, dynamic>))
+            .toList();
         print('✅ Favorites Fetched Successfully: ${favorites.length} items');
         return favorites;
       } else {

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/features/auth/sign_up/service/auth_service.dart';
 import 'package:elad_giserman/features/nav_bar/controller/nav_bar_controller.dart';
 import 'package:elad_giserman/features/profile/main/model/profile_model.dart';
 import 'package:elad_giserman/features/profile/main/service/profile_service.dart';
@@ -17,7 +18,9 @@ class ProfileController extends GetxController {
   var isSaving = false.obs;
   var isInitialLoad = true.obs;
   var profile = Rx<ProfileModel?>(null);
+  var isLoggingOut = false.obs;
   final service = ProfileService();
+  final authService = AuthService();
 
   @override
   void onInit() {
@@ -133,6 +136,27 @@ class ProfileController extends GetxController {
       Get.offNamed('/profileScreen');
     } else {
       Get.snackbar('Error', 'Failed to update profile');
+    }
+  }
+
+  Future<void> logout() async {
+    isLoggingOut.value = true;
+    try {
+      await authService.logout();
+      // Clear local profile data
+      profile.value = null;
+      nameController.clear();
+      phoneController.clear();
+      selectedImagePath.value = '';
+
+      Get.snackbar('Success', 'Logged out successfully');
+      // Navigate to login screen
+      Get.offAllNamed('/loginScreen');
+    } catch (e) {
+      print('❌ Logout Error: $e');
+      Get.snackbar('Error', 'Failed to logout');
+    } finally {
+      isLoggingOut.value = false;
     }
   }
 
