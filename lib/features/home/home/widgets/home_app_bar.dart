@@ -1,12 +1,25 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
 
-class HomeAppBar extends StatelessWidget {
+class HomeAppBar extends StatefulWidget {
   const HomeAppBar({super.key});
+
+  @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
+  late Future<String?> _tokenFuture;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +52,43 @@ class HomeAppBar extends StatelessWidget {
                 icon: Icon(Icons.notifications_outlined, color: Colors.black),
               ),
               SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  Get.offAllNamed('/signInScreen');
-                },
-                child: Container(
-                  height: 28,
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryFontColor,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'login'.tr,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+              FutureBuilder<String?>(
+                future: SharedPreferencesHelper.getAccessToken(),
+                builder: (context, snapshot) {
+                  // Show login button only if token is null or empty
+                  final isLoggedIn =
+                      snapshot.hasData &&
+                      snapshot.data != null &&
+                      snapshot.data!.isNotEmpty;
+
+                  if (isLoggedIn) {
+                    return SizedBox.shrink(); // Hide login button if logged in
+                  }
+
+                  return GestureDetector(
+                    onTap: () {
+                      Get.offAllNamed('/signInScreen');
+                    },
+                    child: Container(
+                      height: 28,
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryFontColor,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'login'.tr,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
