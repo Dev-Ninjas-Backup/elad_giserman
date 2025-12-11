@@ -148,7 +148,7 @@ class ProfileController extends GetxController {
       nameController.clear();
       phoneController.clear();
       selectedImagePath.value = '';
-      
+
       Get.snackbar('Success', 'Logged out successfully');
       // Navigate to login screen
       Get.offAllNamed('/loginScreen');

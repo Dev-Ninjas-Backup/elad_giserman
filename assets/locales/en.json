@@ -43,7 +43,7 @@
   "read_more": "Read more",
   "see_less": "See Less.",
   "reserve_seats": "Reserve Seats",
-  "sign_in_title": "Sign In",
+  "sign_in_title": "Log In",
   "email_label": "Email",
   "email_hint": "example@gmail.com",
   "password_label": "Password",
@@ -61,7 +61,7 @@
   "confirm_password_label": "Confirm Password",
   "sign_up_btn": "Sign Up",
   "already_have_account": "Already have an account?",
-  "sign_in": "Sign In",
+  "sign_in": "Log In",
   "forget_password_title": "Forget Password",
   "forget_password_instructions": "Please enter your email address to request a password reset",
   "continue_btn": "Continue",
@@ -207,6 +207,6 @@
   "tab_cafe": "Cafe",
   "tab_bar": "Bar",
   "login_required": "Login Required",
-  "login_description": "Please sign in to view your profile and access all features.",
-  "sign_in": "Sign In"
+  "login_description": "Please Log In to view your profile and access all features.",
+  "sign_in": "Log In"
 }
