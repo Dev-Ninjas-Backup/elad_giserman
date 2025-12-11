@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:elad_giserman/features/profile/update_password/service/update_password_service.dart';
 import 'package:flutter/material.dart';
