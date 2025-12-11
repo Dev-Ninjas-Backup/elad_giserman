@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:get/get.dart';
 import 'package:elad_giserman/features/home/details/model/profile_detail_model.dart';
 import 'package:elad_giserman/features/home/details/service/profile_detail_service.dart';

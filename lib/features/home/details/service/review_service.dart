@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:elad_giserman/core/services/end_points.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/model/category_model.dart';
