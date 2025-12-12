@@ -12,8 +12,13 @@ import 'package:get/get.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String profileId;
+  final bool isFromReservationHistory;
 
-  const DetailsScreen({super.key, required this.profileId});
+  const DetailsScreen({
+    super.key,
+    required this.profileId,
+    this.isFromReservationHistory = false,
+  });
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -300,86 +305,121 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           SizedBox(height: 12),
 
                           // Action Buttons
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.buttonColor,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 12.0,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    shadowColor: const Color.fromRGBO(
-                                      0,
-                                      136,
-                                      163,
-                                      0.20,
-                                    ),
-                                    elevation: 10,
-                                  ),
-                                  onPressed: () {
-                                    String mainImage =
-                                        _controller.galleryItems.isNotEmpty
-                                        ? _controller.galleryItems.first.url
-                                        : '';
-                                    Get.to(
-                                      () => ReservationScreen(image: mainImage),
-                                      transition: Transition.downToUp,
-                                      duration: const Duration(
-                                        milliseconds: 400,
+                          if (!widget.isFromReservationHistory)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.buttonColor,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 12.0,
                                       ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'reserve_seats'.tr,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      shadowColor: const Color.fromRGBO(
+                                        0,
+                                        136,
+                                        163,
+                                        0.20,
+                                      ),
+                                      elevation: 10,
+                                    ),
+                                    onPressed: () {
+                                      String mainImage =
+                                          _controller.galleryItems.isNotEmpty
+                                          ? _controller.galleryItems.first.url
+                                          : '';
+                                      Get.to(
+                                        () =>
+                                            ReservationScreen(image: mainImage),
+                                        transition: Transition.downToUp,
+                                        duration: const Duration(
+                                          milliseconds: 400,
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'reserve_seats'.tr,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 12),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.buttonColor,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 12.0,
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.buttonColor,
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 12.0,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      shadowColor: const Color.fromRGBO(
+                                        0,
+                                        136,
+                                        163,
+                                        0.20,
+                                      ),
+                                      elevation: 10,
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    shadowColor: const Color.fromRGBO(
-                                      0,
-                                      136,
-                                      163,
-                                      0.20,
-                                    ),
-                                    elevation: 10,
-                                  ),
-                                  onPressed: () {
-                                    Get.offNamed(
-                                      AppRoute.getRedemptionHistoryScreen(),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Redeem Voucher',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
+                                    onPressed: () {
+                                      Get.offNamed(
+                                        AppRoute.getRedemptionHistoryScreen(),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Redeem Voucher',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),
+                              ],
+                            )
+                          else
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.buttonColor,
+                                  padding: EdgeInsets.symmetric(vertical: 12.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  shadowColor: const Color.fromRGBO(
+                                    0,
+                                    136,
+                                    163,
+                                    0.20,
+                                  ),
+                                  elevation: 10,
+                                ),
+                                onPressed: () {
+                                  Get.offNamed(
+                                    AppRoute.getRedemptionHistoryScreen(),
+                                  );
+                                },
+                                child: Text(
+                                  'Redeem Voucher',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
                           SizedBox(height: 24),
                           Divider(),
                           SizedBox(height: 24),

@@ -12,13 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReservationDetails extends StatelessWidget {
-  final String image;
+  final String? image;
   final String title;
-  const ReservationDetails({
-    super.key,
-    required this.image,
-    required this.title,
-  });
+  const ReservationDetails({super.key, this.image, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +28,34 @@ class ReservationDetails extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 58),
-                  child: Image.asset(
-                    image,
-                    height: 248,
-                    width: Get.width,
-                    fit: BoxFit.fill,
-                  ),
+                  child: image != null && image!.isNotEmpty
+                      ? (image!.startsWith('http')
+                            ? Image.network(
+                                image!,
+                                height: 248,
+                                width: Get.width,
+                                fit: BoxFit.fill,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    height: 248,
+                                    width: Get.width,
+                                    color: Colors.grey[300],
+                                    child: const Icon(Icons.restaurant),
+                                  );
+                                },
+                              )
+                            : Image.asset(
+                                image!,
+                                height: 248,
+                                width: Get.width,
+                                fit: BoxFit.fill,
+                              ))
+                      : Container(
+                          height: 248,
+                          width: Get.width,
+                          color: Colors.grey[300],
+                          child: const Icon(Icons.restaurant),
+                        ),
                 ),
                 CustomAppBar(lable: 'details_title'.tr, back: '/navBarScreen'),
               ],
