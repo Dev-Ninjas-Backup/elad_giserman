@@ -8,7 +8,9 @@ class RedemptionCardWidget extends StatelessWidget {
   final String date;
   final String businessTitle;
   final String code;
+  final String id;
   final Widget? leading;
+  final VoidCallback? onClaim;
 
   const RedemptionCardWidget({
     super.key,
@@ -17,7 +19,9 @@ class RedemptionCardWidget extends StatelessWidget {
     required this.date,
     required this.businessTitle,
     required this.code,
+    required this.id,
     this.leading,
+    this.onClaim,
   });
 
   @override
@@ -121,6 +125,30 @@ class RedemptionCardWidget extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                      if (status == 'Unclaimed') ...[
+                        SizedBox(height: 12),
+                        ElevatedButton(
+                          onPressed: onClaim,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.buttonColor,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Claim',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

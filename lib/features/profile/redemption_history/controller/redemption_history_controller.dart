@@ -42,6 +42,29 @@ class RedemptionHistoryController extends GetxController {
     filter.value = filterValue;
   }
 
+  Future<bool> claimRedemption(String redemptionId) async {
+    try {
+      isLoading.value = true;
+      await _service.claimRedemption(redemptionId);
+
+      // Refresh the list after claiming
+      await fetchRedeemedItems();
+
+      if (kDebugMode) {
+        print("✅ Redemption claimed successfully");
+      }
+      return true;
+    } catch (e) {
+      errorMessage.value = 'Failed to claim redemption';
+      if (kDebugMode) {
+        print("❌ Error claiming redemption: $e");
+      }
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   List<RedemptionItem> get filteredItems {
     if (filter.value == 'All') {
       return allItems;

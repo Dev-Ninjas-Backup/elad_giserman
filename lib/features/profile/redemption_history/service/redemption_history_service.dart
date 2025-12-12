@@ -51,4 +51,45 @@ class RedemptionHistoryService {
       rethrow;
     }
   }
+
+  Future<bool> claimRedemption(String redemptionId) async {
+    try {
+      final token = await SharedPreferencesHelper.getAccessToken();
+      if (token == null || token.isEmpty) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse(
+        '${Urls.baseUrl}/user-info/claim-redeemtion/$redemptionId',
+      );
+
+      final response = await http.patch(
+        url,
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        if (kDebugMode) {
+          print("✅ Claim redemption: ${response.statusCode}");
+          print("Response: $jsonResponse");
+        }
+        return true;
+      } else {
+        if (kDebugMode) {
+          print("❌ Failed to claim redemption: ${response.statusCode}");
+          print("Response: ${response.body}");
+        }
+        throw Exception('Failed to claim redemption');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("❌ Error claiming redemption: $e");
+      }
+      rethrow;
+    }
+  }
 }
