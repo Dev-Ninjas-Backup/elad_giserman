@@ -1,6 +1,6 @@
 class Urls {
   static const String baseUrl =
-      'https://elad-giserman-backend-1s7o.onrender.com/api';
+      'http://10.10.10.120:5080/api';
 
   static const String register = '$baseUrl/auth/register';
   static const String verifyOtp = '$baseUrl/auth/verify-otp';
@@ -19,4 +19,5 @@ class Urls {
   static const String replyReview = '$baseUrl/review/reply';
   static const String addFavorite = '$baseUrl/user-favorite';
   static const String myFavorites = '$baseUrl/user-favorite/my-favorite';
+  static const String userReservation = '$baseUrl/user-reservation';
 }

@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReservationWidget extends StatelessWidget {
-  final String image;
+  final String? image;
   final String category;
   final String name;
+  final String? date;
+  final String? time;
   final VoidCallback onPressed;
+
   const ReservationWidget({
     super.key,
-    required this.image,
+    this.image,
     required this.category,
     required this.name,
+    this.date,
+    this.time,
     required this.onPressed,
   });
 
@@ -26,12 +31,27 @@ class ReservationWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              image,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
+            child: image != null && image!.isNotEmpty
+                ? Image.network(
+                    image!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.restaurant),
+                      );
+                    },
+                  )
+                : Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.restaurant),
+                  ),
           ),
           SizedBox(width: 20),
           Expanded(
@@ -55,7 +75,21 @@ class ReservationWidget extends StatelessWidget {
                     color: AppColors.primaryFontColor,
                   ),
                   softWrap: true,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                if (date != null && time != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Text(
+                      '$date at $time',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.fontColor,
+                      ),
+                    ),
+                  ),
                 Spacer(),
                 CustomSmallButton(
                   width: 100,
