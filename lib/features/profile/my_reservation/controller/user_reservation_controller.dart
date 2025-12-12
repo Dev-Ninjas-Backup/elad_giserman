@@ -18,6 +18,15 @@ class UserReservationController extends GetxController {
     checkLoginStatus();
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+    // Refresh data when screen is shown
+    if (isLoggedIn.value) {
+      fetchReservations();
+    }
+  }
+
   Future<void> checkLoginStatus() async {
     final token = await SharedPreferencesHelper.getAccessToken();
     isLoggedIn.value = token != null && token.isNotEmpty;
@@ -71,4 +80,42 @@ class UserReservationController extends GetxController {
 
   bool get hasReservations =>
       lastWeekReservations.isNotEmpty || thisWeekReservations.isNotEmpty;
+
+  Future<bool> deleteReservation(String reservationId) async {
+    try {
+      final token = await SharedPreferencesHelper.getAccessToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Please login to delete a reservation';
+        return false;
+      }
+
+      final success = await _reservationService.deleteReservation(
+        reservationId,
+        token,
+      );
+
+      if (success) {
+        if (kDebugMode) {
+          print("✅ Reservation deleted successfully");
+        }
+        // Refresh the list after deletion
+        await fetchReservations();
+        // Trigger GetBuilder rebuild
+        update();
+        return true;
+      } else {
+        errorMessage.value = 'Failed to delete reservation';
+        if (kDebugMode) {
+          print("❌ Failed to delete reservation");
+        }
+        return false;
+      }
+    } catch (e) {
+      errorMessage.value = 'An error occurred while deleting: $e';
+      if (kDebugMode) {
+        print("❌ Error deleting reservation: $e");
+      }
+      return false;
+    }
+  }
 }

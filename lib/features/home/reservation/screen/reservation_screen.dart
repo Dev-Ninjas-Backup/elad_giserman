@@ -64,38 +64,88 @@ class _ReservationScreenState extends State<ReservationScreen> {
     controller.setPhoneNumber(phoneController.text.trim());
 
     if (!controller.validateFields()) {
-      Get.snackbar(
-        'Validation Error',
-        controller.errorMessage.value,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (mounted) {
+        Get.snackbar(
+          'Validation Error',
+          controller.errorMessage.value,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
       return;
     }
 
     final success = await controller.submitReservation(widget.restaurantId);
 
-    if (success) {
-      Get.snackbar(
-        'Success',
-        'Reservation created successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      Future.delayed(const Duration(seconds: 2), () {
-        Get.back();
-      });
-    } else {
-      Get.snackbar(
-        'Error',
-        controller.errorMessage.value,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    if (mounted) {
+      if (success) {
+        _showSuccessDialog();
+      } else {
+        Get.snackbar(
+          'Error',
+          controller.errorMessage.value,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
     }
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text(
+            'Success',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          content: const Text(
+            'Your reservation has been created successfully!',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          ),
+          actions: [
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close dialog
+                  _resetFields(); // Reset form fields
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.buttonColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _resetFields() {
+    phoneController.clear();
+    controller.selectedDate.value = '';
+    controller.selectedTime.value = '';
+    controller.errorMessage.value = '';
   }
 
   @override

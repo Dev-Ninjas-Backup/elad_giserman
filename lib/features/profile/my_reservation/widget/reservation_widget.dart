@@ -10,6 +10,7 @@ class ReservationWidget extends StatelessWidget {
   final String? date;
   final String? time;
   final VoidCallback onPressed;
+  final VoidCallback? onDelete;
 
   const ReservationWidget({
     super.key,
@@ -19,6 +20,7 @@ class ReservationWidget extends StatelessWidget {
     this.date,
     this.time,
     required this.onPressed,
+    this.onDelete,
   });
 
   @override
@@ -26,81 +28,103 @@ class ReservationWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 100,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: image != null && image!.isNotEmpty
-                ? Image.network(
-                    image!,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: image != null && image!.isNotEmpty
+                    ? Image.network(
+                        image!,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.restaurant),
+                          );
+                        },
+                      )
+                    : Container(
                         width: 100,
                         height: 100,
                         color: Colors.grey[300],
                         child: const Icon(Icons.restaurant),
-                      );
-                    },
-                  )
-                : Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.restaurant),
-                  ),
-          ),
-          SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '# $category',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.fontColor,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryFontColor,
-                  ),
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (date != null && time != null)
-                  Padding(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Text(
-                      '$date at $time',
+                      ),
+              ),
+              SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '# $category',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColors.fontColor,
                       ),
                     ),
-                  ),
-                Spacer(),
-                CustomSmallButton(
-                  width: 100,
-                  text: 'view_details'.tr,
-                  onPressed: onPressed,
-                  buttonColor: AppColors.buttonColor,
-                  fontColor: Colors.white,
+                    SizedBox(height: 4),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryFontColor,
+                      ),
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (date != null && time != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Text(
+                          '$date at $time',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.fontColor,
+                          ),
+                        ),
+                      ),
+                    Spacer(),
+                    CustomSmallButton(
+                      width: 100,
+                      text: 'view_details'.tr,
+                      onPressed: onPressed,
+                      buttonColor: AppColors.buttonColor,
+                      fontColor: Colors.white,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(width: 10),
+            ],
           ),
+          // Delete Icon (Top Right)
+          if (onDelete != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: onDelete,
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.9),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.delete, color: Colors.white, size: 18),
+                ),
+              ),
+            ),
         ],
       ),
     );
