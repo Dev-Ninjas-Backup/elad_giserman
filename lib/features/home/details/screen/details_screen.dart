@@ -5,8 +5,8 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:elad_giserman/features/home/redemption/controller/redemption_controller.dart';
 import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
-import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +28,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   late DetailsController _controller;
   late TextEditingController _commentController;
   late TextEditingController _ratingController;
+  late TextEditingController _redeemCodeController;
+  late RedemptionController _redemptionController;
   final Map<String, TextEditingController> _replyControllers = {};
   final Map<String, bool> _showReplySection = {};
   final Map<String, bool> _showRepliesList = {};
@@ -39,6 +41,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _controller = Get.put(DetailsController());
     _commentController = TextEditingController();
     _ratingController = TextEditingController();
+    _redeemCodeController = TextEditingController();
+    _redemptionController = Get.put(RedemptionController());
     _controller.fetchProfileDetail(widget.profileId);
   }
 
@@ -46,6 +50,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void dispose() {
     _commentController.dispose();
     _ratingController.dispose();
+    _redeemCodeController.dispose();
     for (var controller in _replyControllers.values) {
       controller.dispose();
     }
@@ -135,6 +140,220 @@ class _DetailsScreenState extends State<DetailsScreen> {
       'Reply posted successfully!',
       colorText: Colors.white,
       backgroundColor: Colors.green,
+    );
+  }
+
+  void _showRedeemDialog() {
+    _redeemCodeController.clear();
+    String? errorMessageInDialog;
+    bool isRedeemSuccess = false;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text(
+                'Redeem Voucher Code',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Success message display
+                    if (isRedeemSuccess) ...[
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.green[50],
+                          border: Border.all(
+                            color: Colors.green[300]!,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.green[700],
+                              size: 24,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Redeemed Successfully!',
+                                    style: TextStyle(
+                                      color: Colors.green[700],
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    _redemptionController.successMessage.value,
+                                    style: TextStyle(
+                                      color: Colors.green[700],
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ] else ...[
+                      TextField(
+                        controller: _redeemCodeController,
+                        enabled: !_redemptionController.isLoading.value,
+                        decoration: InputDecoration(
+                          hintText: 'Enter redeem code (e.g., SAVE50)',
+                          hintStyle: const TextStyle(
+                            color: Color(0xFF636363),
+                            fontSize: 14,
+                          ),
+                          filled: true,
+                          fillColor: AppColors.textFieldFillColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Colors.grey[300]!,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: AppColors.buttonColor,
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 16,
+                          ),
+                        ),
+                      ),
+                      // Error message display
+                      if (errorMessageInDialog != null) ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.red[50],
+                            border: Border.all(
+                              color: Colors.red[300]!,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.error_outline,
+                                color: Colors.red[700],
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  errorMessageInDialog!,
+                                  style: TextStyle(
+                                    color: Colors.red[700],
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ],
+                  ],
+                ),
+              ),
+              actions: isRedeemSuccess
+                  ? [
+                      TextButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        child: const Text('OK'),
+                      ),
+                    ]
+                  : [
+                      TextButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        child: const Text('Cancel'),
+                      ),
+                      Obx(
+                        () => TextButton(
+                          onPressed: _redemptionController.isLoading.value
+                              ? null
+                              : () async {
+                                  final code = _redeemCodeController.text
+                                      .trim();
+                                  if (code.isEmpty) {
+                                    setState(() {
+                                      errorMessageInDialog =
+                                          'Please enter a redeem code';
+                                    });
+                                    return;
+                                  }
+
+                                  // Clear previous error
+                                  setState(() {
+                                    errorMessageInDialog = null;
+                                  });
+
+                                  final success = await _redemptionController
+                                      .redeemCode(code);
+
+                                  if (mounted) {
+                                    if (success) {
+                                      // Update UI to show success message
+                                      setState(() {
+                                        isRedeemSuccess = true;
+                                      });
+                                      _redeemCodeController.clear();
+                                    } else {
+                                      // Show error in dialog
+                                      setState(() {
+                                        errorMessageInDialog =
+                                            _redemptionController
+                                                .errorMessage
+                                                .value;
+                                      });
+                                    }
+                                  }
+                                },
+                          child: Text(
+                            _redemptionController.isLoading.value
+                                ? 'Redeeming...'
+                                : 'Redeem',
+                            style: TextStyle(
+                              color: _redemptionController.isLoading.value
+                                  ? Colors.grey
+                                  : AppColors.buttonColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+            );
+          },
+        );
+      },
     );
   }
 
@@ -373,9 +592,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       elevation: 10,
                                     ),
                                     onPressed: () {
-                                      Get.offNamed(
-                                        AppRoute.getRedemptionHistoryScreen(),
-                                      );
+                                      _showRedeemDialog();
                                     },
                                     child: Text(
                                       'Redeem Voucher',
@@ -408,9 +625,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   elevation: 10,
                                 ),
                                 onPressed: () {
-                                  Get.offNamed(
-                                    AppRoute.getRedemptionHistoryScreen(),
-                                  );
+                                  _showRedeemDialog();
                                 },
                                 child: Text(
                                   'Redeem Voucher',
