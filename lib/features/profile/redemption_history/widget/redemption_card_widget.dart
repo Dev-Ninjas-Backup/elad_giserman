@@ -6,6 +6,8 @@ class RedemptionCardWidget extends StatelessWidget {
   final String title;
   final String status;
   final String date;
+  final String businessTitle;
+  final String code;
   final Widget? leading;
 
   const RedemptionCardWidget({
@@ -13,6 +15,8 @@ class RedemptionCardWidget extends StatelessWidget {
     required this.title,
     required this.status,
     required this.date,
+    required this.businessTitle,
+    required this.code,
     this.leading,
   });
 
