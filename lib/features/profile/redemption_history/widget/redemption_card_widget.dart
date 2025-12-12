@@ -127,24 +127,26 @@ class RedemptionCardWidget extends StatelessWidget {
                       ),
                       if (status == 'Unclaimed') ...[
                         SizedBox(height: 12),
-                        ElevatedButton(
-                          onPressed: onClaim,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.buttonColor,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: onClaim,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.buttonColor,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            'Claim',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                            child: Text(
+                              'Claim',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
