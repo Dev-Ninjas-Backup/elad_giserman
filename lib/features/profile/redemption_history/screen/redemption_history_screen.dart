@@ -12,6 +12,60 @@ class RedemptionHistoryScreen extends StatelessWidget {
 
   RedemptionHistoryScreen({super.key});
 
+  void _showClaimConfirmationDialog(
+    BuildContext context,
+    String redemptionId,
+    String offerTitle,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text(
+            'Confirm Claim',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          content: Text(
+            'Are you sure you want to claim "$offerTitle"?',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(dialogContext);
+
+                final success = await controller.claimRedemption(redemptionId);
+
+                if (success) {
+                  Get.snackbar(
+                    'Success',
+                    'Offer claimed successfully!',
+                    backgroundColor: Colors.green,
+                    colorText: Colors.white,
+                    duration: const Duration(seconds: 2),
+                  );
+                } else {
+                  Get.snackbar(
+                    'Error',
+                    controller.errorMessage.value,
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                    duration: const Duration(seconds: 2),
+                  );
+                }
+              },
+              child: const Text('Claim', style: TextStyle(color: Colors.green)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String> displayToValue = {
@@ -146,6 +200,13 @@ class RedemptionHistoryScreen extends StatelessWidget {
                                       date: e.date,
                                       businessTitle: e.businessTitle,
                                       code: e.code,
+                                      id: e.id,
+                                      onClaim: () =>
+                                          _showClaimConfirmationDialog(
+                                            context,
+                                            e.id,
+                                            e.title,
+                                          ),
                                     ),
                                   )
                                   .toList(),
