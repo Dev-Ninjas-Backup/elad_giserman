@@ -333,8 +333,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           ? _controller.galleryItems.first.url
                                           : '';
                                       Get.to(
-                                        () =>
-                                            ReservationScreen(image: mainImage),
+                                        () => ReservationScreen(
+                                          image: mainImage,
+                                          restaurantId: widget.profileId,
+                                        ),
                                         transition: Transition.downToUp,
                                         duration: const Duration(
                                           milliseconds: 400,
