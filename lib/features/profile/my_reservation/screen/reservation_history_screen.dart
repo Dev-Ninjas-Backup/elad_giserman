@@ -9,10 +9,32 @@ import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReservationHistoryScreen extends StatelessWidget {
+class ReservationHistoryScreen extends StatefulWidget {
   final bool isFromBottomNav;
 
   const ReservationHistoryScreen({super.key, this.isFromBottomNav = true});
+
+  @override
+  State<ReservationHistoryScreen> createState() =>
+      _ReservationHistoryScreenState();
+}
+
+class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Refresh data when screen is first opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshReservations();
+    });
+  }
+
+  void _refreshReservations() {
+    final controller = Get.find<UserReservationController>();
+    if (controller.isLoggedIn.value) {
+      controller.fetchReservations();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +49,7 @@ class ReservationHistoryScreen extends StatelessWidget {
               children: [
                 CustomAppBar(
                   lable: 'reservation_history_title'.tr,
-                  showBackButton: !isFromBottomNav,
+                  showBackButton: !widget.isFromBottomNav,
                   back: '/navBarScreen',
                 ),
                 Obx(() {
@@ -230,9 +252,58 @@ class ReservationHistoryScreen extends StatelessWidget {
               ),
             );
           },
+          onDelete: () {
+            _showDeleteConfirmation(entry.value.id);
+          },
         ),
         if (!isLast) SizedBox(height: 12),
       ];
     }).toList();
+  }
+
+  void _showDeleteConfirmation(String reservationId) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Confirm Delete'),
+        content: const Text(
+          'Are you sure you want to delete this reservation?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(Get.context!),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(Get.context!); // Close dialog first
+              final controller = Get.find<UserReservationController>();
+              final success = await controller.deleteReservation(reservationId);
+
+              if (success) {
+                // UI will auto-update because deleteReservation calls fetchReservations()
+                // which updates reservationResponse.value triggering Obx rebuild
+                Get.snackbar(
+                  'Success',
+                  'Reservation deleted successfully',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                  duration: const Duration(seconds: 2),
+                );
+              } else {
+                Get.snackbar(
+                  'Error',
+                  'Failed to delete reservation',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
+              }
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 }

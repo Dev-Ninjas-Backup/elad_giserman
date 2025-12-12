@@ -38,4 +38,37 @@ class ReservationService {
       return null;
     }
   }
+
+  Future<bool> deleteReservation(String reservationId, String token) async {
+    try {
+      final url = Uri.parse('${Urls.userReservation}/delete/$reservationId');
+
+      final response = await http.delete(
+        url,
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        if (kDebugMode) {
+          print("✅ Reservation deleted: ${response.statusCode}");
+          print("Response: ${response.body}");
+        }
+        return true;
+      } else {
+        if (kDebugMode) {
+          print("❌ Failed to delete reservation: ${response.statusCode}");
+          print("Response: ${response.body}");
+        }
+        return false;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("❌ Error deleting reservation: $e");
+      }
+      return false;
+    }
+  }
 }
