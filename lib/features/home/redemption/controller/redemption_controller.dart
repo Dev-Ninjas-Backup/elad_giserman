@@ -10,11 +10,17 @@ class RedemptionController extends GetxController {
   final RxString errorMessage = ''.obs;
   final RxString successMessage = ''.obs;
 
-  Future<bool> redeemCode(String code) async {
+  Future<bool> redeemCode(String code, {String? offerId}) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
       successMessage.value = '';
+
+      if (kDebugMode) {
+        print("🔄 Starting redemption...");
+        print("Code: $code");
+        print("Offer ID: $offerId");
+      }
 
       final token = await SharedPreferencesHelper.getAccessToken();
       if (token == null || token.isEmpty) {
@@ -25,19 +31,38 @@ class RedemptionController extends GetxController {
 
       final url = Uri.parse('${Urls.baseUrl}/user-info/redeem/$code');
 
+      if (kDebugMode) {
+        print("📍 API URL: $url");
+      }
+
+      final Map<String, dynamic> body = {};
+      if (offerId != null && offerId.isNotEmpty) {
+        body['offerId'] = offerId;
+        if (kDebugMode) {
+          print("📤 Request body: ${jsonEncode(body)}");
+        }
+      }
+
       final response = await http.post(
         url,
         headers: {
           "Accept": "application/json",
           "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
         },
+        body: body.isNotEmpty ? jsonEncode(body) : null,
       );
 
-      if (response.statusCode == 200) {
+      if (kDebugMode) {
+        print("📥 Response Status Code: ${response.statusCode}");
+        print("📥 Response Body: ${response.body}");
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = jsonDecode(response.body);
         if (kDebugMode) {
           print("✅ Redemption successful: ${response.statusCode}");
-          print("Response: $jsonResponse");
+          print("✅ Response: $jsonResponse");
         }
         successMessage.value =
             jsonResponse['message'] ?? 'Code redeemed successfully!';
@@ -46,7 +71,7 @@ class RedemptionController extends GetxController {
       } else {
         if (kDebugMode) {
           print("❌ Redemption failed: ${response.statusCode}");
-          print("Response: ${response.body}");
+          print("❌ Response: ${response.body}");
         }
         final jsonResponse = jsonDecode(response.body);
         errorMessage.value = jsonResponse['message'] ?? 'Failed to redeem code';
@@ -55,7 +80,7 @@ class RedemptionController extends GetxController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print("❌ Error redeeming code: $e");
+        print("❌ Exception during redemption: $e");
       }
       errorMessage.value = 'An error occurred: $e';
       isLoading.value = false;

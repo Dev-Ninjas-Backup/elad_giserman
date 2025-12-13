@@ -128,6 +128,14 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     OptionButton(
+                      title: 'offers'.tr,
+                      button: () {
+                        Get.offNamed(AppRoute.getOffersScreen());
+                      },
+                    ),
+                    const SizedBox(height: 8),
+
+                    OptionButton(
                       title: 'subscriptions'.tr,
                       button: () {
                         Get.offNamed('/subscriptionScreen');

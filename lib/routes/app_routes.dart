@@ -3,6 +3,7 @@ import 'package:elad_giserman/features/auth/forget_password/screen/reset_passwor
 import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart';
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
+import 'package:elad_giserman/features/home/offers/screen/offers_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/about/screen/about_screen.dart';
 import 'package:elad_giserman/features/profile/general_settings/helps/screen/help_screen.dart';
@@ -35,6 +36,7 @@ class AppRoute {
   static String reservationScreen = "/reservationScreen";
   static String subscriptionScreen = "/subscriptionScreen";
   static String redemptionHistoryScreen = "/redemptionHistoryScreen";
+  static String offersScreen = "/offersScreen";
   static String generalSettingsScreen = "/generalSettingsScreen";
   static String notificationScreen = "/notificationScreen";
   static String privacyPolicyScreen = "/privacyPolicyScreen";
@@ -57,6 +59,7 @@ class AppRoute {
   static String getSubscriptionScreen() => subscriptionScreen;
   static String getDetailsScreen() => detailsScreen;
   static String getRedemptionHistoryScreen() => redemptionHistoryScreen;
+  static String getOffersScreen() => offersScreen;
   static String getGeneralSettingsScreen() => generalSettingsScreen;
   static String getNotificationScreen() => notificationScreen;
   static String getPrivacyPolicyScreen() => privacyPolicyScreen;
@@ -122,6 +125,11 @@ class AppRoute {
     GetPage(
       name: redemptionHistoryScreen,
       page: () => RedemptionHistoryScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: offersScreen,
+      page: () => OffersScreen(),
       transition: Transition.upToDown,
     ),
     GetPage(
