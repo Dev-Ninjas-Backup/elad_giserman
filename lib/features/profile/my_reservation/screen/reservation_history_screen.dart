@@ -53,12 +53,18 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
                   back: '/navBarScreen',
                 ),
                 Obx(() {
+                  print(
+                    "🔄 Rebuild triggered - isLoggedIn: ${controller.isLoggedIn.value}, isLoading: ${controller.isLoading.value}, hasReservations: ${controller.hasReservations}",
+                  );
+
                   // Show login card if not logged in
                   if (!controller.isLoggedIn.value) {
+                    print("📱 Showing login card");
                     return _buildLoginCard();
                   }
 
                   if (controller.isLoading.value) {
+                    print("⏳ Showing loading spinner");
                     return SizedBox(
                       height: 300,
                       child: Center(
@@ -70,6 +76,7 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
                   }
 
                   if (controller.errorMessage.value.isNotEmpty) {
+                    print("❌ Showing error: ${controller.errorMessage.value}");
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 18,
@@ -85,6 +92,7 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
                   }
 
                   if (!controller.hasReservations) {
+                    print("📭 No reservations found");
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 18,
@@ -102,6 +110,9 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
                     );
                   }
 
+                  print(
+                    "✅ Showing reservations - thisWeek: ${controller.thisWeekReservations.length}, lastWeek: ${controller.lastWeekReservations.length}",
+                  );
                   return Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 18,

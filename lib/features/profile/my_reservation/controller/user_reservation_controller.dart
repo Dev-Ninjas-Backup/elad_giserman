@@ -55,6 +55,11 @@ class UserReservationController extends GetxController {
         reservationResponse.value = response;
         if (kDebugMode) {
           print("✅ Reservations loaded successfully");
+          print("📊 This Week: ${response.data.thisWeek.length} reservations");
+          print("📊 Last Week: ${response.data.lastWeek.length} reservations");
+          for (var res in response.data.thisWeek) {
+            print("  - ${res.restaurant.title} on ${res.date} at ${res.time}");
+          }
         }
       } else {
         errorMessage.value = 'Failed to load reservations';
