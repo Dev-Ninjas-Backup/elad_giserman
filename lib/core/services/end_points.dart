@@ -1,6 +1,6 @@
 class Urls {
   static const String baseUrl =
-      'http://10.10.10.120:5080/api';
+      'http://31.97.125.159:5050/api';
 
   static const String register = '$baseUrl/auth/register';
   static const String verifyOtp = '$baseUrl/auth/verify-otp';
