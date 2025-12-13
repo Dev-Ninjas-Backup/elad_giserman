@@ -135,7 +135,12 @@ class ProfileController extends GetxController {
 
     if (success) {
       Get.snackbar('Success', 'Profile updated successfully');
-      Get.offNamed('/profileScreen');
+      // Reload profile data before navigating
+      await loadProfile(showLoading: false);
+      // Clear selected image path after successful update
+      selectedImagePath.value = '';
+      // Navigate to home
+      Get.offNamed('/navBarScreen');
     } else {
       Get.snackbar('Error', 'Failed to update profile');
     }

@@ -100,7 +100,17 @@ class Restaurant {
     return Restaurant(
       id: json['id'] ?? '',
       title: json['title'] ?? '',
-      gallery: List<String>.from(json['gallery'] as List<dynamic>? ?? []),
+      gallery:
+          (json['gallery'] as List<dynamic>?)
+              ?.map((item) {
+                if (item is Map<String, dynamic>) {
+                  return item['url'] as String? ?? '';
+                }
+                return item as String? ?? '';
+              })
+              .where((url) => url.isNotEmpty)
+              .toList() ??
+          [],
     );
   }
 }

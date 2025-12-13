@@ -2,6 +2,7 @@ import 'package:elad_giserman/features/auth/forget_password/screen/forget_passwo
 import 'package:elad_giserman/features/auth/forget_password/screen/reset_password_screen.dart';
 import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart';
 import 'package:elad_giserman/features/auth/sign_up/screen/sign_up_screen.dart';
+import 'package:elad_giserman/features/home/details/screen/business_offers_screen.dart';
 import 'package:elad_giserman/features/home/home/screen/home_screen.dart';
 import 'package:elad_giserman/features/home/offers/screen/offers_screen.dart';
 import 'package:elad_giserman/features/nav_bar/screen/nav_bar_screen.dart';
@@ -44,6 +45,7 @@ class AppRoute {
   static String termOfUseScreen = "/termOfUseScreen";
   static String aboutScreen = "/aboutScreen";
   static String updatePasswordScreen = "/updatePasswordScreen";
+  static String businessOffersScreen = "/businessOffersScreen";
 
   static String getSplashScreen() => splashScreen;
   static String getSignInScreen() => signInScreen;
@@ -67,6 +69,11 @@ class AppRoute {
   static String getTermOfUseScreen() => termOfUseScreen;
   static String getAboutScreen() => aboutScreen;
   static String getUpdatePasswordScreen() => updatePasswordScreen;
+  static String getBusinessOffersScreen(
+    String businessId,
+    String businessName,
+  ) =>
+      '$businessOffersScreen?businessId=$businessId&businessName=$businessName';
 
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => SplashScreen()),
@@ -165,6 +172,18 @@ class AppRoute {
     GetPage(
       name: updatePasswordScreen,
       page: () => UpdatePasswordScreen(),
+      transition: Transition.upToDown,
+    ),
+    GetPage(
+      name: businessOffersScreen,
+      page: () {
+        final businessId = Get.parameters['businessId'] ?? '';
+        final businessName = Get.parameters['businessName'] ?? '';
+        return BusinessOffersScreen(
+          businessId: businessId,
+          businessName: businessName,
+        );
+      },
       transition: Transition.upToDown,
     ),
   ];
