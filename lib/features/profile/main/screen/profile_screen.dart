@@ -13,18 +13,33 @@ import 'package:get/get.dart';
 import '../controller/profile_controller.dart';
 import '../../../../routes/app_routes.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late ProfileController controller;
+
+  @override
+  void initState() {
+    super.initState();
     // Initialize controller if not already present
     if (!Get.isRegistered<ProfileController>()) {
       Get.put(ProfileController());
     }
+    controller = Get.find<ProfileController>();
 
-    final controller = Get.find<ProfileController>();
+    // Refresh profile data when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.loadProfile(showLoading: false);
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
         // Show loading only on initial load
