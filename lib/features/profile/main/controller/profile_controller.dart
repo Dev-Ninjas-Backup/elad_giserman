@@ -134,13 +134,25 @@ class ProfileController extends GetxController {
     isSaving.value = false;
 
     if (success) {
-      Get.snackbar('Success', 'Profile updated successfully');
       // Reload profile data before navigating
       await loadProfile(showLoading: false);
       // Clear selected image path after successful update
       selectedImagePath.value = '';
-      // Navigate to home
-      Get.offNamed('/navBarScreen');
+
+      Get.snackbar('Success', 'Profile updated successfully');
+
+      // Navigate to navbar with profile tab (index 4)
+      Get.offAllNamed('/navBarScreen');
+
+      // Try to set navbar to profile tab
+      try {
+        final NavbarController navbarController = Get.find();
+        navbarController.changeTabIndex(4);
+      } catch (e) {
+        if (kDebugMode) {
+          print("Could not navigate to profile tab: $e");
+        }
+      }
     } else {
       Get.snackbar('Error', 'Failed to update profile');
     }
