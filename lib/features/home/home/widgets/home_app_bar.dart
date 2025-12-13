@@ -3,6 +3,7 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/features/home/home/controller/custom_app_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,10 +18,12 @@ class HomeAppBar extends StatefulWidget {
 
 class _HomeAppBarState extends State<HomeAppBar> {
   late Future<String?> _tokenFuture;
+  late CustomAppDetailsController _appDetailsController;
 
   @override
   void initState() {
     super.initState();
+    _appDetailsController = Get.put(CustomAppDetailsController());
   }
 
   @override
@@ -45,7 +48,26 @@ class _HomeAppBarState extends State<HomeAppBar> {
         children: [
           Row(
             children: [
-              Image.asset(IconPath.appIcon, height: 25, width: 98),
+              Obx(() {
+                final logoUrl = _appDetailsController.logoUrl;
+                if (logoUrl.isNotEmpty) {
+                  return Image.network(
+                    logoUrl,
+                    height: 25,
+                    width: 98,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        IconPath.appIcon,
+                        height: 25,
+                        width: 98,
+                      );
+                    },
+                  );
+                } else {
+                  return Image.asset(IconPath.appIcon, height: 25, width: 98);
+                }
+              }),
               Spacer(),
               IconButton(
                 onPressed: () {
