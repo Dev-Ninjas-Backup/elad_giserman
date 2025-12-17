@@ -7,7 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class SubscriptionService {
-  static const String _subscriptionUrl = 'https://api.yamiz.org/api/subscription';
+  static const String _subscriptionUrl =
+      'https://api.yamiz.org/api/subscription';
 
   Future<SubscriptionResponse?> fetchSubscriptions() async {
     try {
@@ -19,7 +20,9 @@ class SubscriptionService {
       // Get auth token
       final token = await SharedPreferencesHelper.getAccessToken();
       if (kDebugMode) {
-        print('   Token retrieved: ${token != null ? 'Yes (${token.length} chars)' : 'No'}');
+        print(
+          '   Token retrieved: ${token != null ? 'Yes (${token.length} chars)' : 'No'}',
+        );
       }
 
       final response = await http.get(
@@ -46,28 +49,44 @@ class SubscriptionService {
           print('🔄 Parsing JSON response...');
         }
         final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-        
+
         if (kDebugMode) {
           print('   JSON decoded successfully');
           print('   Success: ${jsonResponse['success']}');
           print('   Message: ${jsonResponse['message']}');
         }
 
-        final subscriptionResponse = SubscriptionResponse.fromJson(jsonResponse);
+        final subscriptionResponse = SubscriptionResponse.fromJson(
+          jsonResponse,
+        );
 
         if (kDebugMode) {
           print('✅ Subscriptions fetched successfully');
-          print('   Monthly Plan: ${subscriptionResponse.data.monthlyPlan?.title ?? 'None'}');
+          print(
+            '   Monthly Plan: ${subscriptionResponse.data.monthlyPlan?.title ?? 'None'}',
+          );
           if (subscriptionResponse.data.monthlyPlan != null) {
-            print('     - Price: ${subscriptionResponse.data.monthlyPlan!.formattedPrice}');
-            print('     - Discount: ${subscriptionResponse.data.monthlyPlan!.discountPercent}%');
-            print('     - Benefits Count: ${subscriptionResponse.data.monthlyPlan!.benefits.length}');
+            print(
+              '     - Price: ${subscriptionResponse.data.monthlyPlan!.formattedPrice}',
+            );
+            print(
+              '     - Discount: ${subscriptionResponse.data.monthlyPlan!.discountPercent}%',
+            );
+            print(
+              '     - Benefits Count: ${subscriptionResponse.data.monthlyPlan!.benefits.length}',
+            );
           }
-          print('   Yearly Plan: ${subscriptionResponse.data.yearlyPlan?.title ?? 'None'}');
+          print(
+            '   Yearly Plan: ${subscriptionResponse.data.yearlyPlan?.title ?? 'None'}',
+          );
           if (subscriptionResponse.data.yearlyPlan != null) {
-            print('     - Price: ${subscriptionResponse.data.yearlyPlan!.formattedPrice}');
+            print(
+              '     - Price: ${subscriptionResponse.data.yearlyPlan!.formattedPrice}',
+            );
           }
-          print('   Biannual Plan: ${subscriptionResponse.data.biannualPlan?.title ?? 'None'}');
+          print(
+            '   Biannual Plan: ${subscriptionResponse.data.biannualPlan?.title ?? 'None'}',
+          );
         }
 
         return subscriptionResponse;

@@ -38,7 +38,9 @@ class UserSubscriptionData {
       status: json['status'] as String,
       canSubscribe: json['canSubscribe'] as bool,
       plan: UserSubscriptionPlan.fromJson(json['plan'] as Map<String, dynamic>),
-      period: SubscriptionPeriod.fromJson(json['period'] as Map<String, dynamic>),
+      period: SubscriptionPeriod.fromJson(
+        json['period'] as Map<String, dynamic>,
+      ),
       message: json['message'] as String,
     );
   }

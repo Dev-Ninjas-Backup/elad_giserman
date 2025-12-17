@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';

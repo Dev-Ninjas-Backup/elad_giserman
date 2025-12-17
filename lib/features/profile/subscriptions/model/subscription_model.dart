@@ -32,13 +32,19 @@ class SubscriptionData {
   factory SubscriptionData.fromJson(Map<String, dynamic> json) {
     return SubscriptionData(
       monthlyPlan: json['monthlyPlan'] != null
-          ? SubscriptionPlan.fromJson(json['monthlyPlan'] as Map<String, dynamic>)
+          ? SubscriptionPlan.fromJson(
+              json['monthlyPlan'] as Map<String, dynamic>,
+            )
           : null,
       biannualPlan: json['biannualPlan'] != null
-          ? SubscriptionPlan.fromJson(json['biannualPlan'] as Map<String, dynamic>)
+          ? SubscriptionPlan.fromJson(
+              json['biannualPlan'] as Map<String, dynamic>,
+            )
           : null,
       yearlyPlan: json['yearlyPlan'] != null
-          ? SubscriptionPlan.fromJson(json['yearlyPlan'] as Map<String, dynamic>)
+          ? SubscriptionPlan.fromJson(
+              json['yearlyPlan'] as Map<String, dynamic>,
+            )
           : null,
     );
   }

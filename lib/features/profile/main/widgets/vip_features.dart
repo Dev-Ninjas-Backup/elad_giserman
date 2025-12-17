@@ -46,11 +46,11 @@ class _VipFeaturesState extends State<VipFeatures> {
           print('   Expires: ${response.data.period.endedAt}');
           print('   Remaining: ${response.data.period.remainingDays}');
         }
-        
+
         // Format dates to a professional format (e.g., "Dec 13, 2025")
         final formattedJoinedDate = _formatDate(response.data.period.startedAt);
         final formattedExpireDate = _formatDate(response.data.period.endedAt);
-        
+
         setState(() {
           status = response.data.status;
           planTitle = response.data.plan.title;
@@ -61,7 +61,9 @@ class _VipFeaturesState extends State<VipFeatures> {
         });
       } else {
         if (kDebugMode) {
-          print('❌ VipFeatures: Failed to load subscription - response is null');
+          print(
+            '❌ VipFeatures: Failed to load subscription - response is null',
+          );
         }
         setState(() {
           errorMessage = 'Failed to load subscription';
@@ -138,7 +140,10 @@ class _VipFeaturesState extends State<VipFeatures> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(27),
                         color: Colors.white24,
@@ -171,7 +176,9 @@ class _VipFeaturesState extends State<VipFeatures> {
                             width: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -208,7 +215,9 @@ class _VipFeaturesState extends State<VipFeatures> {
                           ),
                           SizedBox(height: 6),
                           Text(
-                            'vip_remaining_days'.trParams({'days': remainingDays}),
+                            'vip_remaining_days'.trParams({
+                              'days': remainingDays,
+                            }),
                             style: getTextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

@@ -34,10 +34,16 @@ class SubscriptionController extends GetxController {
         subscriptionResponse.value = response;
         if (kDebugMode) {
           print('✅ Subscriptions loaded successfully');
-          print('   Monthly Plan: ${response.data.monthlyPlan?.title ?? 'None'}');
+          print(
+            '   Monthly Plan: ${response.data.monthlyPlan?.title ?? 'None'}',
+          );
           print('   Yearly Plan: ${response.data.yearlyPlan?.title ?? 'None'}');
-          print('   Biannual Plan: ${response.data.biannualPlan?.title ?? 'None'}');
-          print('   Current selected: ${isMonthlySelected.value ? 'Monthly' : 'Yearly'}');
+          print(
+            '   Biannual Plan: ${response.data.biannualPlan?.title ?? 'None'}',
+          );
+          print(
+            '   Current selected: ${isMonthlySelected.value ? 'Monthly' : 'Yearly'}',
+          );
           print('   Current Plan: ${currentPlan?.title}');
           print('   Current Price: ${currentPlan?.formattedPrice}');
           print('   Benefits: ${currentPlan?.benefits.length ?? 0}');
@@ -64,7 +70,9 @@ class SubscriptionController extends GetxController {
 
   void toggleBillingPeriod(bool isMonthly) {
     if (kDebugMode) {
-      print('🔄 Toggling billing period from ${isMonthlySelected.value ? "Monthly" : "Yearly"} to ${isMonthly ? "Monthly" : "Yearly"}');
+      print(
+        '🔄 Toggling billing period from ${isMonthlySelected.value ? "Monthly" : "Yearly"} to ${isMonthly ? "Monthly" : "Yearly"}',
+      );
     }
     isMonthlySelected.value = isMonthly;
     if (kDebugMode) {
@@ -85,7 +93,7 @@ class SubscriptionController extends GetxController {
     final plan = isMonthlySelected.value
         ? subscriptionResponse.value!.data.monthlyPlan
         : subscriptionResponse.value!.data.yearlyPlan ??
-            subscriptionResponse.value!.data.monthlyPlan;
+              subscriptionResponse.value!.data.monthlyPlan;
     if (kDebugMode) {
       print('📋 currentPlan getter called');
       print('   Monthly selected: ${isMonthlySelected.value}');
