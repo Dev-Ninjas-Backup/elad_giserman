@@ -214,5 +214,9 @@
   "login_description": "Please Log In to view your profile and access all features.",
   "search_results": "Search Results",
   "found_results": "Found @count results",
-  "no_results": "No results found. Try another search term."
+  "no_results": "No results found. Try another search term.",
+  "previous": "Previous",
+  "no_notifications": "No notifications yet",
+  "just_now": "Just now",
+  "days_ago": "@count days ago"
 }

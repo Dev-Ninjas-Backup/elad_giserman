@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
+import 'package:elad_giserman/features/notifications/controller/notification_controller.dart';
 import 'package:flutter/material.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../widget/notification_item_widget.dart';
@@ -9,86 +10,142 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NotificationController controller = Get.put(NotificationController());
+
     return Scaffold(
       backgroundColor: Color(0xFFFCFCFC),
       body: Column(
         children: [
           CustomAppBar(lable: 'notifications'.tr),
           Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'today'.tr,
-                    style: TextStyle(
-                      color: AppColors.primaryFontColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 12),
+            child: Obx(() {
+              if (controller.isLoading.value) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-                  NotificationItemWidget(
-                    title: 'Congratulations!',
-                    body:
-                        'Your table for 2 at La Bella Café is confirmed for 7:30 PM tonight',
-                    timeAgo: 'minutes_ago'.trParams({'count': '5'}),
-                    icon: Icons.check_circle,
-                    iconColor: Colors.green,
-                    highlighted: true,
-                  ),
+              if (controller.errorMessage.isNotEmpty) {
+                return Center(
+                  child: Text(controller.errorMessage.value),
+                );
+              }
 
-                  NotificationItemWidget(
-                    title: 'Reminder',
-                    body:
-                        'Dinner reservation at Spice Garden tomorrow at 8:00 PM',
-                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
-                    icon: Icons.notifications_active_outlined,
-                    iconColor: Colors.purple,
-                    highlighted: false,
-                  ),
+              final notificationData = controller.notificationData.value;
+              if (notificationData == null) {
+                return Center(
+                  child: Text('No notifications'),
+                );
+              }
 
-                  NotificationItemWidget(
-                    title: 'Special Offer',
-                    body:
-                        'Get a free dessert with your booking at Sweet Tooth Diner 🍨',
-                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
-                    icon: Icons.local_offer,
-                    iconColor: Colors.redAccent,
-                    highlighted: false,
-                  ),
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Today section
+                    if (notificationData.today.isNotEmpty) ...[
+                      Text(
+                        'today'.tr,
+                        style: TextStyle(
+                          color: AppColors.primaryFontColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      ...notificationData.today.map((item) {
+                        final timeAgo = _getTimeAgo(item.createdAt);
+                        return NotificationItemWidget(
+                          title: item.notification.title,
+                          body: item.notification.message,
+                          timeAgo: timeAgo,
+                          highlighted: !item.read,
+                        );
+                      }).toList(),
+                    ],
 
-                  SizedBox(height: 20),
-                  Divider(color: AppColors.borderColor, thickness: 0.5),
-                  SizedBox(height: 20),
+                    // Divider between sections
+                    if (notificationData.today.isNotEmpty &&
+                        notificationData.previous.isNotEmpty) ...[
+                      SizedBox(height: 20),
+                      Divider(
+                          color: AppColors.borderColor, thickness: 0.5),
+                      SizedBox(height: 20),
+                    ],
 
-                  Text(
-                    'yesterday'.tr,
-                    style: TextStyle(
-                      color: AppColors.primaryFontColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 12),
+                    // Previous section
+                    if (notificationData.previous.isNotEmpty) ...[
+                      Text(
+                        'previous'.tr,
+                        style: TextStyle(
+                          color: AppColors.primaryFontColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      ...notificationData.previous.map((item) {
+                        final timeAgo = _getTimeAgo(item.createdAt);
+                        return NotificationItemWidget(
+                          title: item.notification.title,
+                          body: item.notification.message,
+                          timeAgo: timeAgo,
+                          highlighted: !item.read,
+                        );
+                      }).toList(),
+                    ],
 
-                  NotificationItemWidget(
-                    title: 'Special Offer',
-                    body:
-                        'Your VIP Subscription is expiring soon! Renew now to keep enjoying priority bookings, exclusive discounts & special offers.',
-                    timeAgo: 'hours_ago'.trParams({'count': '1'}),
-                    icon: Icons.local_offer,
-                    iconColor: Colors.green,
-                    highlighted: false,
-                  ),
-                ],
-              ),
-            ),
+                    // Empty state
+                    if (notificationData.today.isEmpty &&
+                        notificationData.previous.isEmpty)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 40),
+                          child: Text(
+                            'no_notifications'.tr,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AppColors.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }),
           ),
         ],
       ),
     );
+  }
+
+  String _getTimeAgo(String dateString) {
+    try {
+      final createdDate = DateTime.parse(dateString);
+      final now = DateTime.now();
+      final difference = now.difference(createdDate);
+
+      if (difference.inMinutes < 1) {
+        return 'just_now'.tr;
+      } else if (difference.inMinutes < 60) {
+        return 'minutes_ago'.trParams(
+          {'count': difference.inMinutes.toString()},
+        );
+      } else if (difference.inHours < 24) {
+        return 'hours_ago'.trParams(
+          {'count': difference.inHours.toString()},
+        );
+      } else if (difference.inDays < 7) {
+        return 'days_ago'.trParams(
+          {'count': difference.inDays.toString()},
+        );
+      } else {
+        return dateString.split('T')[0]; // Return date in YYYY-MM-DD format
+      }
+    } catch (e) {
+      return dateString;
+    }
   }
 }
