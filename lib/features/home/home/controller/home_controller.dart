@@ -50,8 +50,10 @@ class HomeController extends GetxController {
   var recommended = <Recommended>[].obs;
   var categories = <CategoryModel>[].obs;
   var businessProfiles = <BusinessProfile>[].obs;
+  var searchResults = <BusinessProfile>[].obs;
   var favorites = <Favorite>[].obs;
   var isLoadingFavorites = false.obs;
+  var searchQuery = ''.obs;
 
   final CategoryService _categoryService = CategoryService();
   final BusinessProfileService _profileService = BusinessProfileService();
@@ -241,5 +243,29 @@ class HomeController extends GetxController {
 
   bool isFavoriteBusiness(String restaurantId) {
     return _favoriteService.isFavorite(restaurantId, favorites);
+  }
+
+  // Search functionality
+  void searchByQuery(String query) {
+    if (query.isEmpty) {
+      searchResults.clear();
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    print('🔍 Searching for: $query in ${businessProfiles.length} profiles');
+
+    searchResults.value = businessProfiles.where((profile) =>
+      profile.title.toLowerCase().contains(lowerQuery) ||
+      profile.description.toLowerCase().contains(lowerQuery) ||
+      profile.location.toLowerCase().contains(lowerQuery)
+    ).toList();
+
+    print('✅ Found ${searchResults.length} results for: $query');
+  }
+
+  void clearSearchResults() {
+    searchResults.clear();
+    searchQuery.value = '';
   }
 }

@@ -4,6 +4,8 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/home/home/controller/custom_app_details_controller.dart';
+import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,11 +21,51 @@ class HomeAppBar extends StatefulWidget {
 class _HomeAppBarState extends State<HomeAppBar> {
   late Future<String?> _tokenFuture;
   late CustomAppDetailsController _appDetailsController;
+  late HomeController _homeController;
+  final TextEditingController _searchController = TextEditingController();
+  final searchQuery = ''.obs;
 
   @override
   void initState() {
     super.initState();
     _appDetailsController = Get.put(CustomAppDetailsController());
+    _homeController = Get.find<HomeController>();
+    _searchController.addListener(() {
+      searchQuery.value = _searchController.text;
+      // Perform search as user types
+      _homeController.searchByQuery(_searchController.text);
+      if (kDebugMode) {
+        print('🔍 Search query: ${_searchController.text}');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _showSearchResults() {
+    if (_searchController.text.isEmpty) {
+      Get.snackbar(
+        'Search',
+        'Please enter a search term',
+        backgroundColor: Colors.blue,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    if (kDebugMode) {
+      print('🔍 Performing search for: ${_searchController.text}');
+    }
+
+    // Navigate to search results screen
+    Get.toNamed(
+      AppRoute.getHomeScreen(),
+      arguments: {'searchQuery': _searchController.text},
+    );
   }
 
   @override
@@ -134,6 +176,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
               borderRadius: BorderRadius.circular(50),
             ),
             child: TextField(
+              controller: _searchController,
+              onSubmitted: (_) => _showSearchResults(),
               decoration: InputDecoration(
                 hintText: 'search_hint'.tr,
                 hintStyle: TextStyle(
@@ -143,7 +187,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                 ),
                 prefixIcon: Icon(Icons.search, color: AppColors.buttonColor),
                 border: InputBorder.none,
-                suffixIcon: Image.asset(IconPath.searchSuffix),
+                // suffixIcon: GestureDetector(
+                //   onTap: _showSearchResults,
+                //   child: Image.asset(IconPath.searchSuffix),
+                // ),
               ),
             ),
           ),
