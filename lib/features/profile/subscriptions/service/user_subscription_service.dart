@@ -7,7 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class UserSubscriptionService {
-  static const String _userSubscriptionUrl = 'https://api.yamiz.org/api/subscription/me';
+  static const String _userSubscriptionUrl =
+      'https://api.yamiz.org/api/subscription/me';
 
   Future<UserSubscriptionResponse?> fetchUserSubscription() async {
     try {
@@ -19,7 +20,9 @@ class UserSubscriptionService {
       // Get auth token
       final token = await SharedPreferencesHelper.getAccessToken();
       if (kDebugMode) {
-        print('   Token retrieved: ${token != null ? 'Yes (${token.length} chars)' : 'No'}');
+        print(
+          '   Token retrieved: ${token != null ? 'Yes (${token.length} chars)' : 'No'}',
+        );
       }
 
       if (token == null || token.isEmpty) {
@@ -60,16 +63,24 @@ class UserSubscriptionService {
           print('   Message: ${jsonResponse['message']}');
         }
 
-        final userSubscriptionResponse = UserSubscriptionResponse.fromJson(jsonResponse);
+        final userSubscriptionResponse = UserSubscriptionResponse.fromJson(
+          jsonResponse,
+        );
 
         if (kDebugMode) {
           print('✅ User subscription fetched successfully');
           print('   Status: ${userSubscriptionResponse.data.status}');
           print('   Plan: ${userSubscriptionResponse.data.plan.title}');
-          print('   Price: ${userSubscriptionResponse.data.plan.formattedPrice}/${userSubscriptionResponse.data.plan.billingPeriod}');
-          print('   Started: ${userSubscriptionResponse.data.period.startedAt}');
+          print(
+            '   Price: ${userSubscriptionResponse.data.plan.formattedPrice}/${userSubscriptionResponse.data.plan.billingPeriod}',
+          );
+          print(
+            '   Started: ${userSubscriptionResponse.data.period.startedAt}',
+          );
           print('   Ends: ${userSubscriptionResponse.data.period.endedAt}');
-          print('   Remaining Days: ${userSubscriptionResponse.data.period.remainingDays}');
+          print(
+            '   Remaining Days: ${userSubscriptionResponse.data.period.remainingDays}',
+          );
         }
 
         return userSubscriptionResponse;

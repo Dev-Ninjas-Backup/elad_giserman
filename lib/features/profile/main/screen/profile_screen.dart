@@ -148,14 +148,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Get.offNamed(AppRoute.getOffersScreen());
                       },
                     ),
-                    const SizedBox(height: 8),
+                    // const SizedBox(height: 8),
 
-                    OptionButton(
-                      title: 'subscriptions'.tr,
-                      button: () {
-                        Get.offNamed('/subscriptionScreen');
-                      },
-                    ),
+                    // OptionButton(
+                    //   title: 'subscriptions'.tr,
+                    //   button: () {
+                    //     Get.offNamed('/subscriptionScreen');
+                    //   },
+                    // ),
                     const SizedBox(height: 8),
 
                     OptionButton(
