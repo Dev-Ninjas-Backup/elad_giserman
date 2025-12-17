@@ -214,5 +214,9 @@
   "login_description": "אנא היכנס כדי לצפות בפרופיל שלך ולגשת לכל התכונות.",
   "search_results": "תוצאות חיפוש",
   "found_results": "נמצאו @count תוצאות",
-  "no_results": "לא נמצאו תוצאות. נסה מושג חיפוש אחר."
+  "no_results": "לא נמצאו תוצאות. נסה מושג חיפוש אחר.",
+  "previous": "הקודם",
+  "no_notifications": "אין עדיין התראות",
+  "just_now": "זה עתה",
+  "days_ago": "@count ימים"
 }

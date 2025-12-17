@@ -5,8 +5,6 @@ class NotificationItemWidget extends StatelessWidget {
   final String title;
   final String body;
   final String timeAgo;
-  final Color iconColor;
-  final IconData icon;
   final bool highlighted;
 
   const NotificationItemWidget({
@@ -14,8 +12,6 @@ class NotificationItemWidget extends StatelessWidget {
     required this.title,
     required this.body,
     required this.timeAgo,
-    required this.iconColor,
-    required this.icon,
     this.highlighted = false,
   });
 
@@ -43,16 +39,6 @@ class NotificationItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            margin: EdgeInsets.only(right: 12, top: highlighted ? 2 : 0),
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(child: Icon(icon, color: iconColor, size: 20)),
-          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
