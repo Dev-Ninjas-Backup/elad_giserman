@@ -18,7 +18,7 @@ class SubscriptionsScreen extends StatelessWidget {
 
     try {
       final Uri uri = Uri.parse(stripePaymentUrl);
-      
+
       if (kDebugMode) {
         print('🔄 Attempting to open payment URL: $stripePaymentUrl');
       }
@@ -30,10 +30,7 @@ class SubscriptionsScreen extends StatelessWidget {
         }
 
         if (canLaunch) {
-          await launchUrl(
-            uri,
-            mode: LaunchMode.externalApplication,
-          );
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
           if (kDebugMode) {
             print('✅ Stripe payment URL opened successfully');
           }
@@ -136,7 +133,9 @@ class SubscriptionsScreen extends StatelessWidget {
                         if (currentPlan != null)
                           Text.rich(
                             TextSpan(
-                              text: currentPlan.formattedPrice,
+                              text: controller.isMonthlySelected.value
+                                  ? currentPlan.formattedPrice
+                                  : currentPlan.formattedYearlyPrice,
                               style: getTextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w600,

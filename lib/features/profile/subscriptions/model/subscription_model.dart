@@ -61,6 +61,7 @@ class SubscriptionPlan {
   final String stripePriceId;
   final String currency;
   final int priceCents;
+  final int? yearlyPriceCents;
   final int priceWithoutDiscountCents;
   final int discountPercent;
   final String billingPeriod;
@@ -78,6 +79,7 @@ class SubscriptionPlan {
     required this.stripePriceId,
     required this.currency,
     required this.priceCents,
+    required this.yearlyPriceCents,
     required this.priceWithoutDiscountCents,
     required this.discountPercent,
     required this.billingPeriod,
@@ -97,6 +99,7 @@ class SubscriptionPlan {
       stripePriceId: json['stripePriceId'] as String,
       currency: json['currency'] as String,
       priceCents: json['priceCents'] as int,
+      yearlyPriceCents: json['yearlyPriceCents'] as int?,
       priceWithoutDiscountCents: json['priceWithoutDiscountCents'] as int,
       discountPercent: json['discountPercent'] as int,
       billingPeriod: json['billingPeriod'] as String,
@@ -107,6 +110,16 @@ class SubscriptionPlan {
 
   String get formattedPrice {
     final dollars = priceCents / 100;
+    return '\$${dollars.toStringAsFixed(2)}';
+  }
+
+  String get formattedYearlyPrice {
+    if (yearlyPriceCents == null) {
+      final yearlyCalculated = priceCents * 12;
+      final dollars = yearlyCalculated / 100;
+      return '\$${dollars.toStringAsFixed(2)}';
+    }
+    final dollars = yearlyPriceCents! / 100;
     return '\$${dollars.toStringAsFixed(2)}';
   }
 }
