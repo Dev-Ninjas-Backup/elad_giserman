@@ -1,5 +1,5 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
-import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
+// import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/profile/subscriptions/service/user_subscription_service.dart';
@@ -226,15 +226,15 @@ class _VipFeaturesState extends State<VipFeatures> {
                           ),
                         ],
                       ),
-                    SizedBox(height: 24),
-                    CustomSmallButton(
-                      text: 'vip_renew_btn'.tr,
-                      onPressed: () {
-                        Get.offNamed('/subscriptionScreen');
-                      },
-                      buttonColor: Colors.white,
-                      fontColor: Colors.black,
-                    ),
+                    // SizedBox(height: 24),
+                    // CustomSmallButton(
+                    //   text: 'vip_renew_btn'.tr,
+                    //   onPressed: () {
+                    //     Get.offNamed('/subscriptionScreen');
+                    //   },
+                    //   buttonColor: Colors.white,
+                    //   fontColor: Colors.black,
+                    // ),
                   ],
                 ),
               ),

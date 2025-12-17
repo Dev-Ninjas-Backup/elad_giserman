@@ -211,5 +211,8 @@
   "tab_cafe": "Cafe",
   "tab_bar": "Bar",
   "login_required": "Login Required",
-  "login_description": "Please Log In to view your profile and access all features."
+  "login_description": "Please Log In to view your profile and access all features.",
+  "search_results": "Search Results",
+  "found_results": "Found @count results",
+  "no_results": "No results found. Try another search term."
 }
