@@ -116,7 +116,9 @@ class HomeScreen extends StatelessWidget {
                                   : 'https://via.placeholder.com/300',
                               title: profile.title,
                               subTitle: profile.location,
-                              rating: profile.avgRating ?? 0.0,
+                              rating: double.parse(
+                                ((profile.avgRating ?? 0.0).toStringAsFixed(1)),
+                              ),
                               reviewNum: profile.reviewCount,
                               category: profile.category.name,
                               isFavorite: controller.isFavoriteBusiness(
