@@ -5,6 +5,7 @@ class Urls {
   static const String verifyOtp = '$baseUrl/auth/verify-otp';
   static const String resendOtp = '$baseUrl/auth/resend-otp';
   static const String login = '$baseUrl/auth/login';
+  static const String googleLogin = '$baseUrl/auth/google-login';
   static const String logout = '$baseUrl/auth/logout';
   static const String forgetPassword = '$baseUrl/auth/forgot-password';
   static const String resetPassword = '$baseUrl/auth/reset-password';

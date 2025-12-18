@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:elad_giserman/core/services/google_auth_service.dart';
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/auth/sign_up/service/auth_service.dart';
 import 'package:elad_giserman/features/auth/verification/screen/verification_screen.dart';
+import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -146,9 +149,83 @@ class SignUpController extends GetxController {
     }
   }
 
-  void signUpWithGoogle() {
+  Future<void> signUpWithGoogle() async {
     if (kDebugMode) {
       print('Initiating Google sign-up');
+    }
+
+    Get.snackbar(
+      "Please wait",
+      "Signing up with Google...",
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 1),
+    );
+
+    try {
+      final response = await GoogleAuthService.performGoogleSignIn();
+
+      if (response == null) {
+        Get.snackbar(
+          "Error",
+          "Google sign-up was cancelled",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.2),
+        );
+        return;
+      }
+
+      final data = jsonDecode(response.body);
+
+      if (kDebugMode) {
+        print("GOOGLE SIGNUP STATUS: ${response.statusCode}");
+        print("GOOGLE SIGNUP RESPONSE: ${response.body}");
+      }
+
+      if (response.statusCode == 201 && data["success"] == true) {
+        final token = data["data"]["token"];
+        final user = data["data"]["user"];
+
+        final role = user["role"] ?? "USER";
+        final userId = user["id"];
+
+        await SharedPreferencesHelper.saveTokenAndRole(token, role, userId);
+
+        Get.snackbar(
+          "Success",
+          data["message"] ?? "Signed up with Google successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.2),
+        );
+
+        Get.offAllNamed(AppRoute.navBarScreen);
+      } else {
+        Get.snackbar(
+          "Error",
+          data["message"] ?? "Google sign-up failed",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.2),
+        );
+      }
+    } catch (e) {
+      String errorMessage = "Google sign-up failed. Try again.";
+
+      if (e.toString().contains('Google Sign-In not properly configured')) {
+        errorMessage =
+            "Google Sign-In requires additional setup. Please contact support.";
+      } else if (e.toString().contains('sign_in_canceled')) {
+        errorMessage = "Google sign-up was cancelled.";
+      }
+
+      Get.snackbar(
+        "Error",
+        errorMessage,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.2),
+      );
+
+      if (kDebugMode) {
+        print("Google Sign-Up Error: $e");
+      }
     }
   }
 
