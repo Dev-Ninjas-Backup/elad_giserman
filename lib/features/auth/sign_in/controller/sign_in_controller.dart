@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/core/services/google_auth_service.dart';
 import 'package:elad_giserman/features/auth/sign_in/service/sign_in_service.dart';
 import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
@@ -98,9 +99,72 @@ class SignInController extends GetxController {
     }
   }
 
-  void signInWithGoogle() {
+  Future<void> signInWithGoogle() async {
     if (kDebugMode) {
-      print('Initiating Google sign-up');
+      print('Initiating Google sign-in');
+    }
+
+    isLoading.value = true;
+
+    try {
+      final response = await GoogleAuthService.performGoogleSignIn();
+
+      if (response == null) {
+        Get.snackbar(
+          "Error",
+          "Google sign-in was cancelled",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
+      final data = jsonDecode(response.body);
+
+      if (kDebugMode) {
+        print("GOOGLE LOGIN STATUS: ${response.statusCode}");
+        print("GOOGLE LOGIN RESPONSE: ${response.body}");
+      }
+
+      if (response.statusCode == 201 && data["success"] == true) {
+        final token = data["data"]["token"];
+        final user = data["data"]["user"];
+
+        final role = user["role"] ?? "USER";
+        final userId = user["id"];
+
+        await SharedPreferencesHelper.saveTokenAndRole(token, role, userId);
+
+        Get.snackbar(
+          "Success",
+          data["message"] ?? "Signed in with Google successfully",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        Get.offAllNamed(AppRoute.navBarScreen);
+      } else {
+        Get.snackbar(
+          "Error",
+          data["message"] ?? "Google sign-in failed",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      String errorMessage = "Google sign-in failed. Try again.";
+
+      if (e.toString().contains('Google Sign-In not properly configured')) {
+        errorMessage =
+            "Google Sign-In requires additional setup. Please contact support.";
+      } else if (e.toString().contains('sign_in_canceled')) {
+        errorMessage = "Google sign-in was cancelled.";
+      }
+
+      Get.snackbar("Error", errorMessage, snackPosition: SnackPosition.BOTTOM);
+
+      if (kDebugMode) {
+        print("Google Sign-In Error: $e");
+      }
+    } finally {
+      isLoading.value = false;
     }
   }
 }
