@@ -1,7 +1,9 @@
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
+import 'package:elad_giserman/features/auth/forget_password/controller/forget_password_controller.dart';
 import 'package:elad_giserman/features/auth/verification/controller/verification_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -93,6 +95,19 @@ class VerificationScreen extends StatelessWidget {
                           if (previousScreen == '/signUpScreen') {
                             Get.offAllNamed('/navBarScreen');
                           } else {
+                            // Navigate to reset password screen with email
+                            try {
+                              final forgetController =
+                                  Get.find<ForgetPasswordController>(
+                                    tag: 'forgetPassword',
+                                  );
+                              forgetController.verificationEmail =
+                                  verificationEmail;
+                            } catch (e) {
+                              if (kDebugMode) {
+                                print('❌ Error setting email: $e');
+                              }
+                            }
                             Get.offAllNamed('/resetPasswordScreen');
                           }
                         }
