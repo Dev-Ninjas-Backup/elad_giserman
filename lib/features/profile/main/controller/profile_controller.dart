@@ -168,9 +168,12 @@ class ProfileController extends GetxController {
       phoneController.clear();
       selectedImagePath.value = '';
 
+      // Clear shared preferences credentials
+      await SharedPreferencesHelper.clearAll();
+
       Get.snackbar('Success', 'Logged out successfully');
       // Navigate to login screen
-      Get.offAllNamed('/loginScreen');
+      Get.offAllNamed('/signInScreen');
     } catch (e) {
       print('❌ Logout Error: $e');
       Get.snackbar('Error', 'Failed to logout');
