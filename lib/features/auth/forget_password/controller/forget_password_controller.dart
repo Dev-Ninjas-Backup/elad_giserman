@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:elad_giserman/core/services/end_points.dart';
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,10 @@ class ForgetPasswordController extends GetxController {
   final showConfirmPassword = false.obs;
 
   final isLoading = false.obs;
+
+  // Store email and OTP for reset password
+  String? verificationEmail;
+  String? verificationOtp;
 
   void validateEmail(String value) {
     if (value.isEmpty) {
@@ -106,6 +111,112 @@ class ForgetPasswordController extends GetxController {
         Get.snackbar(
           "Error",
           "Failed to send reset password email",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return false;
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        "Error",
+        "Network error: $e",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
+  }
+
+  Future<bool> changePassword() async {
+    validatePassword(resetPasswordController.text);
+    validateConfirmPassword(confirmresetPasswordController.text);
+
+    if (resetPasswordError.value.isNotEmpty ||
+        confirmResetPasswordError.value.isNotEmpty) {
+      return false;
+    }
+
+    // Check if we have the required data
+    if (verificationEmail == null || verificationEmail!.isEmpty) {
+      if (kDebugMode) {
+        print("❌ Email not found: $verificationEmail");
+      }
+      Get.snackbar(
+        "Error",
+        "Email not found. Please start the forgot password process again.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
+
+    if (verificationOtp == null || verificationOtp!.isEmpty) {
+      if (kDebugMode) {
+        print("❌ OTP not found: $verificationOtp");
+      }
+      Get.snackbar(
+        "Error",
+        "OTP not found. Please verify your OTP again.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
+
+    if (kDebugMode) {
+      print("✅ Reset Password Data:");
+      print("Email: $verificationEmail");
+      print("OTP: $verificationOtp");
+      print("Password: ${resetPasswordController.text}");
+    }
+
+    isLoading.value = true;
+    try {
+      final url = Uri.parse(Urls.resetPassword);
+      final body = jsonEncode({
+        "otp": verificationOtp!.trim(),
+        "email": verificationEmail!.trim(),
+        "newPassword": resetPasswordController.text.trim(),
+      });
+
+      if (kDebugMode) {
+        print("📤 Sending Reset Password Request:");
+        print("URL: $url");
+        print("Body: $body");
+      }
+
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      if (kDebugMode) {
+        print("RESET PASSWORD STATUS: ${response.statusCode}");
+        print("RESET PASSWORD BODY: ${response.body}");
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data["success"] == true) {
+          isLoading.value = false;
+          Get.snackbar(
+            "Success",
+            data["message"] ?? "Password reset successfully",
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return true;
+        } else {
+          isLoading.value = false;
+          Get.snackbar(
+            "Error",
+            data["message"] ?? "Failed to reset password",
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return false;
+        }
+      } else {
+        isLoading.value = false;
+        Get.snackbar(
+          "Error",
+          "Failed to reset password",
           snackPosition: SnackPosition.BOTTOM,
         );
         return false;
