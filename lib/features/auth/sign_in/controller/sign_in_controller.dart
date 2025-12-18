@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/core/services/google_auth_service.dart';
 import 'package:elad_giserman/features/auth/sign_in/service/sign_in_service.dart';
+import 'package:elad_giserman/features/home/home/controller/custom_app_details_controller.dart';
 import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,17 @@ class SignInController extends GetxController {
   final isLoading = false.obs;
 
   final SignInService _service = SignInService();
+  final CustomAppDetailsController _appDetailsController = Get.put(
+    CustomAppDetailsController(),
+  );
+
+  @override
+  void onInit() {
+    super.onInit();
+    _appDetailsController.fetchAppDetails();
+  }
+
+  String get logoUrl => _appDetailsController.logoUrl;
 
   // ---------------- VALIDATION ----------------
   void validateEmail(String value) {
