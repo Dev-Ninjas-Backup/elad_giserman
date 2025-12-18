@@ -32,11 +32,13 @@ class NotificationData {
   factory NotificationData.fromJson(Map<String, dynamic> json) {
     return NotificationData(
       unreadCount: json['unreadCount'] ?? 0,
-      today: (json['today'] as List?)
+      today:
+          (json['today'] as List?)
               ?.map((item) => NotificationItem.fromJson(item))
               .toList() ??
           [],
-      previous: (json['yesterday'] as List?)
+      previous:
+          (json['yesterday'] as List?)
               ?.map((item) => NotificationItem.fromJson(item))
               .toList() ??
           [],

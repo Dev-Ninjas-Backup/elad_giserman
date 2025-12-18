@@ -1,10 +1,9 @@
-// ignore_for_file: unused_field
-
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/home/home/controller/custom_app_details_controller.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:elad_giserman/features/notifications/service/notification_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +23,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   late HomeController _homeController;
   final TextEditingController _searchController = TextEditingController();
   final searchQuery = ''.obs;
+  final NotificationService _notificationService = NotificationService();
 
   @override
   void initState() {
@@ -66,6 +66,21 @@ class _HomeAppBarState extends State<HomeAppBar> {
       AppRoute.getHomeScreen(),
       arguments: {'searchQuery': _searchController.text},
     );
+  }
+
+  Future<void> _handleNotificationTap() async {
+    try {
+      // Mark all notifications as read
+      await _notificationService.markAllNotificationsAsRead();
+      // Navigate to notification screen
+      Get.toNamed(AppRoute.getNotificationScreen());
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error handling notification tap: $e');
+      }
+      // Still navigate even if marking as read fails
+      Get.toNamed(AppRoute.getNotificationScreen());
+    }
   }
 
   @override
@@ -112,9 +127,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               }),
               Spacer(),
               IconButton(
-                onPressed: () {
-                  Get.toNamed(AppRoute.getNotificationScreen());
-                },
+                onPressed: _handleNotificationTap,
                 icon: Icon(Icons.notifications_outlined, color: Colors.black),
               ),
               SizedBox(width: 10),

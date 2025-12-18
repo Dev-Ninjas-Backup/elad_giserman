@@ -255,11 +255,14 @@ class HomeController extends GetxController {
     final lowerQuery = query.toLowerCase();
     print('🔍 Searching for: $query in ${businessProfiles.length} profiles');
 
-    searchResults.value = businessProfiles.where((profile) =>
-      profile.title.toLowerCase().contains(lowerQuery) ||
-      profile.description.toLowerCase().contains(lowerQuery) ||
-      profile.location.toLowerCase().contains(lowerQuery)
-    ).toList();
+    searchResults.value = businessProfiles
+        .where(
+          (profile) =>
+              profile.title.toLowerCase().contains(lowerQuery) ||
+              profile.description.toLowerCase().contains(lowerQuery) ||
+              profile.location.toLowerCase().contains(lowerQuery),
+        )
+        .toList();
 
     print('✅ Found ${searchResults.length} results for: $query');
   }
