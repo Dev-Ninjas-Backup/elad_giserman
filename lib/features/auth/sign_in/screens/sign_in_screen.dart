@@ -28,7 +28,30 @@ class SignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(IconPath.appIcon, height: 48, width: 190),
+                  Obx(() {
+                    final logoUrl = controller.logoUrl;
+                    if (logoUrl.isNotEmpty) {
+                      return Image.network(
+                        logoUrl,
+                        height: 48,
+                        width: 190,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            IconPath.appIcon,
+                            height: 48,
+                            width: 190,
+                          );
+                        },
+                      );
+                    } else {
+                      return Image.asset(
+                        IconPath.appIcon,
+                        height: 48,
+                        width: 190,
+                      );
+                    }
+                  }),
                   SizedBox(height: 97),
                   Center(
                     child: Text(
