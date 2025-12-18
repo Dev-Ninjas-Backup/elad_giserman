@@ -56,7 +56,7 @@ class NotificationsScreen extends StatelessWidget {
                           timeAgo: timeAgo,
                           highlighted: !item.read,
                         );
-                      }).toList(),
+                      }),
                     ],
 
                     // Divider between sections
@@ -86,7 +86,7 @@ class NotificationsScreen extends StatelessWidget {
                           timeAgo: timeAgo,
                           highlighted: !item.read,
                         );
-                      }).toList(),
+                      }),
                     ],
 
                     // Empty state

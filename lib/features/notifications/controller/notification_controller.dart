@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:get/get.dart';
 import 'package:elad_giserman/features/notifications/model/notification_model.dart';
 import 'package:elad_giserman/features/notifications/service/notification_service.dart';

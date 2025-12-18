@@ -18,7 +18,6 @@ class HomeAppBar extends StatefulWidget {
 }
 
 class _HomeAppBarState extends State<HomeAppBar> {
-  late Future<String?> _tokenFuture;
   late CustomAppDetailsController _appDetailsController;
   late HomeController _homeController;
   final TextEditingController _searchController = TextEditingController();
