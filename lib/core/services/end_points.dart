@@ -1,6 +1,5 @@
 class Urls {
-  static const String baseUrl =
-      'http://31.97.125.159:5050/api';
+  static const String baseUrl = 'http://31.97.125.159:5050/api';
 
   static const String register = '$baseUrl/auth/register';
   static const String verifyOtp = '$baseUrl/auth/verify-otp';
@@ -20,4 +19,6 @@ class Urls {
   static const String addFavorite = '$baseUrl/user-favorite';
   static const String myFavorites = '$baseUrl/user-favorite/my-favorite';
   static const String userReservation = '$baseUrl/user-reservation';
+  static const String markNotificationsAsRead =
+      '$baseUrl/user-info/mark-as-read';
 }

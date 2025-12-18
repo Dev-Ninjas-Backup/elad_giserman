@@ -20,22 +20,16 @@ class NotificationsScreen extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Center(child: CircularProgressIndicator());
               }
 
               if (controller.errorMessage.isNotEmpty) {
-                return Center(
-                  child: Text(controller.errorMessage.value),
-                );
+                return Center(child: Text(controller.errorMessage.value));
               }
 
               final notificationData = controller.notificationData.value;
               if (notificationData == null) {
-                return Center(
-                  child: Text('No notifications'),
-                );
+                return Center(child: Text('No notifications'));
               }
 
               return SingleChildScrollView(
@@ -69,8 +63,7 @@ class NotificationsScreen extends StatelessWidget {
                     if (notificationData.today.isNotEmpty &&
                         notificationData.previous.isNotEmpty) ...[
                       SizedBox(height: 20),
-                      Divider(
-                          color: AppColors.borderColor, thickness: 0.5),
+                      Divider(color: AppColors.borderColor, thickness: 0.5),
                       SizedBox(height: 20),
                     ],
 
@@ -130,17 +123,13 @@ class NotificationsScreen extends StatelessWidget {
       if (difference.inMinutes < 1) {
         return 'just_now'.tr;
       } else if (difference.inMinutes < 60) {
-        return 'minutes_ago'.trParams(
-          {'count': difference.inMinutes.toString()},
-        );
+        return 'minutes_ago'.trParams({
+          'count': difference.inMinutes.toString(),
+        });
       } else if (difference.inHours < 24) {
-        return 'hours_ago'.trParams(
-          {'count': difference.inHours.toString()},
-        );
+        return 'hours_ago'.trParams({'count': difference.inHours.toString()});
       } else if (difference.inDays < 7) {
-        return 'days_ago'.trParams(
-          {'count': difference.inDays.toString()},
-        );
+        return 'days_ago'.trParams({'count': difference.inDays.toString()});
       } else {
         return dateString.split('T')[0]; // Return date in YYYY-MM-DD format
       }
