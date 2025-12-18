@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
+
 import 'dart:convert';
 import 'package:elad_giserman/core/services/google_auth_service.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';

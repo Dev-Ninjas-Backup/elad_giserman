@@ -1,4 +1,3 @@
-import 'package:elad_giserman/features/auth/forget_password/controller/forget_password_controller.dart';
 import 'package:elad_giserman/features/auth/forget_password/screen/forget_password_screen.dart';
 import 'package:elad_giserman/features/auth/forget_password/screen/reset_password_screen.dart';
 import 'package:elad_giserman/features/auth/sign_in/screens/sign_in_screen.dart';

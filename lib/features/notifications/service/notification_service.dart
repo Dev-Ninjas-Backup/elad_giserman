@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:elad_giserman/features/notifications/model/notification_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
