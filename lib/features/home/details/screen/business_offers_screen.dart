@@ -52,8 +52,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text(
-                'Redeem Voucher Code',
+              title: Text(
+                'redeem_voucher_code'.tr,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               content: SingleChildScrollView(
@@ -85,7 +85,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Redeemed Successfully!',
+                                    'code_redeemed_success'.tr,
                                     style: TextStyle(
                                       color: Colors.green[700],
                                       fontSize: 14,
@@ -168,7 +168,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                         controller: _redeemCodeController,
                         readOnly: true,
                         decoration: InputDecoration(
-                          hintText: 'Voucher code',
+                          hintText: 'voucher_code'.tr,
                           hintStyle: const TextStyle(
                             color: Color(0xFF636363),
                             fontSize: 14,
@@ -254,7 +254,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                   : [
                       TextButton(
                         onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('Cancel'),
+                        child: Text('cancel'.tr),
                       ),
                       Obx(
                         () => TextButton(
@@ -266,7 +266,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                   if (code.isEmpty) {
                                     setState(() {
                                       errorMessageInDialog =
-                                          'Please enter a redeem code';
+                                          'enter_redeem_code'.tr;
                                     });
                                     return;
                                   }
@@ -299,8 +299,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 },
                           child: Text(
                             _redemptionController.isLoading.value
-                                ? 'Redeeming...'
-                                : 'Redeem',
+                                ? 'redeeming'.tr
+                                : 'redeem'.tr,
                             style: TextStyle(
                               color: _redemptionController.isLoading.value
                                   ? Colors.grey

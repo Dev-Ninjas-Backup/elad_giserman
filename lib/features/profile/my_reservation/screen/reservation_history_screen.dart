@@ -21,14 +21,29 @@ class ReservationHistoryScreen extends StatefulWidget {
       _ReservationHistoryScreenState();
 }
 
-class _ReservationHistoryScreenState extends State<ReservationHistoryScreen> {
+class _ReservationHistoryScreenState extends State<ReservationHistoryScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Refresh data when screen is first opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _refreshReservations();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _refreshReservations();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void _refreshReservations() {

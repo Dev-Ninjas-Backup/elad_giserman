@@ -388,7 +388,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       _showRedeemDialog();
                                     },
                                     child: Text(
-                                      'Redeem Voucher',
+                                      'redeem_voucher_btn'.tr,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600,
@@ -421,7 +421,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   _showRedeemDialog();
                                 },
                                 child: Text(
-                                  'Redeem Voucher',
+                                  'redeem_voucher_btn'.tr,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,

@@ -102,13 +102,13 @@ class _ReservationScreenState extends State<ReservationScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          title: const Text(
-            'Success',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          title: Text(
+            'reservation_success_title'.tr,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
-          content: const Text(
-            'Your reservation has been created successfully!',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          content: Text(
+            'reservation_success_message'.tr,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
           ),
           actions: [
             SizedBox(
@@ -306,7 +306,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       SizedBox(height: 20),
                       // Phone Number Field
                       Text(
-                        'Phone Number:',
+                        'phone_number_label'.tr,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -318,7 +318,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          hintText: 'Enter your phone number',
+                          hintText: 'phone_number_hint'.tr,
                           hintStyle: const TextStyle(
                             color: Color(0xFF636363),
                             fontSize: 14,
