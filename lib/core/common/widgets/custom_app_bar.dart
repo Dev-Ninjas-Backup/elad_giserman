@@ -51,9 +51,9 @@ class CustomAppBar extends StatelessWidget {
                   icon: Icon(Icons.arrow_back_ios, color: Colors.black),
                   onPressed: () {
                     if (back == null) {
-                      Navigator.pop(context);
+                      Get.back();
                     } else {
-                      Get.offAllNamed(back!);
+                      Get.offNamed(back!);
                     }
                   },
                 )
