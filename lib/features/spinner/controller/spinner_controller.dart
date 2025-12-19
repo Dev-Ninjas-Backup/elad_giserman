@@ -53,12 +53,12 @@ class SpinnerController extends GetxController
 
   void startSpin() {
     if (isSpinning.value) return;
-    
+
     // Stop any existing animation
     if (animationController.isAnimating) {
       animationController.stop();
     }
-    
+
     isSpinning.value = true;
     selectedIndex.value = -1;
     spinSuccessful.value = false;

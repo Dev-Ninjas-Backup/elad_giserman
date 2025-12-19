@@ -152,7 +152,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                     title: 'delete_account'.tr,
                     titleColor: Color(0xFFE54400),
                     onTap: () {
-                      Get.offAllNamed('/signInScreen');
+                      controller.showDeleteAccountConfirmation();
                     },
                   ),
                 ],

@@ -69,4 +69,37 @@ class ProfileService {
       return false;
     }
   }
+
+  Future<bool> deleteAccount(String token) async {
+    final url = Uri.parse(Urls.deleteAccount);
+
+    try {
+      final response = await http.delete(
+        url,
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        if (kDebugMode) {
+          print("✅ Account deleted successfully: ${response.statusCode}");
+          print("Response: ${response.body}");
+        }
+        return true;
+      } else {
+        if (kDebugMode) {
+          print("❌ Failed to delete account: ${response.statusCode}");
+          print("Response: ${response.body}");
+        }
+        return false;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("❌ Error deleting account: $e");
+      }
+      return false;
+    }
+  }
 }
