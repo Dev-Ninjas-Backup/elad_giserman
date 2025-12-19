@@ -82,10 +82,10 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                     SizedBox(height: 90),
                     Obx(() {
                       if (controller.isSpinning.value) {
-                        return const Padding(
+                        return Padding(
                           padding: EdgeInsets.all(12),
                           child: Text(
-                            'Spinning...',
+                            'spinning'.tr,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -95,10 +95,10 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                           ),
                         );
                       }
-                      return const Padding(
+                      return Padding(
                         padding: EdgeInsets.all(12),
                         child: Text(
-                          'Tap SPIN to try your luck!',
+                          'tap_spin_luck'.tr,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -179,7 +179,7 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                               elevation: 8,
                             ),
                             child: Text(
-                              spinning ? 'Spinning...' : 'SPIN',
+                              spinning ? 'spinning'.tr : 'spin_button'.tr,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
