@@ -53,13 +53,20 @@ class SpinnerController extends GetxController
 
   void startSpin() {
     if (isSpinning.value) return;
+    
+    // Stop any existing animation
+    if (animationController.isAnimating) {
+      animationController.stop();
+    }
+    
     isSpinning.value = true;
     selectedIndex.value = -1;
+    spinSuccessful.value = false;
 
     final int fullSpins = 5 + _rand.nextInt(4);
     final double extra = _rand.nextDouble() * math.pi * 2;
 
-    final double start = rotation.value;
+    final double start = rotation.value % (2 * math.pi);
     final double target = start + fullSpins * 2 * math.pi + extra;
 
     final int ms = 3200 + fullSpins * 300;
@@ -69,7 +76,11 @@ class SpinnerController extends GetxController
       CurvedAnimation(parent: animationController, curve: Curves.decelerate),
     );
 
-    animationController.forward(from: 0.0);
+    animationController.forward(from: 0.0).catchError((error) {
+      if (!isClosed) {
+        isSpinning.value = false;
+      }
+    });
   }
 
   void setSelected(int index) {
@@ -78,10 +89,6 @@ class SpinnerController extends GetxController
 
     // Submit spin result to API
     _submitSpinResult(index);
-
-    Future.delayed(Duration(milliseconds: 300), () {
-      selectedIndex.value = -1;
-    });
   }
 
   Future<void> _submitSpinResult(int resultIndex) async {
