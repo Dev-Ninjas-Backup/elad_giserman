@@ -17,7 +17,6 @@ class SpinnerScreen extends StatefulWidget {
 
 class _SpinnerScreenState extends State<SpinnerScreen> {
   late SpinnerController controller;
-  bool _dialogShown = false;
 
   @override
   void initState() {
@@ -29,16 +28,19 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
       controller = Get.put(SpinnerController());
     }
 
-    // Set up listener only once when widget is first created
-    ever(controller.selectedIndex, (index) {
-      if (index != -1 && !_dialogShown && controller.spinSuccessful.value) {
-        _dialogShown = true;
-        Future.delayed(Duration.zero, () {
-          if (mounted) {
+    // Set up listener to show dialog when spin is successful
+    ever(controller.spinSuccessful, (isSuccessful) {
+      if (isSuccessful && mounted) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          if (mounted && controller.selectedIndex.value != -1) {
             Get.dialog(
               ResultDialog(result: controller.selectedText),
               barrierDismissible: false,
-            );
+            ).then((_) {
+              // Reset state after dialog is closed
+              controller.selectedIndex.value = -1;
+              controller.spinSuccessful.value = false;
+            });
           }
         });
       }
@@ -47,7 +49,6 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
 
   @override
   void dispose() {
-    _dialogShown = false;
     super.dispose();
   }
 

@@ -28,6 +28,7 @@ class SignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(height: 20),
                   Obx(() {
                     final logoUrl = controller.logoUrl;
                     if (logoUrl.isNotEmpty) {
@@ -203,7 +204,7 @@ class SignInScreen extends StatelessWidget {
                           text: ' ${'sign_up'.tr}',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                           recognizer: TapGestureRecognizer()
