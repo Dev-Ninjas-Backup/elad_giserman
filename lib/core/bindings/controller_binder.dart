@@ -6,8 +6,14 @@ import 'package:get/get.dart';
 class ControllerBinder extends Bindings {
   @override
   void dependencies() {
-    Get.put(CustomAppDetailsController(), permanent: true);
-    Get.lazyPut(() => ProfileController());
-    Get.lazyPut(() => UserReservationController());
+    if (!Get.isRegistered<CustomAppDetailsController>()) {
+      Get.put(CustomAppDetailsController(), permanent: true);
+    }
+    if (!Get.isRegistered<ProfileController>()) {
+      Get.lazyPut(() => ProfileController(), fenix: true);
+    }
+    if (!Get.isRegistered<UserReservationController>()) {
+      Get.lazyPut(() => UserReservationController(), fenix: true);
+    }
   }
 }
