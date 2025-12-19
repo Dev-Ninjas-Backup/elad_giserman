@@ -48,7 +48,7 @@ Future<void> showConfirmationDialog() async {
               Column(
                 children: [
                   CustomButton(
-                    label: 'Redeem Voucher'.tr,
+                    label: 'redeem_voucher_btn'.tr,
                     onPressed: () {
                       Get.back();
                       vipVoucherDialog();

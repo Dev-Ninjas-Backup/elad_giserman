@@ -42,8 +42,8 @@ class _OffersScreenState extends State<OffersScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text(
-                'Redeem Voucher Code',
+              title: Text(
+                'redeem_voucher_code'.tr,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               content: SingleChildScrollView(
@@ -72,7 +72,7 @@ class _OffersScreenState extends State<OffersScreen> {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Code redeemed successfully!',
+                                'code_redeemed_success'.tr,
                                 style: getTextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -144,7 +144,7 @@ class _OffersScreenState extends State<OffersScreen> {
                         controller: _redeemCodeController,
                         readOnly: true,
                         decoration: InputDecoration(
-                          hintText: 'Voucher code',
+                          hintText: 'voucher_code'.tr,
                           hintStyle: const TextStyle(
                             color: Color(0xFF636363),
                             fontSize: 14,
@@ -184,7 +184,7 @@ class _OffersScreenState extends State<OffersScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Code "$text" copied to clipboard',
+                                    'copied_to_clipboard'.tr,
                                   ),
                                   duration: const Duration(seconds: 2),
                                 ),
@@ -248,7 +248,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   : [
                       TextButton(
                         onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('Cancel'),
+                        child: Text('cancel'.tr),
                       ),
                       TextButton(
                         onPressed: _offersController.isRedeemingOffer.value
@@ -258,7 +258,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                 if (code.isEmpty) {
                                   setState(() {
                                     errorMessageInDialog =
-                                        'Please enter a code';
+                                        'enter_code'.tr;
                                   });
                                   return;
                                 }
@@ -288,8 +288,8 @@ class _OffersScreenState extends State<OffersScreen> {
                               },
                         child: Text(
                           _offersController.isRedeemingOffer.value
-                              ? 'Redeeming...'
-                              : 'Redeem',
+                              ? 'redeeming'.tr
+                              : 'redeem'.tr,
                           style: TextStyle(
                             color: _offersController.isRedeemingOffer.value
                                 ? Colors.grey
