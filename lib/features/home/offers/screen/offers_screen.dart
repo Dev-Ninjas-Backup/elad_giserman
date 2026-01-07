@@ -183,9 +183,7 @@ class _OffersScreenState extends State<OffersScreen> {
                               final text = _redeemCodeController.text;
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(
-                                    'copied_to_clipboard'.tr,
-                                  ),
+                                  content: Text('copied_to_clipboard'.tr),
                                   duration: const Duration(seconds: 2),
                                 ),
                               );
@@ -257,8 +255,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                 final code = _redeemCodeController.text.trim();
                                 if (code.isEmpty) {
                                   setState(() {
-                                    errorMessageInDialog =
-                                        'enter_code'.tr;
+                                    errorMessageInDialog = 'enter_code'.tr;
                                   });
                                   return;
                                 }

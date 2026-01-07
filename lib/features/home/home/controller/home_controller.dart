@@ -3,9 +3,11 @@
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/model/category_model.dart';
+import 'package:elad_giserman/features/home/home/model/custom_app_details_model.dart';
 import 'package:elad_giserman/features/home/home/model/favorite_model.dart';
 import 'package:elad_giserman/features/home/home/service/business_profile_service.dart';
 import 'package:elad_giserman/features/home/home/service/category_service.dart';
+import 'package:elad_giserman/features/home/home/service/custom_app_details_service.dart';
 import 'package:elad_giserman/features/home/home/service/favorite_service.dart';
 import 'package:get/get.dart';
 
@@ -54,16 +56,21 @@ class HomeController extends GetxController {
   var favorites = <Favorite>[].obs;
   var isLoadingFavorites = false.obs;
   var searchQuery = ''.obs;
+  var customAppDetails = Rx<CustomAppDetails?>(null);
 
   final CategoryService _categoryService = CategoryService();
   final BusinessProfileService _profileService = BusinessProfileService();
   final FavoriteService _favoriteService = FavoriteService();
+  final CustomAppDetailsService _customAppDetailsService =
+      CustomAppDetailsService();
 
+  @override
   @override
   void onInit() {
     super.onInit();
     fetchCategories();
     fetchBusinessProfiles();
+    fetchCustomAppDetails();
     restaurants.value = [
       Place(
         image: ImagePath.popularRestaurant1,
@@ -270,5 +277,20 @@ class HomeController extends GetxController {
   void clearSearchResults() {
     searchResults.clear();
     searchQuery.value = '';
+  }
+
+  Future<void> fetchCustomAppDetails() async {
+    try {
+      print('📡 Fetching custom app details...');
+      final details = await _customAppDetailsService.fetchCustomAppDetails();
+      if (details != null) {
+        customAppDetails.value = details;
+        print('✅ Custom app details loaded: ${details.title}');
+      } else {
+        print('⚠️ No custom app details found');
+      }
+    } catch (e) {
+      print('❌ Error fetching custom app details: $e');
+    }
   }
 }

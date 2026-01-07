@@ -15,7 +15,13 @@ class OffersController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchOffers();
+    // Don't fetch automatically - let the screen decide when to fetch
+  }
+
+  void setOffers(List<OfferModel> offersList) {
+    offers.value = offersList;
+    isLoading.value = false;
+    errorMessage.value = '';
   }
 
   Future<void> fetchOffers() async {
@@ -24,23 +30,17 @@ class OffersController extends GetxController {
       errorMessage.value = '';
 
       final token = await SharedPreferencesHelper.getAccessToken();
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Please login to view offers';
-        isLoading.value = false;
-        return;
-      }
 
       final url = Uri.parse(
         'http://31.97.125.159:5050/api/business-profiles/approved',
       );
 
-      final response = await http.get(
-        url,
-        headers: {
-          "Accept": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
+      final headers = {
+        "Accept": "application/json",
+        if (token != null && token.isNotEmpty) "Authorization": "Bearer $token",
+      };
+
+      final response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);

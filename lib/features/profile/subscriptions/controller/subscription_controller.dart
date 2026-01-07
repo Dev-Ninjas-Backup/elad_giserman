@@ -1,15 +1,21 @@
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/profile/subscriptions/model/subscription_model.dart';
+import 'package:elad_giserman/features/profile/subscriptions/model/user_subscription_model.dart';
 import 'package:elad_giserman/features/profile/subscriptions/service/subscription_service.dart';
+import 'package:elad_giserman/features/profile/subscriptions/service/user_subscription_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class SubscriptionController extends GetxController {
   final SubscriptionService _service = SubscriptionService();
+  final UserSubscriptionService _userService = UserSubscriptionService();
 
   final Rx<SubscriptionResponse?> subscriptionResponse = Rx(null);
+  final Rx<UserSubscriptionResponse?> userSubscriptionResponse = Rx(null);
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
   final RxBool isMonthlySelected = true.obs;
+  final RxBool isLoggedIn = false.obs;
 
   @override
   void onInit() {
@@ -17,13 +23,47 @@ class SubscriptionController extends GetxController {
     if (kDebugMode) {
       print('🔄 SubscriptionController initialized');
     }
+    _checkLoginStatus();
     fetchSubscriptions();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final token = await SharedPreferencesHelper.getAccessToken();
+    isLoggedIn.value = token != null && token.isNotEmpty;
+    if (kDebugMode) {
+      print(
+        '🔐 Login Status: ${isLoggedIn.value ? 'Logged In' : 'Not Logged In'}',
+      );
+    }
+
+    if (isLoggedIn.value) {
+      await _fetchUserSubscription();
+    }
+  }
+
+  Future<void> _fetchUserSubscription() async {
+    try {
+      if (kDebugMode) {
+        print('🔄 Fetching user subscription...');
+      }
+      final response = await _userService.fetchUserSubscription();
+      if (response != null) {
+        userSubscriptionResponse.value = response;
+        if (kDebugMode) {
+          print('✅ User subscription loaded: ${response.data.plan.title}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error fetching user subscription: $e');
+      }
+    }
   }
 
   Future<void> fetchSubscriptions() async {
     try {
       if (kDebugMode) {
-        print('🔄 Starting to fetch subscriptions...');
+        print('🔄 Starting to fetch subscription plans...');
       }
       isLoading.value = true;
       errorMessage.value = '';
@@ -33,7 +73,7 @@ class SubscriptionController extends GetxController {
       if (response != null) {
         subscriptionResponse.value = response;
         if (kDebugMode) {
-          print('✅ Subscriptions loaded successfully');
+          print('✅ Subscription plans loaded successfully');
           print(
             '   Monthly Plan: ${response.data.monthlyPlan?.title ?? 'None'}',
           );
@@ -49,13 +89,13 @@ class SubscriptionController extends GetxController {
           print('   Benefits: ${currentPlan?.benefits.length ?? 0}');
         }
       } else {
-        errorMessage.value = 'Failed to load subscription plans';
+        // Show default UI even if API fails
         if (kDebugMode) {
-          print('❌ Failed to load subscriptions - response is null');
+          print('⚠️ Failed to load subscription plans from API');
         }
       }
     } catch (e) {
-      errorMessage.value = 'Error loading subscriptions: ${e.toString()}';
+      // Show default UI even on error
       if (kDebugMode) {
         print('❌ Exception caught in fetchSubscriptions: $e');
         print('   Error type: ${e.runtimeType}');

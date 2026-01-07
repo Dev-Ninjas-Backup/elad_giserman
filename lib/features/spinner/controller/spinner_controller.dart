@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/spinner/model/spin_result_model.dart';
+import 'package:elad_giserman/features/spinner/model/spin_table_model.dart';
 import 'package:elad_giserman/features/spinner/service/spinner_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,10 @@ class SpinnerController extends GetxController
   final Rx<SpinResultData?> spinResult = Rx<SpinResultData?>(null);
   final RxBool isSubmitting = false.obs;
   final RxBool spinSuccessful = false.obs;
+  final Rx<SpinTableResponse?> spinTable = Rx<SpinTableResponse?>(null);
+  final RxBool isLoadingSpinTable = false.obs;
+  final RxInt selectedSpinIndex = (-1).obs;
+  final Rx<SpinTableItem?> selectedSpinItem = Rx<SpinTableItem?>(null);
 
   final math.Random _rand = math.Random();
   final SpinnerService _service = SpinnerService();
@@ -49,10 +54,20 @@ class SpinnerController extends GetxController
         setSelected(sel);
       }
     });
+    _fetchSpinTable();
   }
 
   void startSpin() {
     if (isSpinning.value) return;
+
+    _startSpinInternal();
+  }
+
+  Future<void> _startSpinInternal() async {
+    // Stop any existing animation
+    if (animationController.isAnimating) {
+      animationController.stop();
+    }
 
     // Stop any existing animation
     if (animationController.isAnimating) {
@@ -62,33 +77,154 @@ class SpinnerController extends GetxController
     isSpinning.value = true;
     selectedIndex.value = -1;
     spinSuccessful.value = false;
+    selectedSpinIndex.value = -1;
+    selectedSpinItem.value = null;
 
-    final int fullSpins = 5 + _rand.nextInt(4);
-    final double extra = _rand.nextDouble() * math.pi * 2;
+    try {
+      // Fetch latest spin data on each spin so the API can control the outcome.
+      final response = await _service.fetchSpinTable();
+      if (isClosed) return;
 
-    final double start = rotation.value % (2 * math.pi);
-    final double target = start + fullSpins * 2 * math.pi + extra;
+      if (response == null || response.data.isEmpty) {
+        isSpinning.value = false;
+        Get.snackbar(
+          'Error',
+          'Spin data not available. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
 
-    final int ms = 3200 + fullSpins * 300;
-    animationController.duration = Duration(milliseconds: ms);
+      spinTable.value = response;
+      final spinData = response.data;
 
-    animation = Tween<double>(begin: start, end: target).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.decelerate),
-    );
+      // If API returns a single object in `data`, use it directly.
+      // If API returns a list, keep the existing weighted selection.
+      final SpinTableItem picked;
+      if (spinData.length == 1) {
+        picked = spinData.first;
+      } else {
+        final randomIndex = await _getWeightedRandomIndexFrom(spinData);
+        picked = spinData[randomIndex.clamp(0, spinData.length - 1)];
+      }
 
-    animationController.forward(from: 0.0).catchError((error) {
+      selectedSpinItem.value = picked;
+
+      final int spinValue = picked.spinValue1; // e.g., 10,20,30...100
+      final int uiIndex = _mapSpinValueToUiIndex(spinValue);
+      selectedSpinIndex.value = uiIndex;
+
+      if (kDebugMode) {
+        print(
+          '🎯 API spinValue1: $spinValue → UI index: $uiIndex (${items[uiIndex]})',
+        );
+      }
+
+      final double start = rotation.value % (2 * math.pi);
+      double desired = _rotationForUiIndex(uiIndex);
+      if (desired < start) {
+        desired += 2 * math.pi;
+      }
+
+      final int fullSpins = 5 + _rand.nextInt(4);
+      final double target = desired + fullSpins * 2 * math.pi;
+
+      final int ms = 3200 + fullSpins * 300;
+      animationController.duration = Duration(milliseconds: ms);
+
+      animation = Tween<double>(begin: start, end: target).animate(
+        CurvedAnimation(
+          parent: animationController,
+          curve: Curves.decelerate,
+        ),
+      );
+
+      await animationController.forward(from: 0.0);
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error starting spin: $e');
+      }
       if (!isClosed) {
         isSpinning.value = false;
+        Get.snackbar(
+          'Error',
+          'Unable to spin right now. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       }
-    });
+    }
+  }
+
+  int _mapSpinValueToUiIndex(int spinValue) {
+    final int clamped = spinValue.clamp(10, 100);
+    final int roundedToTens = ((clamped / 10).round()) * 10;
+    return ((roundedToTens ~/ 10) - 1).clamp(0, items.length - 1);
+  }
+
+  double _rotationForUiIndex(int index) {
+    // Must match _computeSelectedIndex() geometry:
+    // - Wheel slices start at -pi/2
+    // - Pointer is at top (-pi/2)
+    // We want the CENTER of slice `index` to align with the pointer.
+    final int n = items.length;
+    final double anglePer = 2 * math.pi / n;
+    final double startAngle = -math.pi / 2;
+    final double topAngle = -math.pi / 2;
+    final double centerAngle = startAngle + index * anglePer + anglePer / 2;
+    return (topAngle - centerAngle) % (2 * math.pi);
+  }
+
+  Future<int> _getWeightedRandomIndexFrom(List<SpinTableItem> spinData) async {
+    if (spinData.isEmpty) return 0;
+
+    final totalProbability = spinData.fold(
+      0,
+      (sum, item) => sum + item.probablity,
+    );
+    if (totalProbability <= 0) return 0;
+    int randomValue = _rand.nextInt(totalProbability);
+
+    int cumulativeProbability = 0;
+    for (int i = 0; i < spinData.length; i++) {
+      cumulativeProbability += spinData[i].probablity;
+      if (randomValue < cumulativeProbability) {
+        if (kDebugMode) {
+          print(
+            '🎯 Weighted random selected index: $i (${spinData[i].useCase})',
+          );
+        }
+        return i;
+      }
+    }
+
+    return 0;
   }
 
   void setSelected(int index) {
     selectedIndex.value = index;
     isSpinning.value = false;
 
+    final selectedItem = selectedSpinItem.value;
+    if (selectedItem != null) {
+
+      if (kDebugMode) {
+        print('🎁 Spin result selected: ${selectedItem.useCase}');
+        print('   Discount: ${selectedItem.spinValue1}%');
+        print('   Probability: ${selectedItem.probablity}%');
+      }
+
+      Get.snackbar(
+        'Congratulations! 🎉',
+        selectedItem.useCase,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+
     // Submit spin result to API
-    _submitSpinResult(index);
+    _submitSpinResult(selectedSpinIndex.value);
   }
 
   Future<void> _submitSpinResult(int resultIndex) async {
@@ -235,6 +371,34 @@ class SpinnerController extends GetxController
 
     rotation.value = rotation.value % (2 * math.pi);
     return bestIndex;
+  }
+
+  Future<void> _fetchSpinTable() async {
+    try {
+      if (kDebugMode) {
+        print('🎡 Fetching spin table data...');
+      }
+      isLoadingSpinTable.value = true;
+
+      final response = await _service.fetchSpinTable();
+
+      if (response != null && response.data.isNotEmpty) {
+        spinTable.value = response;
+        if (kDebugMode) {
+          print('✅ Spin table loaded: ${response.data.length} items');
+        }
+      } else {
+        if (kDebugMode) {
+          print('⚠️ No spin table data available');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error fetching spin table: $e');
+      }
+    } finally {
+      isLoadingSpinTable.value = false;
+    }
   }
 
   @override

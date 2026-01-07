@@ -156,7 +156,14 @@ class HomeScreen extends StatelessWidget {
                         );
                       }),
                     ),
-                    VipFeaturesWidget(),
+                    VipFeaturesWidget(
+                      bannerCard: controller.customAppDetails.value?.bannerCard,
+                      bannerPhoto:
+                          controller.customAppDetails.value?.bannerPhoto,
+                      title: controller.customAppDetails.value?.title,
+                      description:
+                          controller.customAppDetails.value?.description,
+                    ),
                     const SizedBox(height: 20),
                     Center(
                       child: Obx(() {

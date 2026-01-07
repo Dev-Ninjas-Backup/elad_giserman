@@ -4,11 +4,11 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
+import 'package:elad_giserman/features/home/details/screen/business_offers_screen.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
-import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
-import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String profileId;
@@ -142,10 +142,154 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   void _showRedeemDialog() {
-    Get.toNamed(
-      AppRoute.getBusinessOffersScreen(
-        widget.profileId,
-        _controller.profileTitle,
+    Get.to(
+      BusinessOffersScreen(
+        businessId: widget.profileId,
+        businessName: _controller.profileTitle,
+        offers: _controller.businessOffers,
+      ),
+    );
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (url.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'URL not available',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+      return;
+    }
+
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        Get.snackbar(
+          'Error',
+          'Could not launch URL',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to open URL: $e',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    if (phoneNumber.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Phone number not available',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+      return;
+    }
+
+    try {
+      final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        Get.snackbar(
+          'Error',
+          'Could not launch phone call',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to make call: $e',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  void _showPhoneDialog() {
+    final phone = _controller.profilePhone;
+    if (phone.isEmpty) {
+      Get.snackbar(
+        'Info',
+        'Phone number not available',
+        colorText: Colors.white,
+        backgroundColor: Colors.blue,
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Call Restaurant'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Phone Number:',
+                style: getTextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.fontColor,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                phone,
+                style: getTextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryFontColor,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: Text('cancel'.tr),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+                _makePhoneCall(phone);
+              },
+              icon: Icon(Icons.call, size: 18),
+              label: const Text('Call'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.buttonColor,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildSocialIcon(String iconPath, String url, String platform) {
+    return GestureDetector(
+      onTap: () => _launchURL(url),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.buttonColor.withOpacity(0.1),
+        ),
+        child: Image.asset(iconPath, height: 28, width: 28),
       ),
     );
   }
@@ -340,20 +484,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       elevation: 10,
                                     ),
                                     onPressed: () {
-                                      String mainImage =
-                                          _controller.galleryItems.isNotEmpty
-                                          ? _controller.galleryItems.first.url
-                                          : '';
-                                      Get.to(
-                                        () => ReservationScreen(
-                                          image: mainImage,
-                                          restaurantId: widget.profileId,
-                                        ),
-                                        transition: Transition.downToUp,
-                                        duration: const Duration(
-                                          milliseconds: 400,
-                                        ),
-                                      );
+                                      _showPhoneDialog();
                                     },
                                     child: Text(
                                       'reserve_seats'.tr,
@@ -464,7 +595,118 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 20),
+
+                          // Social Media Section
+                          Text(
+                            'Follow Us',
+                            style: getTextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryFontColor,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            children: [
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .facebook
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/facebook.png',
+                                  _controller.profileDetail.value!.facebook,
+                                  'Facebook',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .instagram
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/instagram.png',
+                                  _controller.profileDetail.value!.instagram,
+                                  'Instagram',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .twitter
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/twitter.png',
+                                  _controller.profileDetail.value!.twitter,
+                                  'Twitter',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .linkedin
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/linkedin.png',
+                                  _controller.profileDetail.value!.linkedin,
+                                  'LinkedIn',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .youtube
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/youtube.png',
+                                  _controller.profileDetail.value!.youtube,
+                                  'YouTube',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .pinterest
+                                      .isNotEmpty)
+                                _buildSocialIcon(
+                                  'assets/icons/pinterest.png',
+                                  _controller.profileDetail.value!.pinterest,
+                                  'Pinterest',
+                                ),
+                              if (_controller.profileDetail.value != null &&
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .website
+                                      .isNotEmpty)
+                                GestureDetector(
+                                  onTap: () => _launchURL(
+                                    _controller.profileDetail.value!.website,
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.buttonColor.withOpacity(
+                                        0.1,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.language,
+                                      size: 28,
+                                      color: AppColors.buttonColor,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          SizedBox(height: 24),
+                          Divider(),
+                          SizedBox(height: 24),
 
                           // About Section
                           Text(
@@ -739,66 +981,66 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           SizedBox(height: 20),
 
                           // Existing Reviews Display
-                          Row(
-                            children: [
-                              Image.asset(IconPath.man, height: 24, width: 24),
-                              SizedBox(width: 5),
-                              Text(
-                                'Sarah L.',
-                                style: getTextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primaryFontColor,
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'hours_ago'.trParams({'count': '1'}),
-                                style: getTextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          _buildRatingStars(5.0),
-                          SizedBox(height: 12),
-                          Text(
-                            "Had an amazing time at Karaoke Night! The atmosphere was vibrant, and the staff was super friendly. A perfect night out with friends. Highly recommend the cocktails too!",
-                            style: getTextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.fontColor,
-                            ),
-                            maxLines: _controller.isExpanded.value ? null : 4,
-                            overflow: _controller.isExpanded.value
-                                ? null
-                                : TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 12),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                width: 1,
-                                color: Color(0xFFD2D2D2),
-                              ),
-                            ),
-                            child: Text(
-                              'reply'.tr,
-                              style: getTextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
-                              ),
-                            ),
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Image.asset(IconPath.man, height: 24, width: 24),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       'Sarah L.',
+                          //       style: getTextStyle(
+                          //         fontSize: 14,
+                          //         fontWeight: FontWeight.w600,
+                          //         color: AppColors.primaryFontColor,
+                          //       ),
+                          //     ),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       'hours_ago'.trParams({'count': '1'}),
+                          //       style: getTextStyle(
+                          //         fontSize: 12,
+                          //         fontWeight: FontWeight.w400,
+                          //         color: AppColors.fontColor,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: 8),
+                          // _buildRatingStars(5.0),
+                          // SizedBox(height: 12),
+                          // Text(
+                          //   "Had an amazing time at Karaoke Night! The atmosphere was vibrant, and the staff was super friendly. A perfect night out with friends. Highly recommend the cocktails too!",
+                          //   style: getTextStyle(
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: AppColors.fontColor,
+                          //   ),
+                          //   maxLines: _controller.isExpanded.value ? null : 4,
+                          //   overflow: _controller.isExpanded.value
+                          //       ? null
+                          //       : TextOverflow.ellipsis,
+                          // ),
+                          // SizedBox(height: 12),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(
+                          //     horizontal: 10,
+                          //     vertical: 2,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(12),
+                          //     border: Border.all(
+                          //       width: 1,
+                          //       color: Color(0xFFD2D2D2),
+                          //     ),
+                          //   ),
+                          //   child: Text(
+                          //     'reply'.tr,
+                          //     style: getTextStyle(
+                          //       fontSize: 12,
+                          //       fontWeight: FontWeight.w400,
+                          //       color: AppColors.fontColor,
+                          //     ),
+                          //   ),
+                          // ),
 
                           // API Reviews Display
                           Obx(
