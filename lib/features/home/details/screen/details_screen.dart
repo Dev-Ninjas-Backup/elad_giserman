@@ -10,6 +10,7 @@ import 'package:elad_giserman/features/home/reservation/screen/reservation_scree
 import 'package:elad_giserman/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String profileId;
@@ -148,6 +149,53 @@ class _DetailsScreenState extends State<DetailsScreen> {
         businessId: widget.profileId,
         businessName: _controller.profileTitle,
         offers: _controller.businessOffers,
+      ),
+    );
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (url.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'URL not available',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+      return;
+    }
+
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        Get.snackbar(
+          'Error',
+          'Could not launch URL',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to open URL: $e',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+  }
+
+  Widget _buildSocialIcon(String iconPath, String url, String platform) {
+    return GestureDetector(
+      onTap: () => _launchURL(url),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.buttonColor.withOpacity(0.1),
+        ),
+        child: Image.asset(iconPath, height: 28, width: 28),
       ),
     );
   }
@@ -466,7 +514,118 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 20),
+
+                          // Social Media Section
+                          Text(
+                            'Follow Us',
+                            style: getTextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryFontColor,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            children: [
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.facebook
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/facebook.png',
+                                  _controller.profileDetail.value!.facebook!,
+                                  'Facebook',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.instagram
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/instagram.png',
+                                  _controller.profileDetail.value!.instagram!,
+                                  'Instagram',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.twitter
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/twitter.png',
+                                  _controller.profileDetail.value!.twitter!,
+                                  'Twitter',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.linkedin
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/linkedin.png',
+                                  _controller.profileDetail.value!.linkedin!,
+                                  'LinkedIn',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.youtube
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/youtube.png',
+                                  _controller.profileDetail.value!.youtube!,
+                                  'YouTube',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.pinterest
+                                      ?.isNotEmpty ??
+                                  false)
+                                _buildSocialIcon(
+                                  'assets/icons/pinterest.png',
+                                  _controller.profileDetail.value!.pinterest!,
+                                  'Pinterest',
+                                ),
+                              if (_controller
+                                      .profileDetail
+                                      .value
+                                      ?.website
+                                      ?.isNotEmpty ??
+                                  false)
+                                GestureDetector(
+                                  onTap: () => _launchURL(
+                                    _controller.profileDetail.value!.website!,
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.buttonColor.withOpacity(
+                                        0.1,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.language,
+                                      size: 28,
+                                      color: AppColors.buttonColor,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          SizedBox(height: 24),
+                          Divider(),
+                          SizedBox(height: 24),
 
                           // About Section
                           Text(
