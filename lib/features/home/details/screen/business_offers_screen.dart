@@ -1,5 +1,6 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
+import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/features/home/offers/controller/offers_controller.dart';
 import 'package:elad_giserman/features/home/offers/models/offer_model.dart';
@@ -11,11 +12,13 @@ import 'package:intl/intl.dart';
 class BusinessOffersScreen extends StatefulWidget {
   final String businessId;
   final String businessName;
+  final List<OfferModel>? offers;
 
   const BusinessOffersScreen({
     super.key,
     required this.businessId,
     required this.businessName,
+    this.offers,
   });
 
   @override
@@ -33,12 +36,65 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
     _offersController = Get.put(OffersController());
     _redemptionController = Get.put(RedemptionController());
     _redeemCodeController = TextEditingController();
+    // If offers are passed from details screen, use them directly
+    if (widget.offers != null && widget.offers!.isNotEmpty) {
+      _offersController.setOffers(widget.offers!);
+    } else {
+      // Otherwise fetch from API
+      Future.delayed(Duration.zero, () {
+        _offersController.fetchOffers();
+      });
+    }
   }
 
   @override
   void dispose() {
     _redeemCodeController.dispose();
     super.dispose();
+  }
+
+  Future<bool> _checkLoginStatus() async {
+    final token = await SharedPreferencesHelper.getAccessToken();
+    return token != null && token.isNotEmpty;
+  }
+
+  void _showLoginRequiredDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Login Required'),
+          content: const Text(
+            'You need to log in to redeem offers. Please sign in to continue.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: Text('cancel'.tr),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+                Get.offAllNamed('/signInScreen');
+              },
+              child: const Text(
+                'Sign In',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _handleOfferTap(OfferModel offer) async {
+    final isLoggedIn = await _checkLoginStatus();
+    if (!isLoggedIn) {
+      _showLoginRequiredDialog();
+      return;
+    }
+    _showOfferRedeemDialog(offer);
   }
 
   void _showOfferRedeemDialog(OfferModel offer) {
@@ -334,71 +390,116 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                           color: AppColors.buttonColor,
                         ),
                       )
-                    : _offersController.errorMessage.value.isNotEmpty
-                    ? Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.red[50],
-                          border: Border.all(color: Colors.red[300]!, width: 1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red[600],
-                              size: 48,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              _offersController.errorMessage.value,
-                              textAlign: TextAlign.center,
-                              style: getTextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.red[700]!,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: () {
-                                _offersController.fetchOffers();
-                              },
-                              child: const Text('Retry'),
-                            ),
-                          ],
-                        ),
-                      )
                     : _offersController.offers
                           .where(
                             (offer) => offer.businessId == widget.businessId,
                           )
                           .toList()
                           .isEmpty
-                    ? Center(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 50),
-                            Icon(
-                              Icons.local_offer_outlined,
-                              size: 80,
-                              color: Colors.grey[300],
-                            ),
-                            const SizedBox(height: 20),
-                            Text(
-                              'No offers available for this business',
-                              style: getTextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.fontColor,
+                    ? Column(
+                        children: [
+                          if (_offersController.errorMessage.value.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.red[50],
+                                  border: Border.all(
+                                    color: Colors.red[300]!,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red[600],
+                                      size: 48,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      _offersController.errorMessage.value,
+                                      textAlign: TextAlign.center,
+                                      style: getTextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.red[700]!,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        _offersController.fetchOffers();
+                                      },
+                                      child: const Text('Retry'),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 50),
-                          ],
-                        ),
+                          Center(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 50),
+                                Icon(
+                                  Icons.local_offer_outlined,
+                                  size: 80,
+                                  color: Colors.grey[300],
+                                ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  'No offers available for this business',
+                                  style: getTextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.fontColor,
+                                  ),
+                                ),
+                                const SizedBox(height: 50),
+                              ],
+                            ),
+                          ),
+                        ],
                       )
                     : Column(
                         children: [
+                          if (_offersController.errorMessage.value.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[50],
+                                  border: Border.all(
+                                    color: Colors.orange[300]!,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.warning_amber_rounded,
+                                      color: Colors.orange[600],
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        _offersController.errorMessage.value,
+                                        style: getTextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.orange[700]!,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -422,7 +523,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
 
                               return GestureDetector(
                                 onTap: !isExpired
-                                    ? () => _showOfferRedeemDialog(offer)
+                                    ? () => _handleOfferTap(offer)
                                     : null,
                                 child: Container(
                                   margin: const EdgeInsets.only(bottom: 12),
@@ -579,7 +680,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                               ),
                                             ),
                                             onPressed: () =>
-                                                _showOfferRedeemDialog(offer),
+                                                _handleOfferTap(offer),
                                             child: Text(
                                               'View & Redeem',
                                               style: getTextStyle(

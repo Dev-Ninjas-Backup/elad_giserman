@@ -4,6 +4,7 @@ import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
+import 'package:elad_giserman/features/home/details/screen/business_offers_screen.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
 import 'package:elad_giserman/features/home/reservation/screen/reservation_screen.dart';
 import 'package:elad_giserman/routes/app_routes.dart';
@@ -142,10 +143,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   void _showRedeemDialog() {
-    Get.toNamed(
-      AppRoute.getBusinessOffersScreen(
-        widget.profileId,
-        _controller.profileTitle,
+    Get.to(
+      BusinessOffersScreen(
+        businessId: widget.profileId,
+        businessName: _controller.profileTitle,
+        offers: _controller.businessOffers,
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:elad_giserman/features/home/details/model/profile_detail_model.dart';
 import 'package:elad_giserman/features/home/details/service/profile_detail_service.dart';
 import 'package:elad_giserman/features/home/details/service/review_service.dart';
+import 'package:elad_giserman/features/home/offers/models/offer_model.dart';
 
 class DetailsController extends GetxController {
   final ProfileDetailService _service = ProfileDetailService();
@@ -171,6 +172,51 @@ class DetailsController extends GetxController {
   int get reviewCount => profileDetail.value?.reviewCount ?? 0;
   String get openingTime => profileDetail.value?.openingTime ?? '';
   String get closingTime => profileDetail.value?.closingTime ?? '';
+
+  // Convert Offer objects to OfferModel objects for business offers screen
+  List<OfferModel> get businessOffers {
+    final offersList = profileDetail.value?.offers ?? [];
+    final profileDetail_ = profileDetail.value;
+
+    return offersList
+        .map(
+          (offer) => OfferModel(
+            id: offer.id,
+            title: offer.title,
+            description: offer.description,
+            isActive: offer.isActive,
+            status: offer.status,
+            businessId: offer.businessId,
+            expiredsAt: offer.expiredsAt,
+            code: offer.code,
+            qrCodeUrl: offer.qrCodeUrl,
+            createdAt: offer.createdAt,
+            updatedAt: offer.updatedAt,
+            business: BusinessModel(
+              id: profileDetail_?.id ?? '',
+              title: profileDetail_?.title ?? '',
+              description: profileDetail_?.description ?? '',
+              location: profileDetail_?.location ?? '',
+              isActive: profileDetail_?.isActive ?? false,
+              openingTime: profileDetail_?.openingTime ?? '',
+              closingTime: profileDetail_?.closingTime ?? '',
+              categoryId: profileDetail_?.categoryId,
+              ownerId: profileDetail_?.ownerId ?? '',
+              createdAt: profileDetail_?.createdAt ?? '',
+              updatedAt: profileDetail_?.updatedAt ?? '',
+              profileTypeName: profileDetail_?.profileTypeName,
+              facebook: profileDetail_?.facebook,
+              instagram: profileDetail_?.instagram,
+              linkedin: profileDetail_?.linkedin,
+              pinterest: profileDetail_?.pinterest,
+              twitter: profileDetail_?.twitter,
+              website: profileDetail_?.website,
+              youtube: profileDetail_?.youtube,
+            ),
+          ),
+        )
+        .toList();
+  }
 }
 
 extension BusinessProfileDetailExtension on BusinessProfileDetail {
