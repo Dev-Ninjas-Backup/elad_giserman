@@ -271,6 +271,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               label: const Text('Call'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.buttonColor,
+                foregroundColor: Colors.white,
               ),
             ),
           ],
@@ -980,66 +981,66 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           SizedBox(height: 20),
 
                           // Existing Reviews Display
-                          Row(
-                            children: [
-                              Image.asset(IconPath.man, height: 24, width: 24),
-                              SizedBox(width: 5),
-                              Text(
-                                'Sarah L.',
-                                style: getTextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primaryFontColor,
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'hours_ago'.trParams({'count': '1'}),
-                                style: getTextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          _buildRatingStars(5.0),
-                          SizedBox(height: 12),
-                          Text(
-                            "Had an amazing time at Karaoke Night! The atmosphere was vibrant, and the staff was super friendly. A perfect night out with friends. Highly recommend the cocktails too!",
-                            style: getTextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.fontColor,
-                            ),
-                            maxLines: _controller.isExpanded.value ? null : 4,
-                            overflow: _controller.isExpanded.value
-                                ? null
-                                : TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 12),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                width: 1,
-                                color: Color(0xFFD2D2D2),
-                              ),
-                            ),
-                            child: Text(
-                              'reply'.tr,
-                              style: getTextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
-                              ),
-                            ),
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Image.asset(IconPath.man, height: 24, width: 24),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       'Sarah L.',
+                          //       style: getTextStyle(
+                          //         fontSize: 14,
+                          //         fontWeight: FontWeight.w600,
+                          //         color: AppColors.primaryFontColor,
+                          //       ),
+                          //     ),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       'hours_ago'.trParams({'count': '1'}),
+                          //       style: getTextStyle(
+                          //         fontSize: 12,
+                          //         fontWeight: FontWeight.w400,
+                          //         color: AppColors.fontColor,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: 8),
+                          // _buildRatingStars(5.0),
+                          // SizedBox(height: 12),
+                          // Text(
+                          //   "Had an amazing time at Karaoke Night! The atmosphere was vibrant, and the staff was super friendly. A perfect night out with friends. Highly recommend the cocktails too!",
+                          //   style: getTextStyle(
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: AppColors.fontColor,
+                          //   ),
+                          //   maxLines: _controller.isExpanded.value ? null : 4,
+                          //   overflow: _controller.isExpanded.value
+                          //       ? null
+                          //       : TextOverflow.ellipsis,
+                          // ),
+                          // SizedBox(height: 12),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(
+                          //     horizontal: 10,
+                          //     vertical: 2,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(12),
+                          //     border: Border.all(
+                          //       width: 1,
+                          //       color: Color(0xFFD2D2D2),
+                          //     ),
+                          //   ),
+                          //   child: Text(
+                          //     'reply'.tr,
+                          //     style: getTextStyle(
+                          //       fontSize: 12,
+                          //       fontWeight: FontWeight.w400,
+                          //       color: AppColors.fontColor,
+                          //     ),
+                          //   ),
+                          // ),
 
                           // API Reviews Display
                           Obx(
