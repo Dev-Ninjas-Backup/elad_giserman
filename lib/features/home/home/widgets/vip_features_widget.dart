@@ -81,10 +81,7 @@ class VipFeaturesWidget extends StatelessWidget {
 
   DecorationImage? _buildBackgroundImage(String imagePath) {
     if (imagePath.startsWith('http')) {
-      return DecorationImage(
-        image: NetworkImage(imagePath),
-        fit: BoxFit.cover,
-      );
+      return DecorationImage(image: NetworkImage(imagePath), fit: BoxFit.cover);
     }
     return null;
   }

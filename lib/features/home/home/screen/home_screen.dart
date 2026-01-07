@@ -158,9 +158,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                     VipFeaturesWidget(
                       bannerCard: controller.customAppDetails.value?.bannerCard,
-                      bannerPhoto: controller.customAppDetails.value?.bannerPhoto,
+                      bannerPhoto:
+                          controller.customAppDetails.value?.bannerPhoto,
                       title: controller.customAppDetails.value?.title,
-                      description: controller.customAppDetails.value?.description,
+                      description:
+                          controller.customAppDetails.value?.description,
                     ),
                     const SizedBox(height: 20),
                     Center(

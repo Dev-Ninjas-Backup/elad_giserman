@@ -611,49 +611,77 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             runSpacing: 12,
                             children: [
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.facebook.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .facebook
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/facebook.png',
                                   _controller.profileDetail.value!.facebook,
                                   'Facebook',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.instagram.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .instagram
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/instagram.png',
                                   _controller.profileDetail.value!.instagram,
                                   'Instagram',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.twitter.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .twitter
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/twitter.png',
                                   _controller.profileDetail.value!.twitter,
                                   'Twitter',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.linkedin.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .linkedin
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/linkedin.png',
                                   _controller.profileDetail.value!.linkedin,
                                   'LinkedIn',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.youtube.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .youtube
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/youtube.png',
                                   _controller.profileDetail.value!.youtube,
                                   'YouTube',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.pinterest.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .pinterest
+                                      .isNotEmpty)
                                 _buildSocialIcon(
                                   'assets/icons/pinterest.png',
                                   _controller.profileDetail.value!.pinterest,
                                   'Pinterest',
                                 ),
                               if (_controller.profileDetail.value != null &&
-                                  _controller.profileDetail.value!.website.isNotEmpty)
+                                  _controller
+                                      .profileDetail
+                                      .value!
+                                      .website
+                                      .isNotEmpty)
                                 GestureDetector(
                                   onTap: () => _launchURL(
                                     _controller.profileDetail.value!.website,
