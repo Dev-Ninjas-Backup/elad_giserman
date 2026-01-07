@@ -36,6 +36,9 @@ class SpinnerController extends GetxController
   final RxInt selectedSpinIndex = (-1).obs;
   final Rx<SpinTableItem?> selectedSpinItem = Rx<SpinTableItem?>(null);
 
+  final RxList<SpinResultData> mySpinHistory = <SpinResultData>[].obs;
+  final RxBool isLoadingMySpinHistory = false.obs;
+
   final math.Random _rand = math.Random();
   final SpinnerService _service = SpinnerService();
 
@@ -69,11 +72,6 @@ class SpinnerController extends GetxController
       animationController.stop();
     }
 
-    // Stop any existing animation
-    if (animationController.isAnimating) {
-      animationController.stop();
-    }
-
     isSpinning.value = true;
     selectedIndex.value = -1;
     spinSuccessful.value = false;
@@ -98,15 +96,11 @@ class SpinnerController extends GetxController
       spinTable.value = response;
       final spinData = response.data;
 
-      // If API returns a single object in `data`, use it directly.
-      // If API returns a list, keep the existing weighted selection.
-      final SpinTableItem picked;
-      if (spinData.length == 1) {
-        picked = spinData.first;
-      } else {
-        final randomIndex = await _getWeightedRandomIndexFrom(spinData);
-        picked = spinData[randomIndex.clamp(0, spinData.length - 1)];
-      }
+      // Always select using the API-provided `probablity`.
+      // (If there's only one item, weighted selection will still return index 0.)
+      final randomIndex = await _getWeightedRandomIndexFrom(spinData);
+      final SpinTableItem picked =
+          spinData[randomIndex.clamp(0, spinData.length - 1)];
 
       selectedSpinItem.value = picked;
 
@@ -202,28 +196,17 @@ class SpinnerController extends GetxController
     isSpinning.value = false;
 
     final selectedItem = selectedSpinItem.value;
-    if (selectedItem != null) {
-      if (kDebugMode) {
-        print('🎁 Spin result selected: ${selectedItem.useCase}');
-        print('   Discount: ${selectedItem.spinValue1}%');
-        print('   Probability: ${selectedItem.probablity}%');
-      }
-
-      Get.snackbar(
-        'Congratulations! 🎉',
-        selectedItem.useCase,
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-      );
+    if (selectedItem != null && kDebugMode) {
+      print('🎁 Spin result selected: ${selectedItem.useCase}');
+      print('   Discount: ${selectedItem.spinValue1}%');
+      print('   Probability: ${selectedItem.probablity}%');
     }
 
     // Submit spin result to API
-    _submitSpinResult(selectedSpinIndex.value);
+    _submitSpinResult(selectedSpinItem.value?.id);
   }
 
-  Future<void> _submitSpinResult(int resultIndex) async {
+  Future<void> _submitSpinResult(String? spinId) async {
     // Check if user is logged in
     final token = await SharedPreferencesHelper.getAccessToken();
     if (token == null || token.isEmpty) {
@@ -240,15 +223,26 @@ class SpinnerController extends GetxController
       return;
     }
 
+    if (spinId == null || spinId.isEmpty) {
+      if (!isClosed) {
+        Get.snackbar(
+          "Error",
+          "Spin id not available",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+      return;
+    }
+
     if (!isClosed) {
       isSubmitting.value = true;
     }
     try {
       if (kDebugMode) {
-        print("🎬 Starting to submit spin result with index: $resultIndex");
+        print("🎬 Starting to submit spin history with id: $spinId");
       }
 
-      final response = await _service.submitSpinResult(result: resultIndex);
+      final response = await _service.submitSpinHistory(spinId: spinId);
 
       if (isClosed) return;
 
@@ -257,7 +251,7 @@ class SpinnerController extends GetxController
         print("📊 Response body: ${response.body}");
       }
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         if (kDebugMode) {
           print("✅ Spin result submitted successfully: ${response.statusCode}");
@@ -271,14 +265,6 @@ class SpinnerController extends GetxController
           if (kDebugMode) {
             print("✅ Spin result saved: ${spinResult.value?.id}");
           }
-          // Show success message
-          Get.snackbar(
-            "Success",
-            "Spin result saved successfully!",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          );
         } else {
           if (kDebugMode) {
             print("⚠️ Response data is null");
@@ -309,14 +295,16 @@ class SpinnerController extends GetxController
           }
         }
 
-        // Get.snackbar(
-        //   "Unable to Save Spin",
-        //   errorMessage,
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   backgroundColor: Colors.orange,
-        //   colorText: Colors.white,
-        //   duration: Duration(seconds: 4),
-        // );
+        if (!isClosed) {
+          Get.snackbar(
+            "Unable to Save Spin",
+            errorMessage,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.orange,
+            colorText: Colors.white,
+            duration: Duration(seconds: 4),
+          );
+        }
       }
     } catch (e) {
       if (kDebugMode) {
@@ -335,6 +323,23 @@ class SpinnerController extends GetxController
       if (!isClosed) {
         isSubmitting.value = false;
       }
+    }
+  }
+
+  Future<void> fetchMySpinHistory() async {
+    final token = await SharedPreferencesHelper.getAccessToken();
+    if (token == null || token.isEmpty) {
+      return;
+    }
+
+    try {
+      isLoadingMySpinHistory.value = true;
+      final response = await _service.fetchMySpinHistory();
+      if (response != null) {
+        mySpinHistory.assignAll(response.data);
+      }
+    } finally {
+      isLoadingMySpinHistory.value = false;
     }
   }
 
