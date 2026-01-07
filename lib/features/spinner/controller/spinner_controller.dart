@@ -133,10 +133,7 @@ class SpinnerController extends GetxController
       animationController.duration = Duration(milliseconds: ms);
 
       animation = Tween<double>(begin: start, end: target).animate(
-        CurvedAnimation(
-          parent: animationController,
-          curve: Curves.decelerate,
-        ),
+        CurvedAnimation(parent: animationController, curve: Curves.decelerate),
       );
 
       await animationController.forward(from: 0.0);
@@ -206,7 +203,6 @@ class SpinnerController extends GetxController
 
     final selectedItem = selectedSpinItem.value;
     if (selectedItem != null) {
-
       if (kDebugMode) {
         print('🎁 Spin result selected: ${selectedItem.useCase}');
         print('   Discount: ${selectedItem.spinValue1}%');
@@ -313,14 +309,14 @@ class SpinnerController extends GetxController
           }
         }
 
-        Get.snackbar(
-          "Unable to Save Spin",
-          errorMessage,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orange,
-          colorText: Colors.white,
-          duration: Duration(seconds: 4),
-        );
+        // Get.snackbar(
+        //   "Unable to Save Spin",
+        //   errorMessage,
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        //   duration: Duration(seconds: 4),
+        // );
       }
     } catch (e) {
       if (kDebugMode) {
