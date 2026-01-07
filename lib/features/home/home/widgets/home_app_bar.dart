@@ -104,26 +104,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
         children: [
           Row(
             children: [
-              Obx(() {
-                final logoUrl = _appDetailsController.logoUrl;
-                if (logoUrl.isNotEmpty) {
-                  return Image.network(
-                    logoUrl,
-                    height: 25,
-                    width: 98,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        IconPath.appIcon,
-                        height: 25,
-                        width: 98,
-                      );
-                    },
-                  );
-                } else {
-                  return Image.asset(IconPath.appIcon, height: 25, width: 98);
-                }
-              }),
+              Image.asset(
+                'assets/icons/logo_black_nobg.png',
+                height: 45,
+                width: 160,
+                fit: BoxFit.contain,
+              ),
               Spacer(),
               IconButton(
                 onPressed: _handleNotificationTap,

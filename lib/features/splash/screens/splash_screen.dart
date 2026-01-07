@@ -16,22 +16,15 @@ class SplashScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         decoration: AppColors().buildGradientBackground(context),
         child: Center(
-          child: Obx(() {
-            final logoUrl = controller.logoUrl;
-            if (logoUrl.isNotEmpty) {
-              return Image.network(
-                logoUrl,
-                height: 48,
-                width: 190,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(IconPath.appIcon, height: 48, width: 190);
-                },
-              );
-            } else {
-              return Image.asset(IconPath.appIcon, height: 48, width: 190);
-            }
-          }),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.asset(
+              'assets/icons/logo.png',
+              height: 200,
+              width: 200,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );
