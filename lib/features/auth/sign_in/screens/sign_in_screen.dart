@@ -29,30 +29,12 @@ class SignInScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 20),
-                  Obx(() {
-                    final logoUrl = controller.logoUrl;
-                    if (logoUrl.isNotEmpty) {
-                      return Image.network(
-                        logoUrl,
-                        height: 48,
-                        width: 190,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            IconPath.appIcon,
-                            height: 48,
-                            width: 190,
-                          );
-                        },
-                      );
-                    } else {
-                      return Image.asset(
-                        IconPath.appIcon,
-                        height: 48,
-                        width: 190,
-                      );
-                    }
-                  }),
+                  Image.asset(
+                    'assets/icons/logo_crop.png',
+                    height: 48,
+                    width: 190,
+                    fit: BoxFit.contain,
+                  ),
                   SizedBox(height: 97),
                   Center(
                     child: Text(
