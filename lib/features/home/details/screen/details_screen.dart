@@ -1101,61 +1101,61 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                   ),
                                                 ),
                                                 SizedBox(height: 12),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    _toggleReplyVisibility(
-                                                      review.id,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 2,
-                                                        ),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            12,
-                                                          ),
-                                                      border: Border.all(
-                                                        width: 1,
-                                                        color: Color(
-                                                          0xFFD2D2D2,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          'reply'.tr,
-                                                          style: getTextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: AppColors
-                                                                .buttonColor,
-                                                          ),
-                                                        ),
-                                                        SizedBox(width: 4),
-                                                        Icon(
-                                                          _isReplyVisible(
-                                                                review.id,
-                                                              )
-                                                              ? Icons
-                                                                    .expand_less
-                                                              : Icons
-                                                                    .expand_more,
-                                                          size: 16,
-                                                          color: AppColors
-                                                              .buttonColor,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
+                                                // GestureDetector(
+                                                //   onTap: () {
+                                                //     _toggleReplyVisibility(
+                                                //       review.id,
+                                                //     );
+                                                //   },
+                                                //   child: Container(
+                                                //     padding:
+                                                //         EdgeInsets.symmetric(
+                                                //           horizontal: 10,
+                                                //           vertical: 2,
+                                                //         ),
+                                                //     decoration: BoxDecoration(
+                                                //       borderRadius:
+                                                //           BorderRadius.circular(
+                                                //             12,
+                                                //           ),
+                                                //       border: Border.all(
+                                                //         width: 1,
+                                                //         color: Color(
+                                                //           0xFFD2D2D2,
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //     child: Row(
+                                                //       mainAxisSize:
+                                                //           MainAxisSize.min,
+                                                //       children: [
+                                                //         Text(
+                                                //           'reply'.tr,
+                                                //           style: getTextStyle(
+                                                //             fontSize: 12,
+                                                //             fontWeight:
+                                                //                 FontWeight.w400,
+                                                //             color: AppColors
+                                                //                 .buttonColor,
+                                                //           ),
+                                                //         ),
+                                                //         SizedBox(width: 4),
+                                                //         Icon(
+                                                //           _isReplyVisible(
+                                                //                 review.id,
+                                                //               )
+                                                //               ? Icons
+                                                //                     .expand_less
+                                                //               : Icons
+                                                //                     .expand_more,
+                                                //           size: 16,
+                                                //           color: AppColors
+                                                //               .buttonColor,
+                                                //         ),
+                                                //       ],
+                                                //     ),
+                                                //   ),
+                                                // ),
                                                 // Show reply input if expanded
                                                 if (_isReplyVisible(
                                                   review.id,
