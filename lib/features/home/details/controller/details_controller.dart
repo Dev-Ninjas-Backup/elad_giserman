@@ -165,6 +165,7 @@ class DetailsController extends GetxController {
   String get profileTitle => profileDetail.value?.title ?? 'Profile Details';
   String get profileDescription => profileDetail.value?.description ?? '';
   String get profileLocation => profileDetail.value?.location ?? '';
+  String get profilePhone => profileDetail.value?.phone ?? '';
   List<GalleryItem> get galleryItems => profileDetail.value?.gallery ?? [];
   List<Offer> get offers => profileDetail.value?.offers ?? [];
   List<Review> get reviews => profileDetail.value?.reviews ?? [];
@@ -238,6 +239,7 @@ extension BusinessProfileDetailExtension on BusinessProfileDetail {
     String? linkedin,
     String? pinterest,
     String? youtube,
+    String? phone,
     String? createdAt,
     String? updatedAt,
     List<GalleryItem>? gallery,
@@ -264,6 +266,7 @@ extension BusinessProfileDetailExtension on BusinessProfileDetail {
       linkedin: linkedin ?? this.linkedin,
       pinterest: pinterest ?? this.pinterest,
       youtube: youtube ?? this.youtube,
+      phone: phone ?? this.phone,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       gallery: gallery ?? this.gallery,

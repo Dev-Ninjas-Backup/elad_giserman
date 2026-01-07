@@ -130,6 +130,7 @@ class BusinessProfileDetail {
   final String linkedin;
   final String pinterest;
   final String youtube;
+  final String phone;
   final String createdAt;
   final String updatedAt;
   final List<GalleryItem> gallery;
@@ -156,6 +157,7 @@ class BusinessProfileDetail {
     required this.linkedin,
     required this.pinterest,
     required this.youtube,
+    required this.phone,
     required this.createdAt,
     required this.updatedAt,
     required this.gallery,
@@ -184,6 +186,7 @@ class BusinessProfileDetail {
       linkedin: json['linkedin'] ?? '',
       pinterest: json['pinterest'] ?? '',
       youtube: json['youtube'] ?? '',
+      phone: json['phone'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
       gallery:
