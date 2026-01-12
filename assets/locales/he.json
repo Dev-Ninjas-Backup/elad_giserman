@@ -288,5 +288,12 @@
   "offer_status_active": "פעיל",
   "code": "קוד",
   "expires_short": "תפוגה",
-  "view_and_redeem": "צפייה ומימוש"
+  "view_and_redeem": "צפייה ומימוש",
+  "spin_history": "היסטוריית סיבובים",
+  "view_spin_history": "צפה בהיסטוריית סיבובים",
+  "no_spin_history": "אין עדיין היסטוריית סיבובים",
+  "failed_to_fetch_spin_history": "נכשל בהבאת היסטוריית סיבובים",
+  "used": "בשימוש",
+  "unused": "לא בשימוש",
+  "discount": "הנחה"
 }

@@ -287,5 +287,12 @@
   "offer_status_active": "Active",
   "code": "Code",
   "expires_short": "Expires",
-  "view_and_redeem": "View & Redeem"
+  "view_and_redeem": "View & Redeem",
+  "spin_history": "Spin History",
+  "view_spin_history": "View Spin History",
+  "no_spin_history": "No spin history yet",
+  "failed_to_fetch_spin_history": "Failed to fetch spin history",
+  "used": "Used",
+  "unused": "Unused",
+  "discount": "OFF"
 }

@@ -1,5 +1,6 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/features/home/offers/controller/offers_controller.dart';
 import 'package:elad_giserman/features/home/offers/models/offer_model.dart';
@@ -40,6 +41,16 @@ class _OffersScreenState extends State<OffersScreen> {
     _redeemCodeController.text = offer.code;
     String? errorMessageInDialog;
     bool isRedeemSuccess = false;
+
+    // Translate offer data
+    final translatedTitle = offer.title.obs;
+    final translatedDescription = offer.description.obs;
+    _translateOfferData(
+      offer.title,
+      offer.description,
+      translatedTitle,
+      translatedDescription,
+    );
 
     showDialog(
       context: context,
@@ -103,21 +114,25 @@ class _OffersScreenState extends State<OffersScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              offer.title,
-                              style: getTextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primaryFontColor,
+                            Obx(
+                              () => Text(
+                                translatedTitle.value,
+                                style: getTextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryFontColor,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
-                              offer.description,
-                              style: getTextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
+                            Obx(
+                              () => Text(
+                                translatedDescription.value,
+                                style: getTextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.fontColor,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -185,7 +200,6 @@ class _OffersScreenState extends State<OffersScreen> {
                             ),
                             onPressed: () {
                               // Copy to clipboard functionality
-                              final text = _redeemCodeController.text;
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('copied_to_clipboard'.tr),
@@ -272,7 +286,6 @@ class _OffersScreenState extends State<OffersScreen> {
 
                                 final success = await _offersController
                                     .redeemOffer(code, offer.id);
-
                                 if (mounted) {
                                   if (success) {
                                     setState(() {
@@ -280,10 +293,20 @@ class _OffersScreenState extends State<OffersScreen> {
                                     });
                                     _redeemCodeController.clear();
                                   } else {
-                                    setState(() {
-                                      errorMessageInDialog = _offersController
-                                          .redeemErrorMessage
-                                          .value;
+                                    // Translate error message
+                                    final errorMsg = _offersController
+                                        .redeemErrorMessage
+                                        .value;
+                                    _translateText(
+                                      errorMsg,
+                                      Get.locale?.languageCode ?? 'en',
+                                    ).then((translatedError) {
+                                      if (mounted) {
+                                        setState(() {
+                                          errorMessageInDialog =
+                                              translatedError;
+                                        });
+                                      }
                                     });
                                   }
                                 }
@@ -580,5 +603,37 @@ class _OffersScreenState extends State<OffersScreen> {
         ),
       ),
     );
+  }
+
+  void _translateOfferData(
+    String title,
+    String description,
+    RxString translatedTitle,
+    RxString translatedDescription,
+  ) {
+    final currentLanguage = Get.locale?.languageCode ?? 'en';
+
+    if (currentLanguage != 'en') {
+      _translateText(title, currentLanguage).then((translated) {
+        translatedTitle.value = translated;
+      });
+
+      _translateText(description, currentLanguage).then((translated) {
+        translatedDescription.value = translated;
+      });
+    }
+  }
+
+  Future<String> _translateText(String text, String targetLanguage) async {
+    try {
+      final translationService = Get.find<TranslationService>();
+      return await translationService.translateText(
+        text: text,
+        targetLanguage: targetLanguage,
+        sourceLanguage: 'en',
+      );
+    } catch (e) {
+      return text;
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/spinner/controller/spinner_controller.dart';
+import 'package:elad_giserman/features/spinner/screen/spin_history_screen.dart';
 import 'package:elad_giserman/features/spinner/widget/result_dialog.dart';
 import 'package:elad_giserman/features/spinner/widget/wheel_painter.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +123,8 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                                   child: CustomPaint(
                                     size: Size(wheelSize, wheelSize),
                                     painter: WheelPainter(
-                                      items: controller.items,
+                                      labels: controller.items,
+                                      weights: controller.equalSliceWeights,
                                     ),
                                   ),
                                 );
@@ -162,34 +164,65 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 30),
-                      child: Obx(() {
-                        final spinning = controller.isSpinning.value;
-                        return SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: spinning ? null : controller.startSpin,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.buttonColor,
-                              padding: EdgeInsets.symmetric(vertical: 18),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                      child: Column(
+                        children: [
+                          Obx(() {
+                            final spinning = controller.isSpinning.value;
+                            return SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: spinning
+                                    ? null
+                                    : controller.startSpin,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.buttonColor,
+                                  padding: EdgeInsets.symmetric(vertical: 18),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  // ignore: deprecated_member_use
+                                  shadowColor: Colors.black.withOpacity(0.3),
+                                  elevation: 8,
+                                ),
+                                child: Text(
+                                  spinning ? 'spinning'.tr : 'spin_button'.tr,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2.0,
+                                  ),
+                                ),
                               ),
-                              // ignore: deprecated_member_use
-                              shadowColor: Colors.black.withOpacity(0.3),
-                              elevation: 8,
-                            ),
-                            child: Text(
-                              spinning ? 'spinning'.tr : 'spin_button'.tr,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 2.0,
+                            );
+                          }),
+                          SizedBox(height: 12),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Get.to(() => SpinHistoryScreen());
+                              },
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(color: Colors.amber, width: 2),
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              ),
+                              child: Text(
+                                'view_spin_history'.tr,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.0,
+                                ),
                               ),
                             ),
                           ),
-                        );
-                      }),
+                        ],
+                      ),
                     ),
                   ],
                 ),
