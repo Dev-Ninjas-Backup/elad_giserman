@@ -24,4 +24,5 @@ class Urls {
   static const String userReservation = '$baseUrl/user-reservation';
   static const String markNotificationsAsRead =
       '$baseUrl/user-info/mark-as-read';
+  static const String adminOffers = '$baseUrl/admin/offers';
 }

@@ -23,6 +23,11 @@ class _OffersScreenState extends State<OffersScreen> {
     super.initState();
     _offersController = Get.put(OffersController());
     _redeemCodeController = TextEditingController();
+
+    // Fetch offers when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _offersController.fetchOffers();
+    });
   }
 
   @override
@@ -125,7 +130,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  'Expires: ${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
+                                  '${'expires'.tr}${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -240,7 +245,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   ? [
                       TextButton(
                         onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('OK'),
+                        child: Text('ok'.tr),
                       ),
                     ]
                   : [
@@ -349,7 +354,7 @@ class _OffersScreenState extends State<OffersScreen> {
                               onPressed: () {
                                 _offersController.fetchOffers();
                               },
-                              child: const Text('Retry'),
+                              child: Text('retry'.tr),
                             ),
                           ],
                         ),
@@ -366,7 +371,7 @@ class _OffersScreenState extends State<OffersScreen> {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              'No offers available',
+                              'no_offers_available'.tr,
                               style: getTextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -444,7 +449,9 @@ class _OffersScreenState extends State<OffersScreen> {
                                                   BorderRadius.circular(20),
                                             ),
                                             child: Text(
-                                              isExpired ? 'Expired' : 'Active',
+                                              isExpired
+                                                  ? 'offer_status_expired'.tr
+                                                  : 'offer_status_active'.tr,
                                               style: getTextStyle(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600,
@@ -477,7 +484,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Code',
+                                                'code'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -501,7 +508,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                'Expires',
+                                                'expires_short'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -550,7 +557,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                             onPressed: () =>
                                                 _showRedeemDialog(offer),
                                             child: Text(
-                                              'View & Redeem',
+                                              'view_and_redeem'.tr,
                                               style: getTextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w600,

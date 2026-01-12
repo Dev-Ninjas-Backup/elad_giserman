@@ -63,10 +63,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Login Required'),
-          content: const Text(
-            'You need to log in to redeem offers. Please sign in to continue.',
-          ),
+          title: Text('login_required'.tr),
+          content: Text('login_to_redeem_offers'.tr),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
@@ -77,9 +75,9 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                 Navigator.pop(dialogContext);
                 Get.offAllNamed('/signInScreen');
               },
-              child: const Text(
-                'Sign In',
-                style: TextStyle(color: Colors.blue),
+              child: Text(
+                'sign_in'.tr,
+                style: const TextStyle(color: Colors.blue),
               ),
             ),
           ],
@@ -205,7 +203,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  'Expires: ${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
+                                  '${'expires'.tr}${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -304,7 +302,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                   ? [
                       TextButton(
                         onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('OK'),
+                        child: Text('ok'.tr),
                       ),
                     ]
                   : [
@@ -433,7 +431,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                       onPressed: () {
                                         _offersController.fetchOffers();
                                       },
-                                      child: const Text('Retry'),
+                                      child: Text('retry'.tr),
                                     ),
                                   ],
                                 ),
@@ -450,7 +448,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 Text(
-                                  'No offers available for this business',
+                                  'no_offers_available'.tr,
                                   style: getTextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -576,7 +574,9 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                   BorderRadius.circular(20),
                                             ),
                                             child: Text(
-                                              isExpired ? 'Expired' : 'Active',
+                                              isExpired
+                                                  ? 'offer_status_expired'.tr
+                                                  : 'offer_status_active'.tr,
                                               style: getTextStyle(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600,
@@ -609,7 +609,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Code',
+                                                'code'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -633,7 +633,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                'Expires',
+                                                'expires_short'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -682,7 +682,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                             onPressed: () =>
                                                 _handleOfferTap(offer),
                                             child: Text(
-                                              'View & Redeem',
+                                              'view_and_redeem'.tr,
                                               style: getTextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w600,

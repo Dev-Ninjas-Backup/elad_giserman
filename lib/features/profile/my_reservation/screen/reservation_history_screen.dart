@@ -117,7 +117,7 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen>
                       ),
                       child: Center(
                         child: Text(
-                          'No reservations yet',
+                          'no_reservations_yet'.tr,
                           style: getTextStyle(
                             fontSize: 16,
                             color: AppColors.fontColor,
@@ -292,14 +292,12 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen>
   void _showDeleteConfirmation(String reservationId) {
     Get.dialog(
       AlertDialog(
-        title: const Text('Confirm Delete'),
-        content: const Text(
-          'Are you sure you want to delete this reservation?',
-        ),
+        title: Text('confirm_delete_reservation'.tr),
+        content: Text('confirm_delete_reservation_message'.tr),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(Get.context!),
-            child: const Text('Cancel'),
+            child: Text('cancel'.tr),
           ),
           TextButton(
             onPressed: () async {
@@ -311,8 +309,8 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen>
                 // UI will auto-update because deleteReservation calls fetchReservations()
                 // which updates reservationResponse.value triggering Obx rebuild
                 Get.snackbar(
-                  'Success',
-                  'Reservation deleted successfully',
+                  'success'.tr,
+                  'reservation_deleted_successfully'.tr,
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.green,
                   colorText: Colors.white,
@@ -320,15 +318,15 @@ class _ReservationHistoryScreenState extends State<ReservationHistoryScreen>
                 );
               } else {
                 Get.snackbar(
-                  'Error',
-                  'Failed to delete reservation',
+                  'error'.tr,
+                  'failed_to_delete_reservation'.tr,
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.red,
                   colorText: Colors.white,
                 );
               }
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text('delete'.tr, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

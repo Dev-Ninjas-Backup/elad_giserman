@@ -106,51 +106,58 @@ class _HomeAppBarState extends State<HomeAppBar> {
             children: [
               Image.asset(
                 'assets/icons/logo_black_nobg.png',
-                height: 45,
-                width: 160,
+                height: 40,
+                width: 150,
                 fit: BoxFit.contain,
               ),
               Spacer(),
-              IconButton(
-                onPressed: _handleNotificationTap,
-                icon: Icon(Icons.notifications_outlined, color: Colors.black),
-              ),
-              SizedBox(width: 10),
               FutureBuilder<String?>(
                 future: SharedPreferencesHelper.getAccessToken(),
                 builder: (context, snapshot) {
-                  // Show login button only if token is null or empty
+                  // Check if user is logged in
                   final isLoggedIn =
                       snapshot.hasData &&
                       snapshot.data != null &&
                       snapshot.data!.isNotEmpty;
 
-                  if (isLoggedIn) {
-                    return SizedBox.shrink(); // Hide login button if logged in
-                  }
-
-                  return GestureDetector(
-                    onTap: () {
-                      Get.offAllNamed('/signInScreen');
-                    },
-                    child: Container(
-                      height: 28,
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryFontColor,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'login'.tr,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                  return Row(
+                    children: [
+                      // Show notification icon only if logged in
+                      if (isLoggedIn)
+                        IconButton(
+                          onPressed: _handleNotificationTap,
+                          icon: Icon(
+                            Icons.notifications_outlined,
+                            color: Colors.black,
                           ),
                         ),
-                      ),
-                    ),
+                      if (isLoggedIn) SizedBox(width: 10),
+                      // Show login button only if not logged in
+                      if (!isLoggedIn)
+                        GestureDetector(
+                          onTap: () {
+                            Get.offAllNamed('/signInScreen');
+                          },
+                          child: Container(
+                            height: 28,
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryFontColor,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'login'.tr,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   );
                 },
               ),

@@ -89,8 +89,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void _submitReview() async {
     if (_commentController.text.trim().isEmpty) {
       Get.snackbar(
-        'Validation Error',
-        'Please enter a comment',
+        'validation_error'.tr,
+        'please_enter_comment'.tr,
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -106,8 +106,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _selectedRating = 5;
 
     Get.snackbar(
-      'Success',
-      'Review posted successfully!',
+      'success'.tr,
+      'review_posted'.tr,
       colorText: Colors.white,
       backgroundColor: Colors.green,
     );
@@ -118,8 +118,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     if (replyController.text.trim().isEmpty) {
       Get.snackbar(
-        'Validation Error',
-        'Please enter a reply',
+        'validation_error'.tr,
+        'please_enter_reply'.tr,
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -134,8 +134,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     replyController.clear();
 
     Get.snackbar(
-      'Success',
-      'Reply posted successfully!',
+      'success'.tr,
+      'reply_posted'.tr,
       colorText: Colors.white,
       backgroundColor: Colors.green,
     );
@@ -154,8 +154,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Future<void> _launchURL(String url) async {
     if (url.isEmpty) {
       Get.snackbar(
-        'Error',
-        'URL not available',
+        'error'.tr,
+        'url_not_available'.tr,
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -168,16 +168,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         Get.snackbar(
-          'Error',
-          'Could not launch URL',
+          'error'.tr,
+          'could_not_launch_url'.tr,
           colorText: Colors.white,
           backgroundColor: Colors.red,
         );
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to open URL: $e',
+        'error'.tr,
+        '${'failed_to_open_url'.tr}$e',
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -187,8 +187,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Future<void> _makePhoneCall(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
       Get.snackbar(
-        'Error',
-        'Phone number not available',
+        'error'.tr,
+        'phone_not_available'.tr,
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -201,16 +201,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
         await launchUrl(uri);
       } else {
         Get.snackbar(
-          'Error',
-          'Could not launch phone call',
+          'error'.tr,
+          'could_not_launch_url'.tr,
           colorText: Colors.white,
           backgroundColor: Colors.red,
         );
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to make call: $e',
+        'error'.tr,
+        '${'failed_to_make_call'.tr}$e',
         colorText: Colors.white,
         backgroundColor: Colors.red,
       );
@@ -221,8 +221,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     final phone = _controller.profilePhone;
     if (phone.isEmpty) {
       Get.snackbar(
-        'Info',
-        'Phone number not available',
+        'info'.tr,
+        'phone_not_available'.tr,
         colorText: Colors.white,
         backgroundColor: Colors.blue,
       );
@@ -233,13 +233,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Call Restaurant'),
+          title: Text('call_restaurant'.tr),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Phone Number:',
+                'phone_number'.tr,
                 style: getTextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -268,7 +268,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 _makePhoneCall(phone);
               },
               icon: Icon(Icons.call, size: 18),
-              label: const Text('Call'),
+              label: Text('call'.tr),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.buttonColor,
                 foregroundColor: Colors.white,
@@ -576,7 +576,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   Text(
                                     _controller.profileTitle.isNotEmpty
                                         ? _controller.profileTitle
-                                        : 'Organizer',
+                                        : 'organizer'.tr,
                                     style: getTextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -584,7 +584,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ),
                                   ),
                                   Text(
-                                    'Organizer',
+                                    'organizer'.tr,
                                     style: getTextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
@@ -599,7 +599,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                           // Social Media Section
                           Text(
-                            'Follow Us',
+                            'follow_us'.tr,
                             style: getTextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -778,7 +778,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        'Snack bar',
+                                        'facility_snack_bar'.tr,
                                         style: getTextStyle(
                                           fontSize: 14,
                                           color: AppColors.fontColor,
@@ -796,7 +796,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        'Bikes and Car Parking',
+                                        'facility_parking'.tr,
                                         style: getTextStyle(
                                           fontSize: 14,
                                           color: AppColors.fontColor,
@@ -821,7 +821,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                         SizedBox(width: 5),
                                         Expanded(
                                           child: Text(
-                                            'Toilet',
+                                            'facility_toilet'.tr,
                                             style: getTextStyle(
                                               fontSize: 14,
                                               color: AppColors.fontColor,
@@ -841,7 +841,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                         SizedBox(width: 5),
                                         Expanded(
                                           child: Text(
-                                            '24/7 Water facility',
+                                            'facility_water'.tr,
                                             style: getTextStyle(
                                               fontSize: 14,
                                               color: AppColors.fontColor,
@@ -890,7 +890,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                           // Rating Selection
                           Text(
-                            'Select Rating:',
+                            'select_rating'.tr,
                             style: getTextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -962,7 +962,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Obx(
                             () => _controller.isPostingReview.value
                                 ? CustomSmallButton(
-                                    text: 'Posting...',
+                                    text: 'posting'.tr,
                                     onPressed: () {},
                                     buttonColor: Colors.grey,
                                     fontColor: Colors.white,
@@ -1212,7 +1212,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                                 ),
                                                           ),
                                                       hintText:
-                                                          'Enter your reply...',
+                                                          'enter_reply'.tr,
                                                     ),
                                                     style: getTextStyle(
                                                       fontSize: 14,
@@ -1229,7 +1229,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                             .isReplyingToReview
                                                             .value
                                                         ? CustomSmallButton(
-                                                            text: 'Replying...',
+                                                            text: 'replying'.tr,
                                                             onPressed: () {},
                                                             buttonColor:
                                                                 Colors.grey,

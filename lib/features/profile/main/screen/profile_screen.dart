@@ -49,11 +49,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         final user = controller.profile.value;
 
-        // Show login card if user is not logged in
-        if (user == null) {
-          return const LoginCard();
-        }
-
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -66,105 +61,112 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 34,
-                          backgroundImage: NetworkImage(
-                            user.avatarUrl.isNotEmpty
-                                ? user.avatarUrl
-                                : ImagePath.profileImage2,
+                    // Show login card if user is not logged in
+                    if (user == null) ...[
+                      const LoginCard(),
+                      const SizedBox(height: 24),
+                    ] else ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 34,
+                            backgroundImage: NetworkImage(
+                              user.avatarUrl.isNotEmpty
+                                  ? user.avatarUrl
+                                  : ImagePath.profileImage2,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              user.name,
-                              style: getTextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primaryFontColor,
+                          const SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.name.isNotEmpty
+                                    ? user.name
+                                    : 'unnamed_user'.tr,
+                                style: getTextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryFontColor,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              user.email,
-                              style: getTextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
+                              const SizedBox(height: 4),
+                              Text(
+                                user.email,
+                                style: getTextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.fontColor,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "Username: ${user.username}",
-                              style: getTextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
+                              const SizedBox(height: 4),
+                              Text(
+                                '${'username'.tr}: ${user.username}',
+                                style: getTextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.fontColor,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      VipFeatures(),
+                      const SizedBox(height: 16),
 
-                    const SizedBox(height: 16),
-                    VipFeatures(),
-                    const SizedBox(height: 16),
+                      OptionButton(
+                        title: 'edit_profile'.tr,
+                        button: () {
+                          Get.to(EditProfileScreen());
+                        },
+                      ),
+                      const SizedBox(height: 8),
 
-                    OptionButton(
-                      title: 'edit_profile'.tr,
-                      button: () {
-                        Get.to(EditProfileScreen());
-                      },
-                    ),
-                    const SizedBox(height: 8),
+                      OptionButton(
+                        title: 'my_reservation'.tr,
+                        button: () {
+                          Get.to(
+                            ReservationHistoryScreen(isFromBottomNav: false),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 8),
 
-                    OptionButton(
-                      title: 'my_reservation'.tr,
-                      button: () {
-                        Get.to(
-                          ReservationHistoryScreen(isFromBottomNav: false),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 8),
+                      OptionButton(
+                        title: 'redemption_history'.tr,
+                        button: () {
+                          Get.offNamed(AppRoute.getRedemptionHistoryScreen());
+                        },
+                      ),
+                      const SizedBox(height: 8),
 
-                    OptionButton(
-                      title: 'redemption_history'.tr,
-                      button: () {
-                        Get.offNamed(AppRoute.getRedemptionHistoryScreen());
-                      },
-                    ),
-                    const SizedBox(height: 8),
+                      OptionButton(
+                        title: 'offers'.tr,
+                        button: () {
+                          Get.offNamed(AppRoute.getOffersScreen());
+                        },
+                      ),
+                      // const SizedBox(height: 8),
 
-                    OptionButton(
-                      title: 'offers'.tr,
-                      button: () {
-                        Get.offNamed(AppRoute.getOffersScreen());
-                      },
-                    ),
-                    // const SizedBox(height: 8),
+                      // OptionButton(
+                      //   title: 'subscriptions'.tr,
+                      //   button: () {
+                      //     Get.offNamed('/subscriptionScreen');
+                      //   },
+                      // ),
+                      const SizedBox(height: 8),
 
-                    // OptionButton(
-                    //   title: 'subscriptions'.tr,
-                    //   button: () {
-                    //     Get.offNamed('/subscriptionScreen');
-                    //   },
-                    // ),
-                    const SizedBox(height: 8),
-
-                    OptionButton(
-                      title: 'update_password'.tr,
-                      button: () {
-                        Get.offNamed('/updatePasswordScreen');
-                      },
-                    ),
-                    const SizedBox(height: 8),
+                      OptionButton(
+                        title: 'update_password'.tr,
+                        button: () {
+                          Get.offNamed('/updatePasswordScreen');
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                    ],
 
                     OptionButton(
                       title: 'general_settings'.tr,
@@ -174,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 8),
 
-                    LogOutButton(),
+                    if (user != null) LogOutButton(),
                   ],
                 ),
               ),

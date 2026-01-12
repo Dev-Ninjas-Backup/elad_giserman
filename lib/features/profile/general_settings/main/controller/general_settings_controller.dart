@@ -2,7 +2,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/features/profile/main/service/profile_service.dart';
+import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
+import 'package:elad_giserman/features/home/details/controller/details_controller.dart';
 
 class GeneralSettingsController extends GetxController {
   final language = 'english'.obs;
@@ -29,10 +32,34 @@ class GeneralSettingsController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_language', value);
 
+    // Get the language code for translation
+    String languageCode = value == 'hebrew' ? 'he' : 'en';
+
+    // Update locale
     if (value == 'hebrew') {
       Get.updateLocale(Locale('he', 'IL'));
     } else {
       Get.updateLocale(Locale('en', 'US'));
+    }
+
+    // Update translation service language
+    try {
+      final translationService = Get.find<TranslationService>();
+      translationService.updateLanguage(languageCode);
+
+      // Trigger translation of all data in home screen
+      if (Get.isRegistered<HomeController>()) {
+        final homeController = Get.find<HomeController>();
+        await homeController.translateAllData(languageCode);
+      }
+
+      // Trigger translation of details screen if open
+      if (Get.isRegistered<DetailsController>()) {
+        final detailsController = Get.find<DetailsController>();
+        await detailsController.translateDetail(languageCode);
+      }
+    } catch (e) {
+      print('⚠️ Translation service not available: $e');
     }
   }
 
