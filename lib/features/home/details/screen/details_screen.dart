@@ -33,6 +33,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   final Map<String, bool> _showReplySection = {};
   final Map<String, bool> _showRepliesList = {};
   int _selectedRating = 5;
+  int _filterRating = 0; // 0 means show all ratings
 
   @override
   void initState() {
@@ -568,8 +569,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           // Organizer Info
                           Row(
                             children: [
-                              Image.asset(IconPath.man, height: 45, width: 45),
-                              SizedBox(width: 8),
+                              // Image.asset(IconPath.man, height: 45, width: 45),
+                              // SizedBox(width: 8),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -980,6 +981,99 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Divider(),
                           SizedBox(height: 20),
 
+                          // Filter by Rating
+                          Text(
+                            'filter_by_rating'.tr,
+                            style: getTextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryFontColor,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () => setState(() => _filterRating = 0),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: _filterRating == 0
+                                        ? AppColors.buttonColor
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                      color: _filterRating == 0
+                                          ? AppColors.buttonColor
+                                          : Color(0xFFD2D2D2),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'all'.tr,
+                                    style: getTextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: _filterRating == 0
+                                          ? Colors.white
+                                          : AppColors.fontColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              for (int i = 5; i >= 1; i--)
+                                GestureDetector(
+                                  onTap: () =>
+                                      setState(() => _filterRating = i),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 6,
+                                    ),
+                                    margin: EdgeInsets.only(right: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: _filterRating == i
+                                          ? AppColors.buttonColor
+                                          : Colors.transparent,
+                                      border: Border.all(
+                                        color: _filterRating == i
+                                            ? AppColors.buttonColor
+                                            : Color(0xFFD2D2D2),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          size: 14,
+                                          color: _filterRating == i
+                                              ? Colors.white
+                                              : Colors.deepOrangeAccent,
+                                        ),
+                                        SizedBox(width: 4),
+                                        Text(
+                                          '$i',
+                                          style: getTextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: _filterRating == i
+                                                ? Colors.white
+                                                : AppColors.fontColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          SizedBox(height: 24),
+
                           // Existing Reviews Display
                           // Row(
                           //   children: [
@@ -1053,10 +1147,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       ListView.builder(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: _controller.reviews.length,
+                                        itemCount: _controller.reviews
+                                            .where(
+                                              (review) =>
+                                                  _filterRating == 0 ||
+                                                  review.rating ==
+                                                      _filterRating,
+                                            )
+                                            .length,
                                         itemBuilder: (context, index) {
-                                          final review =
-                                              _controller.reviews[index];
+                                          final filteredReviews = _controller
+                                              .reviews
+                                              .where(
+                                                (review) =>
+                                                    _filterRating == 0 ||
+                                                    review.rating ==
+                                                        _filterRating,
+                                              )
+                                              .toList();
+                                          final review = filteredReviews[index];
                                           final replyController =
                                               _getReplyController(review.id);
                                           return Padding(
@@ -1067,27 +1176,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      IconPath.man,
-                                                      height: 24,
-                                                      width: 24,
-                                                    ),
-                                                    SizedBox(width: 8),
-                                                    Text(
-                                                      'User ${index + 1}',
-                                                      style: getTextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: AppColors
-                                                            .primaryFontColor,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 8),
                                                 _buildRatingStars(
                                                   review.rating.toDouble(),
                                                 ),
