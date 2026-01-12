@@ -2,26 +2,37 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class WheelPainter extends CustomPainter {
-  final List<String> items;
-  WheelPainter({required this.items});
+  final List<String> labels;
+  final List<int> weights;
+
+  WheelPainter({required this.labels, required this.weights})
+    : assert(labels.length == weights.length);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final int n = items.length;
-    final double angle = 2 * math.pi / n;
+    final int n = labels.length;
     final Offset center = Offset(size.width / 2, size.height / 2);
     final double radius = math.min(size.width, size.height) / 2;
 
     final Rect rect = Rect.fromCircle(center: center, radius: radius);
     final Paint paint = Paint()..style = PaintingStyle.fill;
 
+    final int totalWeight = weights.fold(0, (sum, w) => sum + (w > 0 ? w : 0));
+    final List<double> spans = totalWeight > 0
+        ? weights
+              .map((w) => 2 * math.pi * ((w > 0 ? w : 0) / totalWeight))
+              .toList()
+        : List<double>.filled(n, 2 * math.pi / n);
+
     final List<Color> colors = List.generate(n, (i) {
       final double hue = (i * 360 / n);
       return HSLColor.fromAHSL(1.0, hue, 0.72, 0.52).toColor();
     });
 
+    double currentStart = -math.pi / 2;
     for (int i = 0; i < n; i++) {
-      final double start = -math.pi / 2 + i * angle;
+      final double start = currentStart;
+      final double sweep = spans[i];
       paint.shader = LinearGradient(
         // ignore: deprecated_member_use
         colors: [colors[i], Colors.black.withOpacity(0.2)], // changed
@@ -29,10 +40,10 @@ class WheelPainter extends CustomPainter {
         end: Alignment.bottomRight,
       ).createShader(rect);
 
-      canvas.drawArc(rect, start, angle, true, paint);
+      canvas.drawArc(rect, start, sweep, true, paint);
 
-      final String label = items[i];
-      final double labelAngle = start + angle / 2;
+      final String label = labels[i];
+      final double labelAngle = start + sweep / 2;
       final double textRadius = radius * 0.62;
       final Offset textPos = Offset(
         center.dx + textRadius * math.cos(labelAngle),
@@ -67,6 +78,8 @@ class WheelPainter extends CustomPainter {
       canvas.rotate(rotation);
       tp.paint(canvas, Offset(-tp.width / 2, -tp.height / 2));
       canvas.restore();
+
+      currentStart += sweep;
     }
     final Paint innerPaint = Paint()
       // ignore: deprecated_member_use
@@ -77,6 +90,6 @@ class WheelPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant WheelPainter oldDelegate) {
-    return oldDelegate.items != items;
+    return oldDelegate.labels != labels || oldDelegate.weights != weights;
   }
 }

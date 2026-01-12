@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:get/get.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/features/home/details/model/profile_detail_model.dart';
 import 'package:elad_giserman/features/home/details/service/profile_detail_service.dart';
 import 'package:elad_giserman/features/home/details/service/review_service.dart';
@@ -34,6 +35,12 @@ class DetailsController extends GetxController {
       if (detail != null) {
         profileDetail.value = detail;
         print('✅ Profile detail loaded: ${detail.title}');
+
+        // Translate profile data if not English
+        final currentLanguage = Get.locale?.languageCode ?? 'en';
+        if (currentLanguage != 'en') {
+          await translateDetail(currentLanguage);
+        }
       } else {
         print('❌ Failed to load profile detail');
       }
@@ -41,6 +48,169 @@ class DetailsController extends GetxController {
       print('❌ Error fetching profile detail: $e');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  /// Translate the currently loaded profile detail
+  Future<void> _translateProfileDetail(String targetLanguage) async {
+    try {
+      if (profileDetail.value == null) return;
+
+      print('🌐 Translating profile detail to: $targetLanguage');
+      final translationService = Get.find<TranslationService>();
+
+      final detail = profileDetail.value!;
+
+      // Translate: title, description, location, profileTypeName, offers(title+description)
+      final baseTexts = <String>[
+        detail.title,
+        detail.description,
+        detail.location,
+        detail.profileTypeName,
+      ];
+
+      final offerTexts = <String>[];
+      for (final offer in detail.offers) {
+        offerTexts.add(offer.title);
+        offerTexts.add(offer.description);
+      }
+
+      final textsToTranslate = <String>[...baseTexts, ...offerTexts];
+
+      final translatedTexts = await translationService.translateMultiple(
+        texts: textsToTranslate,
+        targetLanguage: targetLanguage,
+        sourceLanguage: 'en',
+      );
+
+      final translatedOffers = <Offer>[];
+      var idx = baseTexts.length;
+      for (final offer in detail.offers) {
+        final translatedTitle = translatedTexts[idx++];
+        final translatedDescription = translatedTexts[idx++];
+
+        translatedOffers.add(
+          Offer(
+            id: offer.id,
+            title: translatedTitle,
+            description: translatedDescription,
+            isActive: offer.isActive,
+            status: offer.status,
+            businessId: offer.businessId,
+            expiredsAt: offer.expiredsAt,
+            code: offer.code,
+            qrCodeUrl: offer.qrCodeUrl,
+            createdAt: offer.createdAt,
+            updatedAt: offer.updatedAt,
+          ),
+        );
+      }
+
+      // Create updated profile with translated fields
+      final translatedDetail = detail.copyWith(
+        title: translatedTexts[0],
+        description: translatedTexts[1],
+        location: translatedTexts[2],
+        profileTypeName: translatedTexts[3],
+        offers: translatedOffers,
+      );
+
+      profileDetail.value = translatedDetail;
+      print('✅ Profile detail translated');
+    } catch (e) {
+      print('⚠️ Error translating profile detail: $e');
+    }
+  }
+
+  /// Translate profile detail to the specified language
+  /// Called when user changes language in settings
+  Future<void> translateDetail(String targetLanguage) async {
+    await _translateProfileDetail(targetLanguage);
+    await _translateReviews(targetLanguage);
+  }
+
+  /// Translate all review comments to the target language
+  Future<void> _translateReviews(String targetLanguage) async {
+    try {
+      if (profileDetail.value == null || profileDetail.value!.reviews.isEmpty) {
+        return;
+      }
+
+      print(
+        '🌐 Translating ${profileDetail.value!.reviews.length} reviews to: $targetLanguage',
+      );
+      final translationService = Get.find<TranslationService>();
+
+      // Collect all comments to translate
+      final reviews = profileDetail.value!.reviews;
+      final commentsToTranslate = reviews.map((r) => r.comment).toList();
+
+      // Collect all reply comments
+      final replyComments = <String>[];
+      for (var review in reviews) {
+        replyComments.addAll(review.replies.map((r) => r.comment));
+      }
+
+      commentsToTranslate.addAll(replyComments);
+
+      if (commentsToTranslate.isEmpty) return;
+
+      // Translate all comments at once
+      final translatedComments = await translationService.translateMultiple(
+        texts: commentsToTranslate,
+        targetLanguage: targetLanguage,
+        sourceLanguage: 'auto',
+      );
+
+      // Rebuild reviews with translated comments
+      final translatedReviews = <Review>[];
+      var commentIndex = 0;
+
+      for (var review in reviews) {
+        final translatedComment = translatedComments[commentIndex];
+        commentIndex++;
+
+        // Translate replies for this review
+        final translatedReplies = <ReviewReply>[];
+        for (var reply in review.replies) {
+          final translatedReplyComment = translatedComments[commentIndex];
+          commentIndex++;
+
+          translatedReplies.add(
+            ReviewReply(
+              id: reply.id,
+              comment: translatedReplyComment,
+              reviewId: reply.reviewId,
+              userId: reply.userId,
+              createdAt: reply.createdAt,
+              updatedAt: reply.updatedAt,
+            ),
+          );
+        }
+
+        translatedReviews.add(
+          Review(
+            id: review.id,
+            comment: translatedComment,
+            rating: review.rating,
+            userId: review.userId,
+            businessId: review.businessId,
+            createdAt: review.createdAt,
+            updatedAt: review.updatedAt,
+            replies: translatedReplies,
+          ),
+        );
+      }
+
+      // Update profile with translated reviews
+      final updatedDetail = profileDetail.value!.copyWith(
+        reviews: translatedReviews,
+      );
+
+      profileDetail.value = updatedDetail;
+      print('✅ Reviews translated');
+    } catch (e) {
+      print('⚠️ Error translating reviews: $e');
     }
   }
 

@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'package:elad_giserman/core/extensions/business_profile_translation_extension.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/model/category_model.dart';
@@ -57,6 +59,8 @@ class HomeController extends GetxController {
   var isLoadingFavorites = false.obs;
   var searchQuery = ''.obs;
   var customAppDetails = Rx<CustomAppDetails?>(null);
+
+  String? _pendingTranslationLanguageCode;
 
   final CategoryService _categoryService = CategoryService();
   final BusinessProfileService _profileService = BusinessProfileService();
@@ -218,11 +222,23 @@ class HomeController extends GetxController {
   Future<void> fetchCategories() async {
     final fetchedCategories = await _categoryService.getCategories();
     categories.value = fetchedCategories;
+
+    final lang =
+        _pendingTranslationLanguageCode ?? (Get.locale?.languageCode ?? 'en');
+    if (lang != 'en') {
+      await _translateCategories(lang);
+    }
   }
 
   Future<void> fetchBusinessProfiles() async {
     final fetchedProfiles = await _profileService.getAllProfiles();
     businessProfiles.value = fetchedProfiles;
+
+    final lang =
+        _pendingTranslationLanguageCode ?? (Get.locale?.languageCode ?? 'en');
+    if (lang != 'en') {
+      await translateAllData(lang);
+    }
   }
 
   Future<void> fetchMyFavorites() async {
@@ -286,11 +302,133 @@ class HomeController extends GetxController {
       if (details != null) {
         customAppDetails.value = details;
         print('✅ Custom app details loaded: ${details.title}');
+
+        final lang =
+            _pendingTranslationLanguageCode ??
+            (Get.locale?.languageCode ?? 'en');
+        if (lang != 'en') {
+          await _translateCustomAppDetails(lang);
+        }
       } else {
         print('⚠️ No custom app details found');
       }
     } catch (e) {
       print('❌ Error fetching custom app details: $e');
+    }
+  }
+
+  /// Translate all business profiles to the target language
+  /// This is called when the user changes the language
+  Future<void> translateAllData(String targetLanguageCode) async {
+    try {
+      print('🌐 Translating all data to: $targetLanguageCode');
+
+      // If called before data loads, remember the language and translate after fetch.
+      if (businessProfiles.isEmpty) {
+        _pendingTranslationLanguageCode = targetLanguageCode;
+      }
+
+      // Categories + custom details should also switch language
+      await _translateCategories(targetLanguageCode);
+      await _translateCustomAppDetails(targetLanguageCode);
+
+      if (businessProfiles.isEmpty) {
+        print('⚠️ No business profiles to translate yet (queued)');
+        return;
+      }
+
+      // Translate all business profiles
+      final translatedProfiles = <BusinessProfile>[];
+      for (var profile in businessProfiles) {
+        final translated = await profile.translated(targetLanguageCode);
+        translatedProfiles.add(translated);
+      }
+      businessProfiles.value = translatedProfiles;
+      print('✅ All ${translatedProfiles.length} profiles translated');
+
+      // Translate search results if any
+      if (searchResults.isNotEmpty) {
+        final translatedSearchResults = <BusinessProfile>[];
+        for (var profile in searchResults) {
+          final translated = await profile.translated(targetLanguageCode);
+          translatedSearchResults.add(translated);
+        }
+        searchResults.value = translatedSearchResults;
+      }
+
+      _pendingTranslationLanguageCode = null;
+    } catch (e) {
+      print('❌ Error translating data: $e');
+    }
+  }
+
+  Future<void> _translateCategories(String targetLanguageCode) async {
+    try {
+      if (categories.isEmpty || targetLanguageCode == 'en') return;
+
+      final translationService = Get.find<TranslationService>();
+      final names = categories.map((c) => c.name).toList(growable: false);
+      if (names.isEmpty) return;
+
+      final translated = await translationService.translateMultiple(
+        texts: names,
+        targetLanguage: targetLanguageCode,
+        sourceLanguage: 'en',
+      );
+
+      final updated = <CategoryModel>[];
+      for (int i = 0; i < categories.length; i++) {
+        final c = categories[i];
+        updated.add(
+          CategoryModel(
+            id: c.id,
+            name: translated[i],
+            createdAt: c.createdAt,
+            updatedAt: c.updatedAt,
+          ),
+        );
+      }
+      categories.value = updated;
+    } catch (e) {
+      print('❌ Error translating categories: $e');
+    }
+  }
+
+  Future<void> _translateCustomAppDetails(String targetLanguageCode) async {
+    try {
+      final details = customAppDetails.value;
+      if (details == null || targetLanguageCode == 'en') return;
+
+      final translationService = Get.find<TranslationService>();
+      final translated = await translationService.translateMultiple(
+        texts: [details.title, details.description],
+        targetLanguage: targetLanguageCode,
+        sourceLanguage: 'en',
+      );
+
+      customAppDetails.value = CustomAppDetails(
+        id: details.id,
+        title: translated[0],
+        description: translated[1],
+        logo: details.logo,
+        bannerCard: details.bannerCard,
+        bannerPhoto: details.bannerPhoto,
+        createAt: details.createAt,
+        updatedAt: details.updatedAt,
+      );
+    } catch (e) {
+      print('❌ Error translating custom app details: $e');
+    }
+  }
+
+  /// Clear translation cache
+  void clearTranslationCache() {
+    try {
+      final translationService = Get.find<TranslationService>();
+      translationService.clearCache();
+      print('✅ Translation cache cleared');
+    } catch (e) {
+      print('⚠️ Translation service not found');
     }
   }
 }

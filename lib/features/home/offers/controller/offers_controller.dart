@@ -31,14 +31,16 @@ class OffersController extends GetxController {
 
       final token = await SharedPreferencesHelper.getAccessToken();
 
-      final url = Uri.parse(
-        'http://31.97.125.159:5050/api/business-profiles/approved',
-      );
+      final url = Uri.parse('http://31.97.125.159:5050/api/admin/offers');
 
       final headers = {
         "Accept": "application/json",
         if (token != null && token.isNotEmpty) "Authorization": "Bearer $token",
       };
+
+      if (kDebugMode) {
+        print("🔄 Fetching offers from: $url");
+      }
 
       final response = await http.get(url, headers: headers);
 
@@ -46,11 +48,15 @@ class OffersController extends GetxController {
         final jsonResponse = jsonDecode(response.body);
         if (kDebugMode) {
           print("✅ Offers fetched successfully: ${response.statusCode}");
+          print("📥 Response: $jsonResponse");
         }
 
         if (jsonResponse['data'] != null) {
           final List<dynamic> data = jsonResponse['data'];
           offers.value = data.map((json) => OfferModel.fromJson(json)).toList();
+          if (kDebugMode) {
+            print("✅ Parsed ${offers.length} offers");
+          }
         }
 
         isLoading.value = false;

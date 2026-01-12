@@ -1,6 +1,7 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/features/home/offers/controller/offers_controller.dart';
 import 'package:elad_giserman/features/home/offers/models/offer_model.dart';
@@ -63,10 +64,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Login Required'),
-          content: const Text(
-            'You need to log in to redeem offers. Please sign in to continue.',
-          ),
+          title: Text('login_required'.tr),
+          content: Text('login_to_redeem_offers'.tr),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
@@ -77,9 +76,9 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                 Navigator.pop(dialogContext);
                 Get.offAllNamed('/signInScreen');
               },
-              child: const Text(
-                'Sign In',
-                style: TextStyle(color: Colors.blue),
+              child: Text(
+                'sign_in'.tr,
+                style: const TextStyle(color: Colors.blue),
               ),
             ),
           ],
@@ -101,6 +100,16 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
     _redeemCodeController.text = offer.code;
     String? errorMessageInDialog;
     bool isRedeemSuccess = false;
+
+    // Translate offer data
+    final translatedTitle = offer.title.obs;
+    final translatedDescription = offer.description.obs;
+    _translateOfferData(
+      offer.title,
+      offer.description,
+      translatedTitle,
+      translatedDescription,
+    );
 
     showDialog(
       context: context,
@@ -178,21 +187,25 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              offer.title,
-                              style: getTextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primaryFontColor,
+                            Obx(
+                              () => Text(
+                                translatedTitle.value,
+                                style: getTextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryFontColor,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
-                              offer.description,
-                              style: getTextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.fontColor,
+                            Obx(
+                              () => Text(
+                                translatedDescription.value,
+                                style: getTextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.fontColor,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -205,7 +218,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  'Expires: ${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
+                                  '${'expires'.tr}${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -304,7 +317,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                   ? [
                       TextButton(
                         onPressed: () => Navigator.pop(dialogContext),
-                        child: const Text('OK'),
+                        child: Text('ok'.tr),
                       ),
                     ]
                   : [
@@ -343,12 +356,20 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                       });
                                       _redeemCodeController.clear();
                                     } else {
-                                      // Show error in dialog
-                                      setState(() {
-                                        errorMessageInDialog =
-                                            _redemptionController
-                                                .errorMessage
-                                                .value;
+                                      // Translate error message
+                                      final errorMsg = _redemptionController
+                                          .errorMessage
+                                          .value;
+                                      _translateText(
+                                        errorMsg,
+                                        Get.locale?.languageCode ?? 'en',
+                                      ).then((translatedError) {
+                                        if (mounted) {
+                                          setState(() {
+                                            errorMessageInDialog =
+                                                translatedError;
+                                          });
+                                        }
                                       });
                                     }
                                   }
@@ -433,7 +454,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                       onPressed: () {
                                         _offersController.fetchOffers();
                                       },
-                                      child: const Text('Retry'),
+                                      child: Text('retry'.tr),
                                     ),
                                   ],
                                 ),
@@ -450,7 +471,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 Text(
-                                  'No offers available for this business',
+                                  'no_offers_available'.tr,
                                   style: getTextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -576,7 +597,9 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                   BorderRadius.circular(20),
                                             ),
                                             child: Text(
-                                              isExpired ? 'Expired' : 'Active',
+                                              isExpired
+                                                  ? 'offer_status_expired'.tr
+                                                  : 'offer_status_active'.tr,
                                               style: getTextStyle(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600,
@@ -609,7 +632,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Code',
+                                                'code'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -633,7 +656,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                'Expires',
+                                                'expires_short'.tr,
                                                 style: getTextStyle(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
@@ -682,7 +705,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                             onPressed: () =>
                                                 _handleOfferTap(offer),
                                             child: Text(
-                                              'View & Redeem',
+                                              'view_and_redeem'.tr,
                                               style: getTextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w600,
@@ -705,5 +728,37 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
         ),
       ),
     );
+  }
+
+  void _translateOfferData(
+    String title,
+    String description,
+    RxString translatedTitle,
+    RxString translatedDescription,
+  ) {
+    final currentLanguage = Get.locale?.languageCode ?? 'en';
+
+    if (currentLanguage != 'en') {
+      _translateText(title, currentLanguage).then((translated) {
+        translatedTitle.value = translated;
+      });
+
+      _translateText(description, currentLanguage).then((translated) {
+        translatedDescription.value = translated;
+      });
+    }
+  }
+
+  Future<String> _translateText(String text, String targetLanguage) async {
+    try {
+      final translationService = Get.find<TranslationService>();
+      return await translationService.translateText(
+        text: text,
+        targetLanguage: targetLanguage,
+        sourceLanguage: 'en',
+      );
+    } catch (e) {
+      return text;
+    }
   }
 }

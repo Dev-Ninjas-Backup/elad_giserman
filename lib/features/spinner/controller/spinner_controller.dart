@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
+import 'package:elad_giserman/core/services/translation_service.dart';
 import 'package:elad_giserman/features/spinner/model/spin_result_model.dart';
 import 'package:elad_giserman/features/spinner/model/spin_table_model.dart';
 import 'package:elad_giserman/features/spinner/service/spinner_service.dart';
@@ -10,7 +11,8 @@ import 'package:get/get.dart';
 
 class SpinnerController extends GetxController
     with GetTickerProviderStateMixin {
-  final items = [
+  // Wheel slices are hardcoded (10% .. 100%).
+  final items = <String>[
     '10% OFF',
     '20% OFF',
     '30% OFF',
@@ -23,6 +25,9 @@ class SpinnerController extends GetxController
     '100% OFF',
   ].obs;
 
+  // For the painter API (kept generic), all slices have equal size.
+  List<int> get equalSliceWeights => List<int>.filled(items.length, 1);
+
   late AnimationController animationController;
   late Animation<double> animation;
   final RxDouble rotation = 0.0.obs;
@@ -33,7 +38,6 @@ class SpinnerController extends GetxController
   final RxBool spinSuccessful = false.obs;
   final Rx<SpinTableResponse?> spinTable = Rx<SpinTableResponse?>(null);
   final RxBool isLoadingSpinTable = false.obs;
-  final RxInt selectedSpinIndex = (-1).obs;
   final Rx<SpinTableItem?> selectedSpinItem = Rx<SpinTableItem?>(null);
 
   final RxList<SpinResultData> mySpinHistory = <SpinResultData>[].obs;
@@ -75,7 +79,6 @@ class SpinnerController extends GetxController
     isSpinning.value = true;
     selectedIndex.value = -1;
     spinSuccessful.value = false;
-    selectedSpinIndex.value = -1;
     selectedSpinItem.value = null;
 
     try {
@@ -85,10 +88,9 @@ class SpinnerController extends GetxController
 
       if (response == null || response.data.isEmpty) {
         isSpinning.value = false;
-        Get.snackbar(
-          'Error',
+        _translateAndShowError(
+          'error'.tr,
           'Spin data not available. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
         );
         return;
       }
@@ -96,21 +98,25 @@ class SpinnerController extends GetxController
       spinTable.value = response;
       final spinData = response.data;
 
-      // Always select using the API-provided `probablity`.
-      // (If there's only one item, weighted selection will still return index 0.)
-      final randomIndex = await _getWeightedRandomIndexFrom(spinData);
+      // Select using API-provided probabilities.
+      final int pickedIndex = await _getWeightedRandomIndexFrom(spinData);
       final SpinTableItem picked =
-          spinData[randomIndex.clamp(0, spinData.length - 1)];
+          spinData[pickedIndex.clamp(0, spinData.length - 1)];
 
       selectedSpinItem.value = picked;
 
-      final int spinValue = picked.spinValue1; // e.g., 10,20,30...100
+      if (kDebugMode) {
+        print(
+          '🎯 API picked: index=$pickedIndex value=${picked.spinValue1} prob=${picked.probablity}',
+        );
+      }
+
+      final int spinValue = picked.spinValue1;
       final int uiIndex = _mapSpinValueToUiIndex(spinValue);
-      selectedSpinIndex.value = uiIndex;
 
       if (kDebugMode) {
         print(
-          '🎯 API spinValue1: $spinValue → UI index: $uiIndex (${items[uiIndex]})',
+          '🎯 spinValue1: $spinValue → UI index: $uiIndex (${items[uiIndex]})',
         );
       }
 
@@ -137,16 +143,16 @@ class SpinnerController extends GetxController
       }
       if (!isClosed) {
         isSpinning.value = false;
-        Get.snackbar(
-          'Error',
+        _translateAndShowError(
+          'error'.tr,
           'Unable to spin right now. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
         );
       }
     }
   }
 
   int _mapSpinValueToUiIndex(int spinValue) {
+    // The UI wheel is 10 fixed slices: 10,20,30,...,100.
     final int clamped = spinValue.clamp(10, 100);
     final int roundedToTens = ((clamped / 10).round()) * 10;
     return ((roundedToTens ~/ 10) - 1).clamp(0, items.length - 1);
@@ -155,8 +161,8 @@ class SpinnerController extends GetxController
   double _rotationForUiIndex(int index) {
     // Must match _computeSelectedIndex() geometry:
     // - Wheel slices start at -pi/2
-    // - Pointer is at top (-pi/2)
-    // We want the CENTER of slice `index` to align with the pointer.
+    // - Pointer is at top (-pi/2) -> 90 degrees.
+    // Align the CENTER of slice `index` to the pointer.
     final int n = items.length;
     final double anglePer = 2 * math.pi / n;
     final double startAngle = -math.pi / 2;
@@ -173,21 +179,15 @@ class SpinnerController extends GetxController
       (sum, item) => sum + item.probablity,
     );
     if (totalProbability <= 0) return 0;
-    int randomValue = _rand.nextInt(totalProbability);
+    final int randomValue = _rand.nextInt(totalProbability);
 
     int cumulativeProbability = 0;
     for (int i = 0; i < spinData.length; i++) {
       cumulativeProbability += spinData[i].probablity;
       if (randomValue < cumulativeProbability) {
-        if (kDebugMode) {
-          print(
-            '🎯 Weighted random selected index: $i (${spinData[i].useCase})',
-          );
-        }
         return i;
       }
     }
-
     return 0;
   }
 
@@ -214,10 +214,9 @@ class SpinnerController extends GetxController
         print("❌ User not logged in");
       }
       if (!isClosed) {
-        Get.snackbar(
-          "Error",
+        _translateAndShowError(
+          'error'.tr,
           "Please login to save your spin result",
-          snackPosition: SnackPosition.BOTTOM,
         );
       }
       return;
@@ -225,11 +224,7 @@ class SpinnerController extends GetxController
 
     if (spinId == null || spinId.isEmpty) {
       if (!isClosed) {
-        Get.snackbar(
-          "Error",
-          "Spin id not available",
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        _translateAndShowError('error'.tr, "Spin id not available");
       }
       return;
     }
@@ -296,14 +291,7 @@ class SpinnerController extends GetxController
         }
 
         if (!isClosed) {
-          Get.snackbar(
-            "Unable to Save Spin",
-            errorMessage,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.orange,
-            colorText: Colors.white,
-            duration: Duration(seconds: 4),
-          );
+          _translateAndShowError("Unable to Save Spin", errorMessage);
         }
       }
     } catch (e) {
@@ -406,5 +394,45 @@ class SpinnerController extends GetxController
   void onClose() {
     animationController.dispose();
     super.onClose();
+  }
+
+  Future<void> _translateAndShowError(String title, String message) async {
+    final currentLanguage = Get.locale?.languageCode ?? 'en';
+
+    String translatedTitle = title;
+    String translatedMessage = message;
+
+    if (currentLanguage != 'en') {
+      try {
+        translatedTitle = await _translateText(title, currentLanguage);
+        translatedMessage = await _translateText(message, currentLanguage);
+      } catch (e) {
+        if (kDebugMode) {
+          print("⚠️ Translation failed: $e");
+        }
+      }
+    }
+
+    Get.snackbar(
+      translatedTitle,
+      translatedMessage,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.orange,
+      colorText: Colors.white,
+      duration: Duration(seconds: 4),
+    );
+  }
+
+  Future<String> _translateText(String text, String targetLanguage) async {
+    try {
+      final translationService = Get.find<TranslationService>();
+      return await translationService.translateText(
+        text: text,
+        targetLanguage: targetLanguage,
+        sourceLanguage: 'en',
+      );
+    } catch (e) {
+      return text;
+    }
   }
 }

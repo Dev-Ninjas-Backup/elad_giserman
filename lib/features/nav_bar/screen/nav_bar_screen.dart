@@ -61,74 +61,134 @@ class NavbarScreen extends StatelessWidget {
                 () => BottomNavigationBar(
                   elevation: 5,
                   backgroundColor: Color(0xFFFFFFFF),
-                  currentIndex: controller.selectedIndex.value,
+                  currentIndex: controller.getBottomNavIndex(),
                   onTap: (index) {
-                    controller.changeTabIndex(index);
+                    // Adjust index if spin is not available
+                    int actualIndex = index;
+                    if (!controller.isSpinAvailable.value && index >= 2) {
+                      actualIndex = index + 1;
+                    }
+                    controller.changeTabIndex(actualIndex);
                   },
                   selectedItemColor: Colors.black,
                   unselectedItemColor: Colors.grey,
                   showUnselectedLabels: true,
                   type: BottomNavigationBarType.fixed,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        IconPath.activeHome,
-                        width: 24,
-                        height: 24,
-                        color: controller.selectedIndex.value == 0
-                            ? Colors.black
-                            : Colors.grey,
-                      ),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        IconPath.activeHistory,
-                        width: 24,
-                        height: 24,
-                        color: controller.selectedIndex.value == 1
-                            ? Colors.black
-                            : Colors.grey,
-                      ),
-                      label: 'History',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SizedBox(height: 24),
-                      label: 'Spin',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        IconPath.activeVip,
-                        width: 24,
-                        height: 24,
-                        color: controller.selectedIndex.value == 3
-                            ? Colors.black
-                            : Colors.grey,
-                      ),
-                      label: 'VIP',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        IconPath.activeProfile,
-                        width: 24,
-                        height: 24,
-                        color: controller.selectedIndex.value == 4
-                            ? Colors.black
-                            : Colors.grey,
-                      ),
-                      label: 'Profile',
-                    ),
-                  ],
+                  items: controller.isSpinAvailable.value
+                      ? [
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeHome,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 0
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'Home',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeHistory,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 1
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'History',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: SizedBox(height: 24),
+                            label: 'Spin',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeVip,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 3
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'VIP',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeProfile,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 4
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'Profile',
+                          ),
+                        ]
+                      : [
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeHome,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 0
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'Home',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeHistory,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 1
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'History',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeVip,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 3
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'VIP',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Image.asset(
+                              IconPath.activeProfile,
+                              width: 24,
+                              height: 24,
+                              color: controller.selectedIndex.value == 4
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            label: 'Profile',
+                          ),
+                        ],
                 ),
               ),
             ),
             Positioned(
               top: -30,
-              child: GestureDetector(
-                onTap: () {
-                  controller.changeTabIndex(2);
-                },
-                child: Image.asset(IconPath.activeSpin, width: 70, height: 70),
+              child: Obx(
+                () => controller.isSpinAvailable.value
+                    ? GestureDetector(
+                        onTap: () {
+                          controller.changeTabIndex(2);
+                        },
+                        child: Image.asset(
+                          IconPath.activeSpin,
+                          width: 70,
+                          height: 70,
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ),
             ),
           ],
