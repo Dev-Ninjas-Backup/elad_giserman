@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unnecessary_cast
 
 import 'dart:convert';
 import 'package:elad_giserman/core/services/end_points.dart';
@@ -28,11 +28,22 @@ class ProfileDetailService {
         final profileData = jsonResponse['data'];
 
         if (profileData != null) {
-          final profile = BusinessProfileDetail.fromJson(
-            profileData as Map<String, dynamic>,
-          );
-          print('✅ Profile Detail Fetched Successfully');
-          return profile;
+            final profile = BusinessProfileDetail.fromJson(
+              profileData as Map<String, dynamic>,
+            );
+            print('✅ Profile Detail Fetched Successfully');
+            try {
+              print('🔎 Parsed rating: ${profile.rating}');
+              print('🔎 Parsed reviewCount: ${profile.reviewCount}');
+              print('🔎 Available keys in profileData: ${(profileData as Map<String, dynamic>).keys.toList()}');
+              if ((profileData as Map<String, dynamic>).containsKey('stats')) {
+                print('🔎 stats keys: ${(profileData['stats'] as Map<String, dynamic>?)?.keys.toList()}');
+              }
+            } catch (e) {
+              print('⚠️ Error printing debug info: $e');
+            }
+
+            return profile;
         }
       } else {
         print('❌ Failed to fetch profile detail: ${response.statusCode}');

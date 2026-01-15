@@ -23,7 +23,9 @@ class DetailsController extends GetxController {
   void onInit() {
     super.onInit();
     ever(profileDetail, (_) {
-      print('🔄 Profile detail updated: ${profileDetail.value?.title}');
+      print(
+        '🔄 Profile detail updatedRating: ${profileDetail.value!.rating?.toStringAsFixed(2)}',
+      );
     });
   }
 
@@ -339,7 +341,16 @@ class DetailsController extends GetxController {
   List<GalleryItem> get galleryItems => profileDetail.value?.gallery ?? [];
   List<Offer> get offers => profileDetail.value?.offers ?? [];
   List<Review> get reviews => profileDetail.value?.reviews ?? [];
-  double get rating => profileDetail.value?.rating ?? 0.0;
+  double get rating {
+    final revs = profileDetail.value?.reviews ?? [];
+    if (revs.isNotEmpty) {
+      final total = revs.fold<double>(0.0, (double sum, r) => sum + (r.rating.toDouble()));
+      return total / revs.length;
+    }
+
+    // No reviews: fall back to API-provided rating (if any)
+    return profileDetail.value?.rating ?? 0.0;
+  }
   int get reviewCount => profileDetail.value?.reviewCount ?? 0;
   String get openingTime => profileDetail.value?.openingTime ?? '';
   String get closingTime => profileDetail.value?.closingTime ?? '';
