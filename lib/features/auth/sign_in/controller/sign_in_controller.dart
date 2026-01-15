@@ -121,6 +121,8 @@ class SignInController extends GetxController {
     try {
       final response = await GoogleAuthService.performGoogleSignIn();
 
+      debugPrint('Google sign-in response received ${response?.body}');
+
       if (response == null) {
         Get.snackbar(
           "Error",

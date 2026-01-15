@@ -38,6 +38,8 @@ class GoogleAuthService {
     try {
       final GoogleSignInAuthentication authentication =
           await account.authentication;
+
+    print('Obtained ID token: ${authentication.idToken}');
       return authentication.idToken;
     } catch (error) {
       print('Error getting ID token: $error');
@@ -49,6 +51,8 @@ class GoogleAuthService {
   static Future<http.Response> authenticateWithBackend(String idToken) async {
     final url = Uri.parse(Urls.googleLogin);
 
+    debugPrint('Sending ID token to backend: $idToken');
+
     final body = jsonEncode({"idToken": idToken});
 
     try {
@@ -57,6 +61,9 @@ class GoogleAuthService {
         headers: {"Content-Type": "application/json"},
         body: body,
       );
+
+      debugPrint('Backend response: ${response.body}');
+
 
       return response;
     } catch (e) {
