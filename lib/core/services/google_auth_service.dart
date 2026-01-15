@@ -15,6 +15,12 @@ class GoogleAuthService {
   static Future<GoogleSignInAccount?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
+      if (account != null) {
+        debugPrint('✅ Google Email: ${account.email}');
+        debugPrint('✅ Google Name: ${account.displayName}');
+        debugPrint('✅ Google ID: ${account.id}');
+        debugPrint('✅ Photo URL: ${account.photoUrl}');
+      }
       return account;
     } catch (error) {
       if (kDebugMode) {
@@ -39,7 +45,7 @@ class GoogleAuthService {
       final GoogleSignInAuthentication authentication =
           await account.authentication;
 
-    print('Obtained ID token: ${authentication.idToken}');
+      print('Obtained ID token: ${authentication.idToken}');
       return authentication.idToken;
     } catch (error) {
       print('Error getting ID token: $error');
@@ -63,7 +69,6 @@ class GoogleAuthService {
       );
 
       debugPrint('Backend response: ${response.body}');
-
 
       return response;
     } catch (e) {
