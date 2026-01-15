@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "814413183557",
+    "project_id": "twist-app-4e64b",
+    "storage_bucket": "twist-app-4e64b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814413183557:android:795dc4181b70b24c06c12c",
+        "android_client_info": {
+          "package_name": "com.example.elad_giserman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814413183557-0ihbuiacbbg6ifi7uj25n7h5dhk1c79e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.elad_giserman",
+            "certificate_hash": "ad637f7f1302ffefd658b15e4a303fc10ef859aa"
+          }
+        },
+        {
+          "client_id": "814413183557-pftlb9q9ia2pa9v28d8hdrglk1us2e8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT0HZdozZsc4_YTIaBRd297AVHWrEQs_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814413183557-pftlb9q9ia2pa9v28d8hdrglk1us2e8v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814413183557-5g6q2qkj9pglioh23jvc2optpkj4c9sj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eladGiserman"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
