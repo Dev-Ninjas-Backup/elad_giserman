@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast
+
 class Offer {
   final String id;
   final String title;
@@ -168,6 +170,90 @@ class BusinessProfileDetail {
   });
 
   factory BusinessProfileDetail.fromJson(Map<String, dynamic> json) {
+    // Recursive search for numeric values whose keys contain certain keywords.
+    double? findNumericByKeySubstring(dynamic node, String substring) {
+      if (node is Map<String, dynamic>) {
+        for (final entry in node.entries) {
+          final key = entry.key.toLowerCase();
+          final value = entry.value;
+          if (key.contains(substring) && value is num) return (value as num).toDouble();
+        }
+        for (final entry in node.entries) {
+          final result = findNumericByKeySubstring(entry.value, substring);
+          if (result != null) return result;
+        }
+      } else if (node is List) {
+        for (final item in node) {
+          final result = findNumericByKeySubstring(item, substring);
+          if (result != null) return result;
+        }
+      }
+      return null;
+    }
+
+    int findIntByKeySubstrings(dynamic node, List<String> substrings) {
+      if (node is Map<String, dynamic>) {
+        for (final entry in node.entries) {
+          final key = entry.key.toLowerCase();
+          final value = entry.value;
+          bool matches = true;
+          for (final s in substrings) {
+            if (!key.contains(s)) {
+              matches = false;
+              break;
+            }
+          }
+          if (matches && value is num) return (value as num).toInt();
+        }
+        for (final entry in node.entries) {
+          final result = findIntByKeySubstrings(entry.value, substrings);
+          if (result != -1) return result;
+        }
+      } else if (node is List) {
+        for (final item in node) {
+          final result = findIntByKeySubstrings(item, substrings);
+          if (result != -1) return result;
+        }
+      }
+      return -1;
+    }
+
+    final parsedReviews = (json['reviews'] as List<dynamic>?)
+            ?.map((item) => Review.fromJson(item as Map<String, dynamic>))
+            .toList() ??
+        [];
+
+    // Prefer explicit rating keys, then search recursively for any 'rating' key.
+    double? ratingVal;
+    if (json['rating'] is num) {
+      ratingVal = (json['rating'] as num).toDouble();
+    } else if (json['avgRating'] is num) {
+      ratingVal = (json['avgRating'] as num).toDouble();
+    } else if (json['avg_rating'] is num) {
+      ratingVal = (json['avg_rating'] as num).toDouble();
+    } else {
+      ratingVal = findNumericByKeySubstring(json, 'rating');
+    }
+
+    // For review count, try common keys, then recursive search, then fallback to reviews length.
+    int reviewCountVal = 0;
+    if (json['reviewCount'] is num) {
+      reviewCountVal = (json['reviewCount'] as num).toInt();
+    } else if (json['reviewsCount'] is num) {
+      reviewCountVal = (json['reviewsCount'] as num).toInt();
+    } else if (json['reviews_count'] is num) {
+      reviewCountVal = (json['reviews_count'] as num).toInt();
+    } else if (json['review_count'] is num) {
+      reviewCountVal = (json['review_count'] as num).toInt();
+    } else {
+      final found = findIntByKeySubstrings(json, ['review', 'count']);
+      if (found != -1) {
+        reviewCountVal = found;
+      } else {
+        reviewCountVal = parsedReviews.length;
+      }
+    }
+
     return BusinessProfileDetail(
       id: json['id'] ?? '',
       title: json['title'] ?? '',
@@ -206,8 +292,8 @@ class BusinessProfileDetail {
               ?.map((item) => Review.fromJson(item as Map<String, dynamic>))
               .toList() ??
           [],
-      rating: json['rating'] is num ? (json['rating'] as num).toDouble() : null,
-      reviewCount: json['reviewCount'] ?? 0,
+          rating: ratingVal,
+          reviewCount: reviewCountVal,
     );
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';

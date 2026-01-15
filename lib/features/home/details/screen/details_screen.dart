@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element, deprecated_member_use
+
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/common/widgets/custom_app_bar.dart';
 import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
@@ -382,7 +384,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                         CustomAppBar(
                           lable: 'details_title'.tr,
-                          back: '/navBarScreen',
+                          back: null,
                         ),
                       ],
                     ),
@@ -967,14 +969,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     onPressed: () {},
                                     buttonColor: Colors.grey,
                                     fontColor: Colors.white,
-                                    width: 130,
+                                   // width: 130,
                                   )
                                 : CustomSmallButton(
                                     text: 'add_comments_btn'.tr,
                                     onPressed: _submitReview,
                                     buttonColor: AppColors.buttonColor,
                                     fontColor: Colors.white,
-                                    width: 130,
+                                 //   width: 130,
                                   ),
                           ),
                           SizedBox(height: 20),

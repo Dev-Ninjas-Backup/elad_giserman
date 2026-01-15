@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'dart:convert';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/features/home/offers/models/offer_model.dart';
