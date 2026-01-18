@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 class GoogleAuthService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
-   // forceCodeForRefreshToken: true,
+    forceCodeForRefreshToken: true,
   );
 
   // Sign in with Google and get ID token
@@ -18,7 +18,7 @@ class GoogleAuthService {
 
   
     try {
-     //   await _googleSignIn.signOut();
+        await _googleSignIn.signOut();
 
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
