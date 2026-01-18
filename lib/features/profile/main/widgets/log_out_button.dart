@@ -1,4 +1,5 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
+import 'package:elad_giserman/core/services/google_auth_service.dart';
 import 'package:elad_giserman/features/profile/main/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,9 @@ class LogOutButton extends StatelessWidget {
                   ? null
                   : () {
                       controller.logout();
+
+                      GoogleAuthService.signOut();
+
                     },
               icon: controller.isLoggingOut.value
                   ? SizedBox(

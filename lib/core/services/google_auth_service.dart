@@ -3,17 +3,23 @@
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:elad_giserman/core/services/end_points.dart';
 import 'package:flutter/foundation.dart';
 
 class GoogleAuthService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
+   // forceCodeForRefreshToken: true,
   );
 
   // Sign in with Google and get ID token
   static Future<GoogleSignInAccount?> signInWithGoogle() async {
+
+  
     try {
+     //   await _googleSignIn.signOut();
+
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
         debugPrint('✅ Google Email: ${account.email}');
@@ -45,8 +51,19 @@ class GoogleAuthService {
       final GoogleSignInAuthentication authentication =
           await account.authentication;
 
-      print('Obtained ID token: ${authentication.idToken}');
-      return authentication.idToken;
+      // Sign in to Firebase using the Google credentials to obtain a Firebase ID token
+      final oauthCredential = GoogleAuthProvider.credential(
+        idToken: authentication.idToken,
+        accessToken: authentication.accessToken,
+      );
+
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+
+      final String? firebaseIdToken = await userCredential.user?.getIdToken();
+
+      print('Obtained Firebase ID token: $firebaseIdToken');
+      return firebaseIdToken;
     } catch (error) {
       print('Error getting ID token: $error');
       return null;
@@ -104,6 +121,7 @@ class GoogleAuthService {
   static Future<void> signOut() async {
     try {
       await _googleSignIn.signOut();
+      await FirebaseAuth.instance.signOut();
     } catch (error) {
       print('Google Sign-Out Error: $error');
     }
