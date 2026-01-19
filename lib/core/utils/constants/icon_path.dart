@@ -4,6 +4,8 @@ class IconPath {
   static const String spinIcon = 'assets/icons/spinIcon.png';
   static const String googleIcon = 'assets/icons/googleIcon.png';
 
+  static const String appleIcon="assets/icons/apple.png";
+
   //Nav bar icon
   static const String activeHome = 'assets/icons/activeHome.png';
   static const String activeHistory = 'assets/icons/activeHistory.png';

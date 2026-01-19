@@ -171,6 +171,22 @@ class SignInScreen extends StatelessWidget {
                       width: 24,
                     ),
                   ),
+
+                  SizedBox(height: 8),
+                  CustomButton(
+                    label: 'login_with_apple'.tr,
+                    onPressed: () {
+                     // controller.signInWithGoogle();
+                    },
+                    color: Colors.white,
+                    textColor: AppColors.primaryFontColor,
+                    icon: Image.asset(
+                      IconPath.appleIcon,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ),
+
                   SizedBox(height: 40),
                   RichText(
                     textAlign: TextAlign.center,
