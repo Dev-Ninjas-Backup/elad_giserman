@@ -4,6 +4,7 @@ import 'package:elad_giserman/core/common/widgets/custom_text_field.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/auth/sign_in/controller/sign_in_controller.dart';
+import 'package:elad_giserman/features/auth/sign_in/controller/signin_with_apple_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignInController());
+   // final appleController=Get.put(AppleLoginController());
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
@@ -175,8 +177,9 @@ class SignInScreen extends StatelessWidget {
                   SizedBox(height: 8),
                   CustomButton(
                     label: 'login_with_apple'.tr,
-                    onPressed: () {
-                     // controller.signInWithGoogle();
+                    onPressed: () async{
+                      await signInWithAppleAndSendToServer();
+                    //  print("apple login message: ${appleController.message.value}"); 
                     },
                     color: Colors.white,
                     textColor: AppColors.primaryFontColor,
