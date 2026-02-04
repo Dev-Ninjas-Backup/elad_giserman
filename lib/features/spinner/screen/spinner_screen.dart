@@ -232,7 +232,8 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
           Positioned(
             left: 0,
             right: 0,
-            top: MediaQuery.of(context).size.height > 700 ? 250 : 100,
+            top: MediaQuery.of(context).size.height*0.18,
+           // top: MediaQuery.of(context).size.height > 700 ? 250 : 100,
             child: Image.asset(
               IconPath.whilePointer,
               height: MediaQuery.of(context).size.height > 700 ? 150 : 120,
