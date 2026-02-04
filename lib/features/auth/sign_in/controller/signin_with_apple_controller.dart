@@ -80,6 +80,8 @@
 
 
 
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:elad_giserman/core/services/shared_preferences_helper.dart';
 import 'package:elad_giserman/routes/app_routes.dart';
