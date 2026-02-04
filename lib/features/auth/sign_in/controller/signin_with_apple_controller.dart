@@ -88,6 +88,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../../../../core/services/end_points.dart';
+
 Future<void> signInWithAppleAndSendToServer() async {
   try {
     // 1️⃣ Sign in with Apple
@@ -117,7 +119,7 @@ Future<void> signInWithAppleAndSendToServer() async {
     print("Firebase ID Token final: $firebaseIdToken");
 
     // 4️⃣ Send Firebase ID token to your backend
-    final url = Uri.parse("http://31.97.125.159:5050/api/auth/google-login");
+    final url = Uri.parse("${Urls.baseUrl}/auth/google-login");
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},

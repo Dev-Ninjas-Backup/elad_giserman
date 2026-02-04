@@ -93,12 +93,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                user.email,
+                                user.email.length > 27
+                                    ? '${user.email.substring(0, 27)}...'
+                                    : user.email,
                                 style: getTextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.fontColor,
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 4),
                               Text(
