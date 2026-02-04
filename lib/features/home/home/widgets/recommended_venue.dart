@@ -124,14 +124,19 @@ class RecommendedVenue extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 10),
-                CustomSmallButton(
-                  text: 'view_details'.tr,
-                  onPressed: () {
-                    Get.to(() => DetailsScreen(profileId: profileId));
-                  },
-                  buttonColor: AppColors.buttonColor,
-                  fontColor: Colors.white,
-                  width: 100,
+                Row(
+                  children: [
+                    CustomSmallButton(
+                      text: 'view_details'.tr,
+                      onPressed: () {
+                        Get.to(() => DetailsScreen(profileId: profileId));
+                      },
+                      buttonColor: AppColors.buttonColor,
+                      fontColor: Colors.white,
+                    //  width: 100,
+                    ),
+                    Expanded(child: SizedBox())
+                  ],
                 ),
               ],
             ),

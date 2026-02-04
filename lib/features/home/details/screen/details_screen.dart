@@ -964,20 +964,30 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           SizedBox(height: 10),
                           Obx(
                             () => _controller.isPostingReview.value
-                                ? CustomSmallButton(
-                                    text: 'posting'.tr,
-                                    onPressed: () {},
-                                    buttonColor: Colors.grey,
-                                    fontColor: Colors.white,
-                                   // width: 130,
-                                  )
-                                : CustomSmallButton(
-                                    text: 'add_comments_btn'.tr,
-                                    onPressed: _submitReview,
-                                    buttonColor: AppColors.buttonColor,
-                                    fontColor: Colors.white,
-                                 //   width: 130,
-                                  ),
+                                ? Row(
+                                  children: [
+                                    CustomSmallButton(
+                                        text: 'posting'.tr,
+                                        onPressed: () {},
+                                        buttonColor: Colors.grey,
+                                        fontColor: Colors.white,
+                                       // width: 130,
+                                      ),
+                                      Expanded(child: SizedBox())
+                                  ],
+                                )
+                                : Row(
+                                  children: [
+                                    CustomSmallButton(
+                                        text: 'add_comments_btn'.tr,
+                                        onPressed: _submitReview,
+                                        buttonColor: AppColors.buttonColor,
+                                        fontColor: Colors.white,
+                                     //   width: 130,
+                                      ),
+                                      Expanded(child: SizedBox())
+                                  ],
+                                ),
                           ),
                           SizedBox(height: 20),
                           Divider(),
@@ -993,86 +1003,89 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () => setState(() => _filterRating = 0),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: _filterRating == 0
-                                        ? AppColors.buttonColor
-                                        : Colors.transparent,
-                                    border: Border.all(
-                                      color: _filterRating == 0
-                                          ? AppColors.buttonColor
-                                          : Color(0xFFD2D2D2),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'all'.tr,
-                                    style: getTextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: _filterRating == 0
-                                          ? Colors.white
-                                          : AppColors.fontColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              for (int i = 5; i >= 1; i--)
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
                                 GestureDetector(
-                                  onTap: () =>
-                                      setState(() => _filterRating = i),
+                                  onTap: () => setState(() => _filterRating = 0),
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
+                                      horizontal: 12,
                                       vertical: 6,
                                     ),
-                                    margin: EdgeInsets.only(right: 8),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      color: _filterRating == i
+                                      color: _filterRating == 0
                                           ? AppColors.buttonColor
                                           : Colors.transparent,
                                       border: Border.all(
-                                        color: _filterRating == i
+                                        color: _filterRating == 0
                                             ? AppColors.buttonColor
                                             : Color(0xFFD2D2D2),
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          size: 14,
-                                          color: _filterRating == i
-                                              ? Colors.white
-                                              : Colors.deepOrangeAccent,
-                                        ),
-                                        SizedBox(width: 4),
-                                        Text(
-                                          '$i',
-                                          style: getTextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: _filterRating == i
-                                                ? Colors.white
-                                                : AppColors.fontColor,
-                                          ),
-                                        ),
-                                      ],
+                                    child: Text(
+                                      'all'.tr,
+                                      style: getTextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: _filterRating == 0
+                                            ? Colors.white
+                                            : AppColors.fontColor,
+                                      ),
                                     ),
                                   ),
                                 ),
-                            ],
+                                SizedBox(width: 8),
+                                for (int i = 5; i >= 1; i--)
+                                  GestureDetector(
+                                    onTap: () =>
+                                        setState(() => _filterRating = i),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 6,
+                                      ),
+                                      margin: EdgeInsets.only(right: 8),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: _filterRating == i
+                                            ? AppColors.buttonColor
+                                            : Colors.transparent,
+                                        border: Border.all(
+                                          color: _filterRating == i
+                                              ? AppColors.buttonColor
+                                              : Color(0xFFD2D2D2),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 14,
+                                            color: _filterRating == i
+                                                ? Colors.white
+                                                : Colors.deepOrangeAccent,
+                                          ),
+                                          SizedBox(width: 4),
+                                          Text(
+                                            '$i',
+                                            style: getTextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: _filterRating == i
+                                                  ? Colors.white
+                                                  : AppColors.fontColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: 24),
 
