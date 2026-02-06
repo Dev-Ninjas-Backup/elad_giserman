@@ -1,4 +1,4 @@
-package com.example.elad_giserman
+package com.yamiz.elad_giserman
 
 import io.flutter.embedding.android.FlutterActivity
 

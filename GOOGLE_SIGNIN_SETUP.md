@@ -24,7 +24,7 @@ keytool -list -v -alias your_key_alias -keystore path/to/your/keystore
 
 1. In Google Cloud Console, go to "Credentials"
 2. Create OAuth 2.0 Client ID for Android
-3. Add your package name: `com.example.elad_giserman` 
+3. Add your package name: `com.yamiz.elad_giserman` 
 4. Add your SHA-1 certificate fingerprint
 
 ### 3. Download google-services.json
