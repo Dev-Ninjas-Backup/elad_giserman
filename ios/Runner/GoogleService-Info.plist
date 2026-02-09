@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>814413183557-5g6q2qkj9pglioh23jvc2optpkj4c9sj.apps.googleusercontent.com</string>
+	<string>814413183557-6dpvh1c19t58iquch6canp2hhl918q3h.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.814413183557-5g6q2qkj9pglioh23jvc2optpkj4c9sj</string>
+	<string>com.googleusercontent.apps.814413183557-6dpvh1c19t58iquch6canp2hhl918q3h</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>814413183557-0ihbuiacbbg6ifi7uj25n7h5dhk1c79e.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDaFX65WnsKTsXDlCyOcl8b9hXrtVe0zx8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.eladGiserman</string>
+	<string>com.yamiz.eladGiserman</string>
 	<key>PROJECT_ID</key>
 	<string>twist-app-4e64b</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:814413183557:ios:b68fc25f563a29a906c12c</string>
+	<string>1:814413183557:ios:4cd4431d14aebf7b06c12c</string>
 </dict>
 </plist>

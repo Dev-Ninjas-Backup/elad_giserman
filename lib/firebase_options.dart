@@ -64,6 +64,6 @@ class DefaultFirebaseOptions {
     projectId: 'twist-app-4e64b',
     storageBucket: 'twist-app-4e64b.firebasestorage.app',
     iosClientId: '814413183557-5g6q2qkj9pglioh23jvc2optpkj4c9sj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.eladGiserman',
+    iosBundleId: 'com.yamiz.eladGiserman',
   );
 }

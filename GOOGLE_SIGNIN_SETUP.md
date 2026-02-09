@@ -53,7 +53,7 @@ plugins {
 ### 1. Configure OAuth 2.0 Client
 
 1. In Google Cloud Console, create OAuth 2.0 Client ID for iOS
-2. Add your bundle identifier: `com.example.eladGiserman`
+2. Add your bundle identifier: `com.yamiz.eladGiserman`
 
 ### 2. Update Info.plist
 
