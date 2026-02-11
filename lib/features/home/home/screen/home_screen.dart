@@ -145,17 +145,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Center(
-                      child: Obx(() {
-                        final ad = adsController.bannerAd3.value;
-                        if (ad == null) return const SizedBox.shrink();
-                        return SizedBox(
-                          width: ad.size.width.toDouble(),
-                          height: ad.size.height.toDouble(),
-                          child: AdWidget(ad: ad),
-                        );
-                      }),
-                    ),
                     VipFeaturesWidget(
                       bannerCard: controller.customAppDetails.value?.bannerCard,
                       bannerPhoto:
@@ -165,18 +154,7 @@ class HomeScreen extends StatelessWidget {
                           controller.customAppDetails.value?.description,
                     ),
                     const SizedBox(height: 20),
-                    Center(
-                      child: Obx(() {
-                        final ad = adsController.bannerAd2.value;
-                        if (ad == null) return const SizedBox.shrink();
-                        return SizedBox(
-                          width: ad.size.width.toDouble(),
-                          height: ad.size.height.toDouble(),
-                          child: AdWidget(ad: ad),
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 20),
+
                     Row(
                       children: [
                         Text(
