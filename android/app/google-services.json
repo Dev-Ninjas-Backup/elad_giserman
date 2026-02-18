@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "814413183557-fupqmnu123aacqu9t8p3hea37goudm1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yamiz.elad_giserman",
+            "certificate_hash": "db926fb8ae07abd5c65386a72e49a5fc1799fb01"
+          }
+        },
+        {
           "client_id": "814413183557-tstdheh0dddlugi2naitc6nvb8afmsvq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
