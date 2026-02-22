@@ -9,7 +9,7 @@ import 'package:elad_giserman/features/notifications/service/notification_servic
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../routes/app_routes.dart';
 
 class HomeAppBar extends StatefulWidget {
@@ -19,12 +19,15 @@ class HomeAppBar extends StatefulWidget {
   State<HomeAppBar> createState() => _HomeAppBarState();
 }
 
-class _HomeAppBarState extends State<HomeAppBar> {
+class _HomeAppBarState extends State<HomeAppBar> with TickerProviderStateMixin {
   late CustomAppDetailsController _appDetailsController;
   late HomeController _homeController;
   final TextEditingController _searchController = TextEditingController();
   final searchQuery = ''.obs;
   final NotificationService _notificationService = NotificationService();
+  late AnimationController _slideAnimationController;
+  late Animation<Offset> _slideAnimation;
+  // final text = 'welcome_back'.tr;
 
   @override
   void initState() {
@@ -39,11 +42,26 @@ class _HomeAppBarState extends State<HomeAppBar> {
         print('🔍 Search query: ${_searchController.text}');
       }
     });
+
+    // Initialize slide animation
+    _slideAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _slideAnimationController,
+            curve: Curves.easeInOut,
+          ),
+        );
+    _slideAnimationController.repeat(reverse: true);
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _slideAnimationController.dispose();
     super.dispose();
   }
 
@@ -88,7 +106,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(20, 62, 20, 22),
+      padding: EdgeInsets.fromLTRB(0, 62, 0, 22),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -101,7 +119,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
         ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        //  mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -140,20 +158,23 @@ class _HomeAppBarState extends State<HomeAppBar> {
                           onTap: () {
                             Get.offAllNamed('/signInScreen');
                           },
-                          child: Container(
-                            height: 28,
-                            padding: EdgeInsets.symmetric(horizontal: 12),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryFontColor,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'login'.tr,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 20, left: 20),
+                            child: Container(
+                              height: 28,
+                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryFontColor,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'login'.tr,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -165,24 +186,56 @@ class _HomeAppBarState extends State<HomeAppBar> {
               ),
             ],
           ),
-          SizedBox(height: 18),
-          Text(
-            'welcome_back'.tr,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: AppColors.primaryFontColor,
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SlideTransition(
+              position: _slideAnimation,
+              child:
+                  //               RichText(
+                  //   text: TextSpan(
+                  //     children: text.split('').asMap().entries.map((entry) {
+                  //       int index = entry.key;
+                  //       String char = entry.value;
+                  //       return TextSpan(
+                  //         text: char,
+                  //         style: GoogleFonts.poppins(
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.w400,
+                  //           color: Colors.primaries[index % Colors.primaries.length],
+                  //         ),
+                  //       );
+                  //     }).toList(),
+                  //   ),
+                  // )
+                  Text(
+                    'welcome_back'.tr,
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.primaryFontColor,
+                    ),
+                  ),
             ),
           ),
+          //   style: TextStyle(
+          //     fontSize: 20,
+          //     fontWeight: FontWeight.w600,
+          //     color: AppColors.primaryFontColor,
+          //   ),
+          // ),
           SizedBox(height: 10),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            // padding: EdgeInsets.zero,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(50),
             ),
             child: TextField(
+              textAlignVertical: TextAlignVertical.center,
               controller: _searchController,
               onSubmitted: (_) => _showSearchResults(),
               decoration: InputDecoration(
@@ -192,7 +245,14 @@ class _HomeAppBarState extends State<HomeAppBar> {
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                prefixIcon: Icon(Icons.search, color: AppColors.buttonColor),
+                //  prefixIcon: Icon(Icons.search, color: AppColors.buttonColor),
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 20,
+                  color: AppColors.buttonColor,
+                ),
+                prefixIconConstraints: const BoxConstraints(minWidth: 30),
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 border: InputBorder.none,
                 // suffixIcon: GestureDetector(
                 //   onTap: _showSearchResults,

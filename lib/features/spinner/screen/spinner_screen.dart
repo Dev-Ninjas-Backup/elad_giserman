@@ -152,8 +152,8 @@ class _SpinnerScreenState extends State<SpinnerScreen> {
                                 child: Center(
                                   child: Image.asset(
                                     IconPath.spinIcon,
-                                    height: 80,
-                                    width: 80,
+                                    height: 40,
+                                    width: 40,
                                   ),
                                 ),
                               ),
