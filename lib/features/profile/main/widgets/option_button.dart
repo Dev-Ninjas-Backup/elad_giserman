@@ -10,32 +10,34 @@ class OptionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      width: Get.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Color(0xFFF5F5F5),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: getTextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.primaryFontColor,
+    return InkWell(
+      onTap: button,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        width: Get.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Color(0xFFF5F5F5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: getTextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primaryFontColor,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: button,
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.primaryFontColor,
+      
+            //onPressed: button,
+            Padding(
+              padding: const EdgeInsets.only(top: 4,bottom: 4),
+              child: Icon(Icons.arrow_forward_ios, color: AppColors.primaryFontColor),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
