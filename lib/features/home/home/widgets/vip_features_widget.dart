@@ -64,7 +64,7 @@ class VipFeaturesWidget extends StatelessWidget {
                     width: 130,
                     text: 'go_premium'.tr,
                     onPressed: () {
-                      Get.offNamed('/subscriptionScreen');
+                      Get.toNamed('/subscriptionScreen');
                     },
                     buttonColor: Colors.white,
                     fontColor: Colors.black,
