@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "814413183557-jjitnl9r0459l8grq21t6601pt9uvlk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yamiz.elad_giserman",
+            "certificate_hash": "2aaf60d2a2bc60ae9bf617d4dd2fe94c4154c84a"
+          }
+        },
+        {
           "client_id": "814413183557-tstdheh0dddlugi2naitc6nvb8afmsvq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
