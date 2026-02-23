@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           translations: AppTranslations(),
-          locale: initialLocale ?? Locale('en', 'US'),
-          fallbackLocale: Locale('en', 'US'),
+          locale: initialLocale ?? Locale('he', 'IL'),
+          fallbackLocale: Locale('he', 'IL'),
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

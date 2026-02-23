@@ -295,5 +295,6 @@
   "failed_to_fetch_spin_history": "Failed to fetch spin history",
   "used": "Used",
   "unused": "Unused",
-  "discount": "OFF"
+  "discount": "OFF",
+  "secure_payment_coming_soon": "Secure payment feature is coming soon. Thank you for your patience."
 }

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalizationService {
   static Future<Locale> initializeLocale() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String savedLanguage = prefs.getString('selected_language') ?? 'english';
+ String savedLanguage = prefs.getString('selected_language') ?? 'hebrew';
 
     if (savedLanguage == 'hebrew') {
       return Locale('he', 'IL');

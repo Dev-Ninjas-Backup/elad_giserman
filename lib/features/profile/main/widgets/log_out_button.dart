@@ -11,46 +11,58 @@ class LogOutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
 
-    return Obx(
-      () => Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        width: Get.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Color(0xFFF5F5F5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'logout'.tr,
-              style: getTextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.red,
+  return Obx(
+    () => GestureDetector(
+      onTap: controller.isLoggingOut.value
+          ? null
+          : () {
+              controller.logout();
+
+              GoogleAuthService.signOut();
+            },
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          width: Get.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Color(0xFFF5F5F5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'logout'.tr,
+                style: getTextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.red,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: controller.isLoggingOut.value
-                  ? null
-                  : () {
-                      controller.logout();
-
-                      GoogleAuthService.signOut();
-
-                    },
-              icon: controller.isLoggingOut.value
-                  ? SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                      ),
-                    )
-                  : Icon(Icons.logout, color: Colors.red),
-            ),
-          ],
+              // IconButton(
+              //   onPressed: controller.isLoggingOut.value
+              //       ? null
+              //       : () {
+              //           controller.logout();
+        
+              //           GoogleAuthService.signOut();
+        
+              //         },
+              //   icon: controller.isLoggingOut.value
+              //       ? SizedBox(
+              //           width: 24,
+              //           height: 24,
+              //           child: CircularProgressIndicator(
+              //             strokeWidth: 2,
+              //             valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+              //           ),
+              //         )
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Icon(Icons.logout, color: Colors.red),
+                    ),
+              
+            ],
+          ),
         ),
       ),
     );
