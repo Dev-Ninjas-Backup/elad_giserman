@@ -296,5 +296,6 @@
   "used": "Used",
   "unused": "Unused",
   "discount": "OFF",
-  "secure_payment_coming_soon": "Secure payment feature is coming soon. Thank you for your patience."
+  "secure_payment_coming_soon": "Secure payment feature is coming soon. Thank you for your patience.",
+  "no_results_found": "No results found"
 }

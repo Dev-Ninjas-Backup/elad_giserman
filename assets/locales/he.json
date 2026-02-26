@@ -296,5 +296,6 @@
   "used": "בשימוש",
   "unused": "לא בשימוש",
   "discount": "הנחה",
-  "secure_payment_coming_soon": "תכונת התשלום המאובטחת תגיע בקרוב. תודה על סבלנותך."
+  "secure_payment_coming_soon": "תכונת התשלום המאובטחת תגיע בקרוב. תודה על סבלנותך.",
+  "no_results_found": "לא נמצאו תוצאות"
 }
