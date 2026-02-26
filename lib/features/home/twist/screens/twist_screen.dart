@@ -87,10 +87,10 @@ class TwistScreen extends StatelessWidget {
                     child: Obx(() {
                       final filteredProfiles = controller.filteredProfiles;
                       if (filteredProfiles.isEmpty) {
-                        return const Center(
+                        return Center(
                           child: Text(
-                            'No results found',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                            'no_results_found'.tr,
+                            style: const TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                         );
                       }

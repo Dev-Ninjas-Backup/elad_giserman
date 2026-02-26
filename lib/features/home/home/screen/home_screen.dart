@@ -77,6 +77,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(width: 5,),
                       GestureDetector(
                         onTap: () => Get.to(TwistScreen()),
                         child: Text(
