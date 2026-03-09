@@ -40,6 +40,7 @@ class PopularNearWidget extends StatelessWidget {
         border: Border.all(width: 1, color: Color(0xFFEBEBEB)),
       ),
       child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [

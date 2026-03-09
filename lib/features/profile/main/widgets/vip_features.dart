@@ -1,11 +1,7 @@
-import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 // import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
-import 'package:elad_giserman/core/utils/constants/colors.dart';
-import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:elad_giserman/features/profile/subscriptions/service/user_subscription_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class VipFeatures extends StatefulWidget {
@@ -90,31 +86,31 @@ class _VipFeaturesState extends State<VipFeatures> {
     }
   }
 
-  String _getStatusLabel() {
-    switch (status) {
-      case 'ACTIVE':
-        return 'vip_status_active'.tr;
-      case 'PENDING':
-        return 'vip_status_pending'.tr;
-      case 'EXPIRED':
-        return 'vip_status_expired'.tr;
-      default:
-        return status;
-    }
-  }
+  // String _getStatusLabel() {
+  //   switch (status) {
+  //     case 'ACTIVE':
+  //       return 'vip_status_active'.tr;
+  //     case 'PENDING':
+  //       return 'vip_status_pending'.tr;
+  //     case 'EXPIRED':
+  //       return 'vip_status_expired'.tr;
+  //     default:
+  //       return status;
+  //   }
+  // }
 
-  Color _getStatusColor() {
-    switch (status) {
-      case 'ACTIVE':
-        return Color(0xFF00CC00);
-      case 'PENDING':
-        return Color(0xFFFFAA00);
-      case 'EXPIRED':
-        return Color(0xFFFF3300);
-      default:
-        return Color(0xFFFF3300);
-    }
-  }
+  // Color _getStatusColor() {
+  //   switch (status) {
+  //     case 'ACTIVE':
+  //       return Color(0xFF00CC00);
+  //     case 'PENDING':
+  //       return Color(0xFFFFAA00);
+  //     case 'EXPIRED':
+  //       return Color(0xFFFF3300);
+  //     default:
+  //       return Color(0xFFFF3300);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,125 +120,127 @@ class _VipFeaturesState extends State<VipFeatures> {
         if (kDebugMode) {
           print('🔄 VipFeatures: Building widget - isLoading: $isLoading');
         }
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          decoration: BoxDecoration(
-            color: AppColors.buttonColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(27),
-                        color: Colors.white24,
-                      ),
-                      child: Text(
-                        _getStatusLabel(),
-                        style: getTextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: _getStatusColor(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'vip_activated'.tr,
-                      style: getTextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    if (isLoading)
-                      SizedBox(
-                        height: 60,
-                        child: Center(
-                          child: SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    else
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'vip_plan'.trParams({'plan': planTitle}),
-                            style: getTextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'vip_joining_date'.trParams({'date': joinedDate}),
-                            style: getTextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'vip_expire_date'.trParams({'date': expireDate}),
-                            style: getTextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'vip_remaining_days'.trParams({
-                              'days': remainingDays,
-                            }),
-                            style: getTextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    // SizedBox(height: 24),
-                    // CustomSmallButton(
-                    //   text: 'vip_renew_btn'.tr,
-                    //   onPressed: () {
-                    //     Get.offNamed('/subscriptionScreen');
-                    //   },
-                    //   buttonColor: Colors.white,
-                    //   fontColor: Colors.black,
-                    // ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 8),
-              Image.asset(ImagePath.strawGlass, scale: 3),
-            ],
-          ),
-        );
+        return SizedBox();
+
+        //  Container(
+        //   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        //   decoration: BoxDecoration(
+        //     color: AppColors.buttonColor,
+        //     borderRadius: BorderRadius.circular(16),
+        //   ),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Expanded(
+        //         flex: 3,
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             Container(
+        //               padding: EdgeInsets.symmetric(
+        //                 horizontal: 10,
+        //                 vertical: 5,
+        //               ),
+        //               decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(27),
+        //                 color: Colors.white24,
+        //               ),
+        //               child: Text(
+        //                 _getStatusLabel(),
+        //                 style: getTextStyle(
+        //                   fontSize: 12,
+        //                   fontWeight: FontWeight.w400,
+        //                   color: _getStatusColor(),
+        //                 ),
+        //               ),
+        //             ),
+        //             SizedBox(height: 8),
+        //             Text(
+        //               'vip_activated'.tr,
+        //               style: getTextStyle(
+        //                 fontSize: 18,
+        //                 fontWeight: FontWeight.w600,
+        //                 color: Colors.white,
+        //               ),
+        //             ),
+        //             SizedBox(height: 6),
+        //             if (isLoading)
+        //               SizedBox(
+        //                 height: 60,
+        //                 child: Center(
+        //                   child: SizedBox(
+        //                     height: 20,
+        //                     width: 20,
+        //                     child: CircularProgressIndicator(
+        //                       strokeWidth: 2,
+        //                       valueColor: AlwaysStoppedAnimation<Color>(
+        //                         Colors.white,
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               )
+        //             else
+        //               Column(
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: [
+        //                   Text(
+        //                     'vip_plan'.trParams({'plan': planTitle}),
+        //                     style: getTextStyle(
+        //                       fontSize: 12,
+        //                       fontWeight: FontWeight.w400,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                   SizedBox(height: 6),
+        //                   Text(
+        //                     'vip_joining_date'.trParams({'date': joinedDate}),
+        //                     style: getTextStyle(
+        //                       fontSize: 12,
+        //                       fontWeight: FontWeight.w400,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                   SizedBox(height: 6),
+        //                   Text(
+        //                     'vip_expire_date'.trParams({'date': expireDate}),
+        //                     style: getTextStyle(
+        //                       fontSize: 12,
+        //                       fontWeight: FontWeight.w400,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                   SizedBox(height: 6),
+        //                   Text(
+        //                     'vip_remaining_days'.trParams({
+        //                       'days': remainingDays,
+        //                     }),
+        //                     style: getTextStyle(
+        //                       fontSize: 12,
+        //                       fontWeight: FontWeight.w600,
+        //                       color: Colors.white,
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             // SizedBox(height: 24),
+        //             // CustomSmallButton(
+        //             //   text: 'vip_renew_btn'.tr,
+        //             //   onPressed: () {
+        //             //     Get.offNamed('/subscriptionScreen');
+        //             //   },
+        //             //   buttonColor: Colors.white,
+        //             //   fontColor: Colors.black,
+        //             // ),
+        //           ],
+        //         ),
+        //       ),
+        //       SizedBox(width: 8),
+        //       Image.asset(ImagePath.strawGlass, scale: 3),
+        //     ],
+        //   ),
+        // );
       },
     );
   }
