@@ -44,3 +44,4 @@ app.*.map.json
 /android/app/release
 /.github
 .gitignore
+temp_interactive_push.bat
