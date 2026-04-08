@@ -1,5 +1,4 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
-import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/image_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,15 +59,16 @@ class VipFeaturesWidget extends StatelessWidget {
                 SizedBox(height: 14),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: CustomSmallButton(
-                    width: 130,
-                    text: 'go_premium'.tr,
-                    onPressed: () {
-                      Get.toNamed('/subscriptionScreen');
-                    },
-                    buttonColor: Colors.white,
-                    fontColor: Colors.black,
-                  ),
+                  child: SizedBox(height: 30),
+                  // CustomSmallButton(
+                  //   width: 130,
+                  //   text: 'go_premium'.tr,
+                  //   onPressed: () {
+                  //     Get.toNamed('/subscriptionScreen');
+                  //   },
+                  //   buttonColor: Colors.white,
+                  //   fontColor: Colors.black,
+                  // ),
                 ),
               ],
             ),
