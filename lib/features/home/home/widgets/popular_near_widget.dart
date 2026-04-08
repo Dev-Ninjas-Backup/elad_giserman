@@ -1,4 +1,3 @@
-
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
@@ -142,7 +141,12 @@ class PopularNearWidget extends StatelessWidget {
             ),
             SizedBox(height: 6),
             Padding(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(
+                left: 8,
+                right: 8,
+                top: 6,
+                bottom: 6,
+              ),
               child: Text(
                 title,
                 style: TextStyle(
@@ -150,6 +154,8 @@ class PopularNearWidget extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Padding(
