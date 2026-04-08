@@ -1,5 +1,4 @@
 import 'package:elad_giserman/core/utils/constants/colors.dart';
-import 'package:elad_giserman/features/home/home/controller/home_ads_controller.dart';
 import 'package:elad_giserman/features/home/home/controller/home_controller.dart';
 import 'package:elad_giserman/features/home/home/model/business_profile_model.dart';
 import 'package:elad_giserman/features/home/home/widgets/home_app_bar.dart';
@@ -10,7 +9,6 @@ import 'package:elad_giserman/features/home/twist/screens/twist_screen.dart';
 import 'package:elad_giserman/features/home/twist/widgets/tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
-    final HomeAdsController adsController = Get.put(HomeAdsController());
+  //  final HomeAdsController adsController = Get.put(HomeAdsController());
 
     final selectedTab = (-1).obs; // -1 means show all categories
 
@@ -39,15 +37,15 @@ class HomeScreen extends StatelessWidget {
           return Column(
             children: [
               HomeAppBar(),
-              Obx(() {
-                final ad = adsController.bannerAd1.value;
-                if (ad == null) return const SizedBox.shrink();
-                return SizedBox(
-                  width: ad.size.width.toDouble(),
-                  height: ad.size.height.toDouble(),
-                  child: AdWidget(ad: ad),
-                );
-              }),
+              // Obx(() {
+              //   final ad = adsController.bannerAd1.value;
+              //   if (ad == null) return const SizedBox.shrink();
+              //   return SizedBox(
+              //     width: ad.size.width.toDouble(),
+              //     height: ad.size.height.toDouble(),
+              //     child: AdWidget(ad: ad),
+              //   );
+              // }),
               const SizedBox(height: 12),
               Obx(
                 () => SingleChildScrollView(
