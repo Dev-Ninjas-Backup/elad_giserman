@@ -105,7 +105,7 @@ class VipFeaturesWidget extends StatelessWidget {
         ),
       );
     } else {
-      return Image.asset(imagePath, scale: 4);
+      return SizedBox.shrink();
     }
   }
 }
