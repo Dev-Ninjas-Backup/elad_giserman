@@ -6,6 +6,8 @@ import 'package:elad_giserman/features/home/home/widgets/recommended_venue.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../home/details/screen/details_screen.dart';
+
 class VenueScreen extends StatelessWidget {
   const VenueScreen({super.key});
 
@@ -40,16 +42,19 @@ class VenueScreen extends StatelessWidget {
                   separatorBuilder: (_, __) => SizedBox(height: 20),
                   itemBuilder: (context, index) {
                     final profile = controller.businessProfiles[index];
-                    return RecommendedVenue(
-                      image: profile.gallery.isNotEmpty
-                          ? profile.gallery.first.url
-                          : 'https://via.placeholder.com/300',
-                      title: profile.title,
-                      description: profile.description,
-                      location: profile.location,
-                      isFavorite: false,
-                      onFavoriteTap: () {},
-                      profileId: profile.id,
+                    return GestureDetector(
+                      onTap: () => Get.to(() => DetailsScreen(profileId: profile.id)),
+                      child: RecommendedVenue(
+                        image: profile.gallery.isNotEmpty
+                            ? profile.gallery.first.url
+                            : 'https://via.placeholder.com/300',
+                        title: profile.title,
+                        description: profile.description,
+                        location: profile.location,
+                        isFavorite: false,
+                        onFavoriteTap: () {},
+                        profileId: profile.id,
+                      ),
                     );
                   },
                 ),

@@ -10,6 +10,8 @@ import 'package:elad_giserman/features/home/twist/widgets/tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../details/screen/details_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -189,20 +191,23 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final profile = controller.businessProfiles[index];
                           return Obx(
-                            () => RecommendedVenue(
-                              image: profile.gallery.isNotEmpty
-                                  ? profile.gallery.first.url
-                                  : 'https://via.placeholder.com/300',
-                              title: profile.title,
-                              description: profile.description,
-                              location: profile.location,
-                              isFavorite: controller.isFavoriteBusiness(
-                                profile.id,
+                            () => GestureDetector(
+                            onTap: () => Get.to(() => DetailsScreen(profileId: profile.id)),
+                              child: RecommendedVenue(
+                                image: profile.gallery.isNotEmpty
+                                    ? profile.gallery.first.url
+                                    : 'https://via.placeholder.com/300',
+                                title: profile.title,
+                                description: profile.description,
+                                location: profile.location,
+                                isFavorite: controller.isFavoriteBusiness(
+                                  profile.id,
+                                ),
+                                onFavoriteTap: () {
+                                  controller.toggleFavoriteBusiness(profile.id);
+                                },
+                                profileId: profile.id,
                               ),
-                              onFavoriteTap: () {
-                                controller.toggleFavoriteBusiness(profile.id);
-                              },
-                              profileId: profile.id,
                             ),
                           );
                         },
