@@ -9,6 +9,7 @@ import 'package:elad_giserman/features/home/redemption/controller/redemption_con
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class BusinessOffersScreen extends StatefulWidget {
   final String businessId;
@@ -29,14 +30,12 @@ class BusinessOffersScreen extends StatefulWidget {
 class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
   late OffersController _offersController;
   late RedemptionController _redemptionController;
-  late TextEditingController _redeemCodeController;
 
   @override
   void initState() {
     super.initState();
     _offersController = Get.put(OffersController());
     _redemptionController = Get.put(RedemptionController());
-    _redeemCodeController = TextEditingController();
     // If offers are passed from details screen, use them directly
     if (widget.offers != null && widget.offers!.isNotEmpty) {
       _offersController.setOffers(widget.offers!);
@@ -50,7 +49,6 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
 
   @override
   void dispose() {
-    _redeemCodeController.dispose();
     super.dispose();
   }
 
@@ -97,7 +95,6 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
   }
 
   void _showOfferRedeemDialog(OfferModel offer) {
-    _redeemCodeController.text = offer.code;
     String? errorMessageInDialog;
     bool isRedeemSuccess = false;
 
@@ -174,19 +171,115 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                       ),
                     ] else ...[
                       // Offer Details Card
+                      // Container(
+                      //   padding: const EdgeInsets.all(12),
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //       color: AppColors.borderColor,
+                      //       width: 1,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8),
+                      //     color: Colors.grey[50],
+                      //   ),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Obx(
+                      //         () => Text(
+                      //           translatedTitle.value,
+                      //           style: getTextStyle(
+                      //             fontSize: 16,
+                      //             fontWeight: FontWeight.w600,
+                      //             color: AppColors.primaryFontColor,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(height: 8),
+                      //       Obx(
+                      //         () => Text(
+                      //           translatedDescription.value,
+                      //           style: getTextStyle(
+                      //             fontSize: 13,
+                      //             fontWeight: FontWeight.w400,
+                      //             color: AppColors.fontColor,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(height: 8),
+                      //       Row(
+                      //         children: [
+                      //           Icon(
+                      //             Icons.calendar_today,
+                      //             size: 14,
+                      //             color: AppColors.fontColor,
+                      //           ),
+                      //           const SizedBox(width: 4),
+                      //           Text(
+                      //             '${'expires'.tr}${DateFormat('MMM dd, yyyy').format(DateTime.parse(offer.expiredsAt))}',
+                      //             style: getTextStyle(
+                      //               fontSize: 12,
+                      //               fontWeight: FontWeight.w400,
+                      //               color: AppColors.fontColor,
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      const SizedBox(height: 16),
+
+                      // QR/Barcode Redemption Card
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: AppColors.borderColor,
-                            width: 1,
+                            color: AppColors.buttonColor,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[50],
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            // Business Name Header
+                            Text(
+                              widget.businessName,
+                              style: getTextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.fontColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+
+                            // QR Code
+                            Container(
+                              width: 200,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: AppColors.buttonColor,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.all(8),
+                              child: QrImageView(
+                                data: offer.code.isEmpty
+                                    ? 'Code not available'
+                                    : offer.code,
+                                version: QrVersions.auto,
+                                errorCorrectionLevel: QrErrorCorrectLevel.H,
+                              ),
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Offer Benefits
                             Obx(
                               () => Text(
                                 translatedTitle.value,
@@ -195,6 +288,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.primaryFontColor,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -206,10 +300,13 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.fontColor,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 12),
+
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.calendar_today,
@@ -227,50 +324,38 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
 
-                      // Code Input Field
-                      TextField(
-                        controller: _redeemCodeController,
-                        readOnly: true,
-                        decoration: InputDecoration(
-                          hintText: 'voucher_code'.tr,
-                          hintStyle: const TextStyle(
-                            color: Color(0xFF636363),
-                            fontSize: 14,
-                          ),
-                          filled: true,
-                          fillColor: AppColors.textFieldFillColor,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.borderColor,
-                              width: 1,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: AppColors.buttonColor,
-                              width: 1,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 16,
-                          ),
-                        ),
-                        style: getTextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primaryFontColor,
+                            // // Redemption Date and Time
+                            // Container(
+                            //   padding: const EdgeInsets.symmetric(
+                            //     vertical: 8,
+                            //     horizontal: 12,
+                            //   ),
+                            //   decoration: BoxDecoration(
+                            //     color: Colors.grey[50],
+                            //     borderRadius: BorderRadius.circular(6),
+                            //   ),
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.center,
+                            //     children: [
+                            //       Icon(
+                            //         Icons.calendar_today,
+                            //         size: 14,
+                            //         color: AppColors.fontColor,
+                            //       ),
+                            //       const SizedBox(width: 6),
+                            //       // Text(
+                            //       //   'Code Generation: ${DateFormat('MMM dd, yyyy').format(DateTime.now())} - ${DateFormat('HH:mm').format(DateTime.now())}',
+                            //       //   style: getTextStyle(
+                            //       //     fontSize: 12,
+                            //       //     fontWeight: FontWeight.w400,
+                            //       //     color: AppColors.fontColor,
+                            //       //   ),
+                            //       // ),
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
                         ),
                       ),
 
@@ -287,25 +372,28 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.error_outline,
-                                color: Colors.red[600],
-                                size: 20,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  errorMessageInDialog!,
+                          child: Center(
+                            child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red[600],
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "N/A",
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.red[700]!,
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -330,23 +418,16 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                           onPressed: _redemptionController.isLoading.value
                               ? null
                               : () async {
-                                  final code = _redeemCodeController.text
-                                      .trim();
-                                  if (code.isEmpty) {
-                                    setState(() {
-                                      errorMessageInDialog =
-                                          'enter_redeem_code'.tr;
-                                    });
-                                    return;
-                                  }
-
                                   // Clear previous error
                                   setState(() {
                                     errorMessageInDialog = null;
                                   });
 
                                   final success = await _redemptionController
-                                      .redeemCode(code, offerId: offer.id);
+                                      .redeemCode(
+                                        offer.code,
+                                        offerId: offer.id,
+                                      );
 
                                   if (mounted) {
                                     if (success) {
@@ -354,7 +435,6 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                       setState(() {
                                         isRedeemSuccess = true;
                                       });
-                                      _redeemCodeController.clear();
                                     } else {
                                       // Translate error message
                                       final errorMsg = _redemptionController
