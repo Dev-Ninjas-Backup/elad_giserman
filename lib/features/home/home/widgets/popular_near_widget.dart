@@ -3,6 +3,7 @@ import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
 import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class PopularNearWidget extends StatelessWidget {
@@ -121,11 +122,15 @@ class PopularNearWidget extends StatelessWidget {
                       ),
                     ),
                   ] else ...[
-                    Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                    Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                    Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                    Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
-                    Icon(Icons.star, size: 12, color: Colors.deepOrangeAccent),
+                    RatingBarIndicator(
+                      rating: rating,
+                      itemBuilder: (context, index) =>
+                          const Icon(Icons.star, color: Colors.deepOrangeAccent),
+                      itemCount: 5,
+                      itemSize: 15,
+                      direction: Axis.horizontal,
+                      
+                    ),
                     SizedBox(width: 6),
                     Text(
                       '${rating.toString()} (${'reviews'.trParams({'count': reviewNum.toString()})})',
