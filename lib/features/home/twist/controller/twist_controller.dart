@@ -5,14 +5,18 @@ import 'package:get/get.dart';
 class TwistController extends GetxController {
   final selectedTab = 0.obs;
   final searchQuery = ''.obs;
-  final businessProfiles = <BusinessProfile>[].obs;
   final homeController = Get.find<HomeController>();
 
   @override
   void onInit() {
     super.onInit();
-    // Get business profiles from home controller
-    businessProfiles.value = homeController.businessProfiles.toList();
+    // Reactively watch for changes in home controller data
+    ever(homeController.businessProfiles, (_) {
+      update(); // Trigger UI rebuild when profiles change
+    });
+    ever(homeController.categories, (_) {
+      update(); // Trigger UI rebuild when categories change
+    });
   }
 
   void changeTab(int index) {
@@ -21,17 +25,22 @@ class TwistController extends GetxController {
   }
 
   List<BusinessProfile> get filteredProfiles {
+    // Use profiles directly from home controller (reactive)
+    final profiles = homeController.businessProfiles;
+    
     // Get profiles for the selected category
-    final categoryProfiles =
-        selectedTab.value < homeController.categories.length
-        ? businessProfiles
-              .where(
-                (profile) =>
-                    profile.categoryId ==
-                    homeController.categories[selectedTab.value].id,
-              )
-              .toList()
-        : businessProfiles;
+    // selectedTab.value == 0 means "All" is selected
+    final categoryProfiles = selectedTab.value == 0
+        ? profiles // Show all profiles when "All" is selected
+        : selectedTab.value - 1 < homeController.categories.length
+            ? profiles
+                  .where(
+                    (profile) =>
+                        profile.categoryId ==
+                        homeController.categories[selectedTab.value - 1].id,
+                  )
+                  .toList()
+            : profiles;
 
     // Filter by search query
     if (searchQuery.value.isEmpty) return categoryProfiles;
