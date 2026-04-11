@@ -10,15 +10,15 @@ class RedemptionController extends GetxController {
   final RxString errorMessage = ''.obs;
   final RxString successMessage = ''.obs;
 
-  Future<bool> redeemCode(String code, {String? offerId}) async {
+  Future<bool> redeemCode(String ?code, {String? offerId}) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
       successMessage.value = '';
 
       if (kDebugMode) {
-        print("🔄 Starting redemption...");
-        print("Code: $code");
+        print("🔄 Starting redemption..." "Code123: $code" "Offer ID: $offerId");
+        print("Code123: $code");
         print("Offer ID: $offerId");
       }
 

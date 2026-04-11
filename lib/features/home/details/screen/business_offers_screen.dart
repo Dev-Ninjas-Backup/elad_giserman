@@ -374,8 +374,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                           ),
                           child: Center(
                             child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.error_outline,
@@ -384,7 +384,7 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "N/A",
+                                  errorMessageInDialog ?? 'N/A',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
