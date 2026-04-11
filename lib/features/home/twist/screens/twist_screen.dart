@@ -7,6 +7,8 @@ import 'package:elad_giserman/features/home/twist/widgets/tab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../details/screen/details_screen.dart';
+
 class TwistScreen extends StatelessWidget {
   const TwistScreen({super.key});
 
@@ -56,6 +58,24 @@ class TwistScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
+                          // "All" tab
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: TabWidget(
+                              image: null,
+                              title: 'all'.tr,
+                              iconColor: controller.selectedTab.value == 0
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontColor: controller.selectedTab.value == 0
+                                  ? Colors.white
+                                  : Colors.black,
+                              buttonColor: controller.selectedTab.value == 0
+                                  ? AppColors.primaryFontColor
+                                  : const Color(0xFFF2F2F2),
+                              onTap: () => controller.changeTab(0),
+                            ),
+                          ),
                           ...List.generate(
                             homeController.categories.length,
                             (index) => Padding(
@@ -63,17 +83,17 @@ class TwistScreen extends StatelessWidget {
                               child: TabWidget(
                                 image: null,
                                 title: homeController.categories[index].name,
-                                iconColor: controller.selectedTab.value == index
+                                iconColor: controller.selectedTab.value == index + 1
                                     ? Colors.white
                                     : Colors.black,
-                                fontColor: controller.selectedTab.value == index
+                                fontColor: controller.selectedTab.value == index + 1
                                     ? Colors.white
                                     : Colors.black,
                                 buttonColor:
-                                    controller.selectedTab.value == index
+                                    controller.selectedTab.value == index + 1
                                     ? AppColors.primaryFontColor
                                     : const Color(0xFFF2F2F2),
-                                onTap: () => controller.changeTab(index),
+                                onTap: () => controller.changeTab(index + 1),
                               ),
                             ),
                           ),
@@ -100,18 +120,21 @@ class TwistScreen extends StatelessWidget {
                         separatorBuilder: (_, __) => const SizedBox(height: 20),
                         itemBuilder: (context, index) {
                           final profile = filteredProfiles[index];
-                          return RecommendedTab(
-                            image: profile.gallery.isNotEmpty
-                                ? profile.gallery.first.url
-                                : 'https://via.placeholder.com/300',
-                            title: profile.title,
-                            location: profile.location,
-                            isFavorite: false,
-                            onFavoriteTap: () {},
-                            category: profile.category.name,
-                            rating: profile.avgRating ?? 0.0,
-                            reviewNum: profile.reviewCount,
-                            profileId: profile.id,
+                          return GestureDetector(
+                            onTap: () => Get.to(() => DetailsScreen(profileId: profile.id)),
+                            child: RecommendedTab(
+                              image: profile.gallery.isNotEmpty
+                                  ? profile.gallery.first.url
+                                  : 'https://via.placeholder.com/300',
+                              title: profile.title,
+                              location: profile.location,
+                              isFavorite: false,
+                              onFavoriteTap: () {},
+                              category: profile.category.name,
+                              rating: profile.avgRating ?? 0.0,
+                              reviewNum: profile.reviewCount,
+                              profileId: profile.id,
+                            ),
                           );
                         },
                       );

@@ -21,7 +21,7 @@ class UserSubscriptionService {
       final token = await SharedPreferencesHelper.getAccessToken();
       if (kDebugMode) {
         print(
-          '   Token retrieved: ${token != null ? 'Yes (${token.length} chars)' : 'No'}',
+          '   Token retrieved: ${token ?? 'No'}',
         );
       }
 

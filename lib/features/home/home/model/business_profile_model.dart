@@ -138,7 +138,7 @@ class BusinessProfile {
       isActive: json['isActive'] ?? false,
       openingTime: json['openingTime'] ?? '',
       closingTime: json['closingTime'] ?? '',
-      categoryId: json['categoryId'] ?? '',
+      categoryId: json['categoryId'] ?? (json['category']?['id'] ?? ''),
       profileTypeName: json['profileTypeName'] ?? '',
       ownerId: json['ownerId'] ?? '',
       facebook: json['facebook'] ?? '',
