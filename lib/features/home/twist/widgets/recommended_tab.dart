@@ -1,8 +1,6 @@
 import 'package:elad_giserman/core/common/styles/global_text_style.dart';
-import 'package:elad_giserman/core/common/widgets/custom_small_button.dart';
 import 'package:elad_giserman/core/utils/constants/colors.dart';
 import 'package:elad_giserman/core/utils/constants/icon_path.dart';
-import 'package:elad_giserman/features/home/details/screen/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -176,15 +174,15 @@ class RecommendedTab extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12),
-                CustomSmallButton(
-                  text: 'reserve_seat'.tr,
-                  onPressed: () {
-                    Get.to(() => DetailsScreen(profileId: profileId));
-                  },
-                  buttonColor: AppColors.buttonColor,
-                  fontColor: Colors.white,
-                  width: 150,
-                ),
+                // CustomSmallButton(
+                //   text: 'reserve_seat'.tr,
+                //   onPressed: () {
+                //     Get.to(() => DetailsScreen(profileId: profileId));
+                //   },
+                //   buttonColor: AppColors.buttonColor,
+                //   fontColor: Colors.white,
+                //   width: 150,
+              //  ),
               ],
             ),
           ),
