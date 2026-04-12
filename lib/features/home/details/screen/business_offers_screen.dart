@@ -384,7 +384,9 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  errorMessageInDialog ?? 'N/A',
+                                  errorMessageInDialog != null
+                                      ? '${errorMessageInDialog!.split(' ').take(2).join(' ')}...'
+                                      : 'N/A',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
