@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "814413183557-ofv0s6vgfvj1niucunvs0ug2e3ngj2d7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yamiz.elad_giserman",
+            "certificate_hash": "467faf85c59675a6e4c43dcd178a8ccfa8ccd07d"
+          }
+        },
+        {
           "client_id": "814413183557-tstdheh0dddlugi2naitc6nvb8afmsvq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -58,7 +66,7 @@
               "client_id": "814413183557-5g6q2qkj9pglioh23jvc2optpkj4c9sj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.yamiz.eladGiserman"
+                "bundle_id": "com.yamiz.elad_giserman"
               }
             }
           ]
