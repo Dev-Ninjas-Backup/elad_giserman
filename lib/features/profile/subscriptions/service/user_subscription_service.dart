@@ -70,9 +70,9 @@ class UserSubscriptionService {
         if (kDebugMode) {
           print('✅ User subscription fetched successfully');
           print('   Status: ${userSubscriptionResponse.data.status}');
-          print('   Plan: ${userSubscriptionResponse.data.plan.title}');
+          print('   Plan: ${userSubscriptionResponse.data.plan?.title}');
           print(
-            '   Price: ${userSubscriptionResponse.data.plan.formattedPrice}/${userSubscriptionResponse.data.plan.billingPeriod}',
+            '   Price: ${userSubscriptionResponse.data.plan?.formattedPrice}/${userSubscriptionResponse.data.plan?.billingPeriod}',
           );
           print(
             '   Started: ${userSubscriptionResponse.data.period.startedAt}',
