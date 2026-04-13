@@ -37,22 +37,38 @@ class _VipFeaturesState extends State<VipFeatures> {
         if (kDebugMode) {
           print('📋 VipFeatures: Subscription data received');
           print('   Status: ${response.data.status}');
-          print('   Plan: ${response.data.plan.title}');
+          print('   Plan: ${response.data.plan?.title}');
           print('   Joined: ${response.data.period.startedAt}');
           print('   Expires: ${response.data.period.endedAt}');
           print('   Remaining: ${response.data.period.remainingDays}');
         }
 
+        // Check if plan exists
+        if (response.data.plan == null) {
+          if (kDebugMode) {
+            print('ℹ️ VipFeatures: No active subscription plan');
+          }
+          setState(() {
+            status = response.data.status;
+            planTitle = 'No Plan';
+            joinedDate = '';
+            expireDate = '';
+            remainingDays = '0';
+            isLoading = false;
+          });
+          return;
+        }
+
         // Format dates to a professional format (e.g., "Dec 13, 2025")
-        final formattedJoinedDate = _formatDate(response.data.period.startedAt);
-        final formattedExpireDate = _formatDate(response.data.period.endedAt);
+        final formattedJoinedDate = _formatDate(response.data.period.startedAt ?? '');
+        final formattedExpireDate = _formatDate(response.data.period.endedAt ?? '');
 
         setState(() {
           status = response.data.status;
-          planTitle = response.data.plan.title;
+          planTitle = response.data.plan!.title;
           joinedDate = formattedJoinedDate;
           expireDate = formattedExpireDate;
-          remainingDays = response.data.period.remainingDays;
+          remainingDays = response.data.period.remainingDays ?? '0';
           isLoading = false;
         });
       } else {

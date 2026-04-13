@@ -44,7 +44,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     _commentController = TextEditingController();
     _ratingController = TextEditingController();
     _redeemCodeController = TextEditingController();
-    _controller.fetchProfileDetail(widget.profileId);
+    
+    // Delay the fetch call until after the build phase completes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.fetchProfileDetail(widget.profileId);
+    });
   }
 
   @override
