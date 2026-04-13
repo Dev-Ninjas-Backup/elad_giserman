@@ -74,7 +74,14 @@ class RedemptionController extends GetxController {
           print("❌ Response: ${response.body}");
         }
         final jsonResponse = jsonDecode(response.body);
-        errorMessage.value = jsonResponse['message'] ?? 'Failed to redeem code';
+        String errorMsg = jsonResponse['message'] ?? 'Failed to redeem code';
+        
+        // Replace technical error message with user-friendly message
+        if (errorMsg.contains('Cannot POST') || response.statusCode == 404) {
+          errorMsg = 'Code is Required';
+        }
+        
+        errorMessage.value = errorMsg;
         isLoading.value = false;
         return false;
       }

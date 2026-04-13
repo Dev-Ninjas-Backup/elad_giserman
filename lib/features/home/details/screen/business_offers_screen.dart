@@ -372,21 +372,19 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.error_outline,
-                                  color: Colors.red[600],
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  errorMessageInDialog != null
-                                      ? '${errorMessageInDialog!.split(' ').take(2).join(' ')}...'
-                                      : 'N/A',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.error_outline,
+                                color: Colors.red[600],
+                                size: 20,
+                              ),
+                              const SizedBox(width: 6),
+                              Expanded(
+                                child: Text(
+                                  errorMessageInDialog ?? 'N/A',
                                   style: getTextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -394,8 +392,8 @@ class _BusinessOffersScreenState extends State<BusinessOffersScreen> {
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

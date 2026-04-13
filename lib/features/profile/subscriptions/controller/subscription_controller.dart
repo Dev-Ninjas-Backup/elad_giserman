@@ -50,7 +50,7 @@ class SubscriptionController extends GetxController {
       if (response != null) {
         userSubscriptionResponse.value = response;
         if (kDebugMode) {
-          print('✅ User subscription loaded: ${response.data.plan.title}');
+          print('✅ User subscription loaded: ${response.data.plan?.title}');
         }
       }
     } catch (e) {

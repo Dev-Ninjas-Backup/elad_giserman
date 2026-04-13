@@ -45,3 +45,4 @@ app.*.map.json
 /.github
 .gitignore
 temp_interactive_push.bat
+branch_structure.json

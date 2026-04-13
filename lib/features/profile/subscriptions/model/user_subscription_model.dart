@@ -21,23 +21,25 @@ class UserSubscriptionResponse {
 class UserSubscriptionData {
   final String status;
   final bool canSubscribe;
-  final UserSubscriptionPlan plan;
+  final UserSubscriptionPlan? plan;
   final SubscriptionPeriod period;
   final String message;
 
   UserSubscriptionData({
     required this.status,
     required this.canSubscribe,
-    required this.plan,
+    this.plan,
     required this.period,
     required this.message,
   });
 
   factory UserSubscriptionData.fromJson(Map<String, dynamic> json) {
+    final planData = json['plan'] as Map<String, dynamic>?;
+    
     return UserSubscriptionData(
       status: json['status'] as String,
       canSubscribe: json['canSubscribe'] as bool,
-      plan: UserSubscriptionPlan.fromJson(json['plan'] as Map<String, dynamic>),
+      plan: planData != null ? UserSubscriptionPlan.fromJson(planData) : null,
       period: SubscriptionPeriod.fromJson(
         json['period'] as Map<String, dynamic>,
       ),
@@ -76,21 +78,21 @@ class UserSubscriptionPlan {
 }
 
 class SubscriptionPeriod {
-  final String startedAt;
-  final String endedAt;
-  final String remainingDays;
+  final String? startedAt;
+  final String? endedAt;
+  final String? remainingDays;
 
   SubscriptionPeriod({
-    required this.startedAt,
-    required this.endedAt,
-    required this.remainingDays,
+    this.startedAt,
+    this.endedAt,
+    this.remainingDays,
   });
 
   factory SubscriptionPeriod.fromJson(Map<String, dynamic> json) {
     return SubscriptionPeriod(
-      startedAt: json['startedAt'] as String,
-      endedAt: json['endedAt'] as String,
-      remainingDays: json['remainingDays'] as String,
+      startedAt: json['startedAt'] as String?,
+      endedAt: json['endedAt'] as String?,
+      remainingDays: json['remainingDays'] as String?,
     );
   }
 }
