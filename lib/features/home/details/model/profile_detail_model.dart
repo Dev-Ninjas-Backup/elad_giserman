@@ -78,6 +78,8 @@ class Review {
   final String comment;
   final int rating;
   final String userId;
+  final String userName;
+  final String avatarUrl;
   final String businessId;
   final String createdAt;
   final String updatedAt;
@@ -88,6 +90,8 @@ class Review {
     required this.comment,
     required this.rating,
     required this.userId,
+    required this.userName,
+    required this.avatarUrl,
     required this.businessId,
     required this.createdAt,
     required this.updatedAt,
@@ -95,11 +99,18 @@ class Review {
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
+    // Extract user name and avatarUrl from nested user object
+    final userMap = json['user'] as Map<String, dynamic>?;
+    final userName = userMap?['name'] as String? ?? '';
+    final avatarUrl = userMap?['avatarUrl'] as String? ?? '';
+    
     return Review(
       id: json['id'] ?? '',
       comment: json['comment'] ?? '',
       rating: json['rating'] ?? 0,
       userId: json['userId'] ?? '',
+      userName: userName,
+      avatarUrl: avatarUrl,
       businessId: json['businessId'] ?? '',
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
