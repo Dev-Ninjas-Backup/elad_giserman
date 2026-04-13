@@ -382,10 +382,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                 ),
                         ),
-                        CustomAppBar(
-                          lable: 'details_title'.tr,
-                          back: null,
-                        ),
+                        CustomAppBar(lable: 'details_title'.tr, back: null),
                       ],
                     ),
                     Container(
@@ -965,29 +962,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Obx(
                             () => _controller.isPostingReview.value
                                 ? Row(
-                                  children: [
-                                    CustomSmallButton(
+                                    children: [
+                                      CustomSmallButton(
                                         text: 'posting'.tr,
                                         onPressed: () {},
                                         buttonColor: Colors.grey,
                                         fontColor: Colors.white,
-                                       // width: 130,
+                                        // width: 130,
                                       ),
-                                      Expanded(child: SizedBox())
-                                  ],
-                                )
+                                      Expanded(child: SizedBox()),
+                                    ],
+                                  )
                                 : Row(
-                                  children: [
-                                    CustomSmallButton(
+                                    children: [
+                                      CustomSmallButton(
                                         text: 'add_comments_btn'.tr,
                                         onPressed: _submitReview,
                                         buttonColor: AppColors.buttonColor,
                                         fontColor: Colors.white,
-                                     //   width: 130,
+                                        //   width: 130,
                                       ),
-                                      Expanded(child: SizedBox())
-                                  ],
-                                ),
+                                      Expanded(child: SizedBox()),
+                                    ],
+                                  ),
                           ),
                           SizedBox(height: 20),
                           Divider(),
@@ -1008,7 +1005,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () => setState(() => _filterRating = 0),
+                                  onTap: () =>
+                                      setState(() => _filterRating = 0),
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 12,
@@ -1087,7 +1085,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 24),
+                        //  SizedBox(height: 24),
 
                           // Existing Reviews Display
                           // Row(
@@ -1158,7 +1156,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(height: 20),
+                                   //   SizedBox(height: 20),
                                       ListView.builder(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
@@ -1187,344 +1185,397 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             padding: EdgeInsets.only(
                                               bottom: 16,
                                             ),
-                                            child: Column(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                _buildRatingStars(
-                                                  review.rating.toDouble(),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        100,
+                                                      ),
+                                                  child: Image.network(
+                                                    review.avatarUrl,
+                                                    height: 30,
+                                                    width: 30,
+                                                    errorBuilder:
+                                                        (
+                                                          context,
+                                                          error,
+                                                          stackTrace,
+                                                        ) {
+                                                          return Icon(
+                                                            Icons
+                                                                .person_outline,
+                                                          );
+                                                        },
+                                                  ),
                                                 ),
-                                                SizedBox(height: 8),
-                                                Text(
-                                                  review.comment,
-                                                  style: getTextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.fontColor,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 12),
-                                                // GestureDetector(
-                                                //   onTap: () {
-                                                //     _toggleReplyVisibility(
-                                                //       review.id,
-                                                //     );
-                                                //   },
-                                                //   child: Container(
-                                                //     padding:
-                                                //         EdgeInsets.symmetric(
-                                                //           horizontal: 10,
-                                                //           vertical: 2,
-                                                //         ),
-                                                //     decoration: BoxDecoration(
-                                                //       borderRadius:
-                                                //           BorderRadius.circular(
-                                                //             12,
-                                                //           ),
-                                                //       border: Border.all(
-                                                //         width: 1,
-                                                //         color: Color(
-                                                //           0xFFD2D2D2,
-                                                //         ),
-                                                //       ),
-                                                //     ),
-                                                //     child: Row(
-                                                //       mainAxisSize:
-                                                //           MainAxisSize.min,
-                                                //       children: [
-                                                //         Text(
-                                                //           'reply'.tr,
-                                                //           style: getTextStyle(
-                                                //             fontSize: 12,
-                                                //             fontWeight:
-                                                //                 FontWeight.w400,
-                                                //             color: AppColors
-                                                //                 .buttonColor,
-                                                //           ),
-                                                //         ),
-                                                //         SizedBox(width: 4),
-                                                //         Icon(
-                                                //           _isReplyVisible(
-                                                //                 review.id,
-                                                //               )
-                                                //               ? Icons
-                                                //                     .expand_less
-                                                //               : Icons
-                                                //                     .expand_more,
-                                                //           size: 16,
-                                                //           color: AppColors
-                                                //               .buttonColor,
-                                                //         ),
-                                                //       ],
-                                                //     ),
-                                                //   ),
-                                                // ),
-                                                // Show reply input if expanded
-                                                if (_isReplyVisible(
-                                                  review.id,
-                                                )) ...[
-                                                  SizedBox(height: 12),
-                                                  TextField(
-                                                    controller: replyController,
-                                                    maxLines: null,
-                                                    minLines: 3,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                            vertical: 12,
-                                                            horizontal: 16,
-                                                          ),
-                                                      border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              6,
-                                                            ),
-                                                        borderSide: BorderSide(
-                                                          color: Color(
-                                                            0xFFD2D2D2,
-                                                          ),
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  6,
-                                                                ),
-                                                            borderSide:
-                                                                BorderSide(
-                                                                  color: Color(
-                                                                    0xFFD2D2D2,
-                                                                  ),
-                                                                  width: 1,
-                                                                ),
-                                                          ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  6,
-                                                                ),
-                                                            borderSide:
-                                                                BorderSide(
-                                                                  color: Color(
-                                                                    0xFFD2D2D2,
-                                                                  ),
-                                                                  width: 1,
-                                                                ),
-                                                          ),
-                                                      hintText:
-                                                          'enter_reply'.tr,
-                                                    ),
-                                                    style: getTextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: AppColors
-                                                          .primaryFontColor,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 8),
-                                                  Obx(
-                                                    () =>
-                                                        _controller
-                                                            .isReplyingToReview
-                                                            .value
-                                                        ? CustomSmallButton(
-                                                            text: 'replying'.tr,
-                                                            onPressed: () {},
-                                                            buttonColor:
-                                                                Colors.grey,
-                                                            fontColor:
-                                                                Colors.white,
-                                                            width: 100,
-                                                          )
-                                                        : CustomSmallButton(
-                                                            text: 'reply'.tr,
-                                                            onPressed: () =>
-                                                                _submitReply(
-                                                                  review.id,
-                                                                ),
-                                                            buttonColor:
-                                                                AppColors
-                                                                    .buttonColor,
-                                                            fontColor:
-                                                                Colors.white,
-                                                            width: 100,
-                                                          ),
-                                                  ),
-                                                ],
-                                                // Display replies if any
-                                                if (review
-                                                    .replies
-                                                    .isNotEmpty) ...[
-                                                  SizedBox(height: 12),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      _toggleRepliesListVisibility(
-                                                        review.id,
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                            horizontal: 10,
-                                                            vertical: 2,
-                                                          ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              12,
-                                                            ),
-                                                        border: Border.all(
-                                                          width: 1,
-                                                          color: Color(
-                                                            0xFFD2D2D2,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Text(
-                                                            'Replies (${review.replies.length})',
-                                                            style: getTextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: AppColors
-                                                                  .buttonColor,
-                                                            ),
-                                                          ),
-                                                          SizedBox(width: 4),
-                                                          Icon(
-                                                            _isRepliesListVisible(
-                                                                  review.id,
-                                                                )
-                                                                ? Icons
-                                                                      .expand_less
-                                                                : Icons
-                                                                      .expand_more,
-                                                            size: 16,
-                                                            color: AppColors
-                                                                .buttonColor,
-                                                          ),
-                                                        ],
+                                                SizedBox(width: 6),
+
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      review.userName.isNotEmpty
+                                                          ? review.userName
+                                                          : 'user'.tr,
+                                                      style: getTextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color:
+                                                            AppColors.fontColor,
                                                       ),
                                                     ),
-                                                  ),
-                                                  // Show replies container if expanded
-                                                  if (_isRepliesListVisible(
-                                                    review.id,
-                                                  )) ...[
                                                     SizedBox(height: 8),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                        left: 16,
-                                                        top: 8,
-                                                        bottom: 8,
+
+                                                    _buildRatingStars(
+                                                      review.rating.toDouble(),
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    Text(
+                                                      review.comment,
+                                                      style: getTextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            AppColors.fontColor,
                                                       ),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          border: Border(
-                                                            left: BorderSide(
-                                                              color: AppColors
-                                                                  .buttonColor,
-                                                              width: 3,
+                                                    ),
+                                                    SizedBox(height: 8),
+                                                    // GestureDetector(
+                                                    //   onTap: () {
+                                                    //     _toggleReplyVisibility(
+                                                    //       review.id,
+                                                    //     );
+                                                    //   },
+                                                    //   child: Container(
+                                                    //     padding:
+                                                    //         EdgeInsets.symmetric(
+                                                    //           horizontal: 10,
+                                                    //           vertical: 2,
+                                                    //         ),
+                                                    //     decoration: BoxDecoration(
+                                                    //       borderRadius:
+                                                    //           BorderRadius.circular(
+                                                    //             12,
+                                                    //           ),
+                                                    //       border: Border.all(
+                                                    //         width: 1,
+                                                    //         color: Color(
+                                                    //           0xFFD2D2D2,
+                                                    //         ),
+                                                    //       ),
+                                                    //     ),
+                                                    //     child: Row(
+                                                    //       mainAxisSize:
+                                                    //           MainAxisSize.min,
+                                                    //       children: [
+                                                    //         Text(
+                                                    //           'reply'.tr,
+                                                    //           style: getTextStyle(
+                                                    //             fontSize: 12,
+                                                    //             fontWeight:
+                                                    //                 FontWeight.w400,
+                                                    //             color: AppColors
+                                                    //                 .buttonColor,
+                                                    //           ),
+                                                    //         ),
+                                                    //         SizedBox(width: 4),
+                                                    //         Icon(
+                                                    //           _isReplyVisible(
+                                                    //                 review.id,
+                                                    //               )
+                                                    //               ? Icons
+                                                    //                     .expand_less
+                                                    //               : Icons
+                                                    //                     .expand_more,
+                                                    //           size: 16,
+                                                    //           color: AppColors
+                                                    //               .buttonColor,
+                                                    //         ),
+                                                    //       ],
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
+                                                    // Show reply input if expanded
+                                                    if (_isReplyVisible(
+                                                      review.id,
+                                                    )) ...[
+                                                      SizedBox(height: 12),
+                                                      TextField(
+                                                        controller:
+                                                            replyController,
+                                                        maxLines: null,
+                                                        minLines: 3,
+                                                        decoration: InputDecoration(
+                                                          contentPadding:
+                                                              EdgeInsets.symmetric(
+                                                                vertical: 12,
+                                                                horizontal: 16,
+                                                              ),
+                                                          border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  6,
+                                                                ),
+                                                            borderSide:
+                                                                BorderSide(
+                                                                  color: Color(
+                                                                    0xFFD2D2D2,
+                                                                  ),
+                                                                  width: 1,
+                                                                ),
+                                                          ),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                      6,
+                                                                    ),
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                      color: Color(
+                                                                        0xFFD2D2D2,
+                                                                      ),
+                                                                      width: 1,
+                                                                    ),
+                                                              ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                      6,
+                                                                    ),
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                      color: Color(
+                                                                        0xFFD2D2D2,
+                                                                      ),
+                                                                      width: 1,
+                                                                    ),
+                                                              ),
+                                                          hintText:
+                                                              'enter_reply'.tr,
+                                                        ),
+                                                        style: getTextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: AppColors
+                                                              .primaryFontColor,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Obx(
+                                                        () =>
+                                                            _controller
+                                                                .isReplyingToReview
+                                                                .value
+                                                            ? CustomSmallButton(
+                                                                text: 'replying'
+                                                                    .tr,
+                                                                onPressed:
+                                                                    () {},
+                                                                buttonColor:
+                                                                    Colors.grey,
+                                                                fontColor:
+                                                                    Colors
+                                                                        .white,
+                                                                width: 100,
+                                                              )
+                                                            : CustomSmallButton(
+                                                                text:
+                                                                    'reply'.tr,
+                                                                onPressed: () =>
+                                                                    _submitReply(
+                                                                      review.id,
+                                                                    ),
+                                                                buttonColor:
+                                                                    AppColors
+                                                                        .buttonColor,
+                                                                fontColor:
+                                                                    Colors
+                                                                        .white,
+                                                                width: 100,
+                                                              ),
+                                                      ),
+                                                    ],
+                                                    // Display replies if any
+                                                    if (review
+                                                        .replies
+                                                        .isNotEmpty) ...[
+                                                      SizedBox(height: 12),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          _toggleRepliesListVisibility(
+                                                            review.id,
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.symmetric(
+                                                                horizontal: 10,
+                                                                vertical: 2,
+                                                              ),
+                                                          decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  12,
+                                                                ),
+                                                            border: Border.all(
+                                                              width: 1,
+                                                              color: Color(
+                                                                0xFFD2D2D2,
+                                                              ),
                                                             ),
                                                           ),
-                                                          color: Color(
-                                                            0xFFF5F5F5,
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Text(
+                                                                'Replies (${review.replies.length})',
+                                                                style: getTextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: AppColors
+                                                                      .buttonColor,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 4,
+                                                              ),
+                                                              Icon(
+                                                                _isRepliesListVisible(
+                                                                      review.id,
+                                                                    )
+                                                                    ? Icons
+                                                                          .expand_less
+                                                                    : Icons
+                                                                          .expand_more,
+                                                                size: 16,
+                                                                color: AppColors
+                                                                    .buttonColor,
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                        padding: EdgeInsets.all(
-                                                          12,
-                                                        ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: review
-                                                              .replies
-                                                              .map(
-                                                                (
-                                                                  reply,
-                                                                ) => Padding(
-                                                                  padding:
-                                                                      EdgeInsets.only(
+                                                      ),
+                                                      // Show replies container if expanded
+                                                      if (_isRepliesListVisible(
+                                                        review.id,
+                                                      )) ...[
+                                                        SizedBox(height: 8),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                left: 16,
+                                                                top: 8,
+                                                                bottom: 8,
+                                                              ),
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              border: Border(
+                                                                left: BorderSide(
+                                                                  color: AppColors
+                                                                      .buttonColor,
+                                                                  width: 3,
+                                                                ),
+                                                              ),
+                                                              color: Color(
+                                                                0xFFF5F5F5,
+                                                              ),
+                                                            ),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                  12,
+                                                                ),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: review
+                                                                  .replies
+                                                                  .map(
+                                                                    (
+                                                                      reply,
+                                                                    ) => Padding(
+                                                                      padding: EdgeInsets.only(
                                                                         bottom:
                                                                             12,
                                                                       ),
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
+                                                                      child: Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
                                                                         children: [
-                                                                          Container(
-                                                                            padding: EdgeInsets.symmetric(
-                                                                              horizontal: 8,
-                                                                              vertical: 2,
-                                                                            ),
-                                                                            decoration: BoxDecoration(
-                                                                              color: AppColors.buttonColor,
-                                                                              borderRadius: BorderRadius.circular(
-                                                                                4,
+                                                                          Row(
+                                                                            children: [
+                                                                              Container(
+                                                                                padding: EdgeInsets.symmetric(
+                                                                                  horizontal: 8,
+                                                                                  vertical: 2,
+                                                                                ),
+                                                                                decoration: BoxDecoration(
+                                                                                  color: AppColors.buttonColor,
+                                                                                  borderRadius: BorderRadius.circular(
+                                                                                    4,
+                                                                                  ),
+                                                                                ),
+                                                                                child: Text(
+                                                                                  'Organizer',
+                                                                                  style: getTextStyle(
+                                                                                    fontSize: 11,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    color: Colors.white,
+                                                                                  ),
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            child: Text(
-                                                                              'Organizer',
-                                                                              style: getTextStyle(
-                                                                                fontSize: 11,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.white,
+                                                                              SizedBox(
+                                                                                width: 8,
                                                                               ),
-                                                                            ),
+                                                                              Text(
+                                                                                'Just now',
+                                                                                style: getTextStyle(
+                                                                                  fontSize: 11,
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                  color: AppColors.fontColor,
+                                                                                ),
+                                                                              ),
+                                                                            ],
                                                                           ),
                                                                           SizedBox(
-                                                                            width:
-                                                                                8,
+                                                                            height:
+                                                                                6,
                                                                           ),
                                                                           Text(
-                                                                            'Just now',
+                                                                            reply.comment,
                                                                             style: getTextStyle(
-                                                                              fontSize: 11,
+                                                                              fontSize: 13,
                                                                               fontWeight: FontWeight.w400,
-                                                                              color: AppColors.fontColor,
+                                                                              color: AppColors.primaryFontColor,
                                                                             ),
                                                                           ),
                                                                         ],
                                                                       ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            6,
-                                                                      ),
-                                                                      Text(
-                                                                        reply
-                                                                            .comment,
-                                                                        style: getTextStyle(
-                                                                          fontSize:
-                                                                              13,
-                                                                          fontWeight:
-                                                                              FontWeight.w400,
-                                                                          color:
-                                                                              AppColors.primaryFontColor,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              )
-                                                              .toList(),
+                                                                    ),
+                                                                  )
+                                                                  .toList(),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
+                                                      ],
+                                                    ],
                                                   ],
-                                                ],
+                                                ),
                                               ],
                                             ),
                                           );
